@@ -1,6 +1,8 @@
 * {
     box-sizing: border-box;
     cursor: none;
+    margin: 0px;
+    display: block;
 }
 
 html, body {
@@ -11,25 +13,24 @@ html, body {
 }
 
 h1 {
-    text-align: left;
+    text-align: center;
     font-family: 'Josefin Sans';
-    padding: 30px;
     vertical-align: top;
 }
 
 .title {
     margin:0;
     font-size: clamp(8rem, 12vw, 20rem);
-    color: rgb(65, 201, 106);
+    color: rgb(0, 0, 0);
     animation-name: quickfade;
     animation-duration: 1s;
     animation-iteration-count: 1;
 }
 
 section {
-    height: 100vh;
+    height: 90vh;
     padding: 0 clamp(6rem, 14vw, 22rem);
-    display: grid;
+    display: block;
     align-content: center;
     
     h2 {
@@ -44,24 +45,90 @@ section {
     }
 
     &:nth-of-type(1) {
-        background-color: black;
-        color: white
+        height: 85vh;
+        background-color: white;
+        background-image: url("assets\\logobg3.png");
+        background-size: auto;
+        color: black;
     }
     &:nth-of-type(2) {
-        border-bottom: 1px solid black;
+        background-color: black;
+        color: white;
     }
     &:nth-of-type(3) {
-        background-color: black;
-        color: white
+        border-bottom: 1px solid black;
     }
     &:nth-of-type(5) {
         background-color: rgb(65, 201, 106);
-        color: black
+        color: black;
     }
     &:nth-of-type(6) {
         background-color: rgb(26, 39, 33);
-        color: white
+        color: white;
     }
+}
+
+.bottomtab {
+    display: block;
+    background-color: black;
+    border-top-left-radius: clamp(3rem, 5vw, 9rem);
+    border-top-right-radius: clamp(3rem, 5vw, 9rem);
+    width: 100vw;
+    height: clamp(3rem, 5vw, 9rem);
+}
+
+.logospace {
+    display: inline-block;
+    padding-left: clamp(0, 15vw, 25vw);
+    padding-right: clamp(0, 15vw, 25vw);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    animation-name: quickfade;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+}
+
+nav {
+    text-align: center;
+}
+
+nav ul {
+    background-color: rgb(255, 255, 255);
+    font-size: 20px;
+    padding-left: 0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0px;
+    overflow: hidden;
+    text-align: center
+}
+
+ul li {
+    display: inline;
+}
+
+ul li a {
+    display: inline-block;
+    padding: 20px;
+    text-align: center;
+    margin: 0px;
+}
+
+nav a {
+    font-family: "Courier New";
+    text-decoration: none;
+    background-color: inherit;
+    color: rgb(0, 0, 0);
+}
+
+nav a:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .blob {
