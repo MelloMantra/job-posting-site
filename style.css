@@ -1,8 +1,7 @@
 * {
     box-sizing: border-box;
     cursor: none;
-    margin: 0px;
-    display: block;
+    margin: 0;
 }
 
 html, body {
@@ -10,6 +9,7 @@ html, body {
     padding: 0px;
     font-family: "Cousine";
     background-color: rgb(255, 255, 255);
+    display: block;
 }
 
 h1 {
@@ -29,6 +29,7 @@ h1 {
 
 section {
     height: 90vh;
+    width: 100%;
     padding: 0 clamp(6rem, 14vw, 22rem);
     display: block;
     align-content: center;
@@ -48,7 +49,7 @@ section {
         height: 85vh;
         background-color: white;
         background-image: url("assets\\logobg3.png");
-        background-size: auto;
+        background-size: cover;
         color: black;
     }
     &:nth-of-type(2) {
@@ -71,16 +72,20 @@ section {
 .bottomtab {
     display: block;
     background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: clamp(1rem, 25px, 4rem);
     border-top-left-radius: clamp(3rem, 5vw, 9rem);
     border-top-right-radius: clamp(3rem, 5vw, 9rem);
-    width: 100vw;
+    width: 100%;
     height: clamp(3rem, 5vw, 9rem);
 }
 
 .logospace {
+    color: white;
     display: inline-block;
-    padding-left: clamp(0, 15vw, 25vw);
-    padding-right: clamp(0, 15vw, 25vw);
+    padding-left: clamp(0%, 15%, 30%);
+    padding-right: clamp(0%, 15%, 30%);
 }
 
 header {
@@ -93,12 +98,14 @@ header {
 
 nav {
     text-align: center;
+    width: 100%
 }
 
 nav ul {
     background-color: rgb(255, 255, 255);
     font-size: 20px;
     padding-left: 0;
+    border-bottom: 1px black solid;
 }
 
 ul {
@@ -106,6 +113,14 @@ ul {
     margin: 0px;
     overflow: hidden;
     text-align: center
+}
+
+nav ul:hover {
+    cursor: auto;
+}
+
+nav:hover {
+    cursor: auto;
 }
 
 ul li {
