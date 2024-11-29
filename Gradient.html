@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.background {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, #000000, #000000);
+    display: flex;
+    flex-grow: 1;
+    z-index: -1;
+}
+
+.background div {
+    position: absolute;
+    border-radius: 100%;
+    height: 0;
+    filter: blur(200vw);
+    opacity: 0.9;
+}
+
+.background div:nth-child(1) {
+    background: linear-gradient(132deg, #1FCFC3 0.00%, #1F91CF 100.00%);
+    width: 40%;
+    padding-top: 40%;
+    position: absolute;
+    left: 20%;
+    top: 0%;
+    transform: translateX(-50%) translateY(-50%);
+    animation: moveCircle1 20s infinite linear;
+}
+
+.background div:nth-child(2) {
+    background: linear-gradient(132deg, #7700ff 0%, #6f00ff 30%, #912ae5 70%, #b02ae5 100%);
+    width: 40%;
+    padding-top: 40%;
+    position: absolute;
+    left: 100%;
+    top: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    animation: moveCircle2 20s infinite linear;
+}
+
+@keyframes moveCircle1 {
+    0% {
+        transform: translateX(-50%) translateY(-50%) translate(0, 0);
+    }
+    12.5% {
+        transform: translateX(-50%) translateY(-50%) translate(200px, 200px);
+    }
+    25% {
+        transform: translateX(-50%) translateY(-50%) translate(400px, 400px);
+    }
+    37.5% {
+        transform: translateX(-50%) translateY(-50%) translate(200px, 600px);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-50%) translate(0px, 800px);
+    }
+    62.5% {
+        transform: translateX(-50%) translateY(-50%) translate(-100px, 600px);
+    }
+    75% {
+        transform: translateX(-50%) translateY(-50%) translate(0px, 400px);
+    }
+    87.5% {
+        transform: translateX(-50%) translateY(-50%) translate(100px, 200px);
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%) translate(0, 0);
+    }
+}
+
+@keyframes moveCircle2 {
+    0% {
+        transform: translateX(-50%) translateY(-50%) translate(0, 0);
+    }
+    12.5% {
+        transform: translateX(-50%) translateY(-50%) translate(-200px, -200px);
+    }
+    25% {
+        transform: translateX(-50%) translateY(-50%) translate(-400px, -400px);
+    }
+    37.5% {
+        transform: translateX(-50%) translateY(-50%) translate(-200px, -600px);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-50%) translate(0, -800px);
+    }
+    62.5% {
+        transform: translateX(-50%) translateY(-50%) translate(100px, -600px);
+    }
+    75% {
+        transform: translateX(-50%) translateY(-50%) translate(0px, -400px);
+    }
+    87.5% {
+        transform: translateX(-50%) translateY(-50%) translate(-100px, -200px);
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%) translate(0, 0);
+    }
+}
+</style>
+</head>
+<body>
+<div class="background">
+   <div></div>
+   <div></div>
+</div>
+</body>
+</html>
