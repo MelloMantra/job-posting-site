@@ -167,6 +167,16 @@ nav a:hover {
     z-index: 9999;
 }
 
+.poppyText {
+    display: block;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.poppyText:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+
 /*
 
 ANIMATIONS
