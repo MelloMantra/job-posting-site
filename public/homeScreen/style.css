@@ -84,8 +84,8 @@ section {
 .logospace {
     color: white;
     display: inline-block;
-    padding-left: clamp(0%, 25%, 30%);
-    padding-right: clamp(0%, 25%, 30%);
+    padding-left: clamp(0px, 20rem, 30rem);
+    padding-right: clamp(0px, 20rem, 30rem);
 }
 
 header {
