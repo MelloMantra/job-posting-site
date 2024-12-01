@@ -2,12 +2,12 @@
   "name": "job-posting-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Jobify, a powerful and dynamic job posting site to help users get hired easy, and employers find their best candidates",
+  "description": "Jobify, the all-in-one tool for employers to hire students, fast.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Spencer Southworth, Matteo Delrossi and Romir Patel",
+  "author": "Spencer Southworth, Matteo Delrossi, and Romir Patel",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.3.3",
