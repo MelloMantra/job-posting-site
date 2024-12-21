@@ -11,10 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "chai": "^5.1.2",
+    "chai-http": "^5.1.1",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "job-posting-site": "file:",
     "jquery": "^3.7.1",
+    "mocha": "^11.0.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.5",
     "nodemailer": "^6.9.16",
