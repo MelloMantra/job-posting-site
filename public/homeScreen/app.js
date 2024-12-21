@@ -3,6 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
     var mouseMagnifier = 1;
     let blobs = document.querySelectorAll(".blob");
     let mouse = document.querySelector(".mouse");
+    let topText = document.getElementById("topText");
+
+    // back to top buttons
+    window.onscroll = function( ) {scrollFunction()};
+    topText.onclick = function( ) {topFunction()};
+
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
     // lenis smooth scroll
     const lenis = new Lenis();
@@ -13,6 +23,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     requestAnimationFrame(raf);
+
+    // scrolly text
+    gsap.registerPlugin(ScrollTrigger);
+
+    const splitTypes = document.querySelectorAll('.reveal-type')
+
+    splitTypes.forEach((char,i) => {
+
+        const text = new SplitType(char, { types: 'chars'})
+
+        gsap.from(text.chars, {
+            scrollTrigger: {
+                trigger: char,
+                start: 'top 100%',
+                end: 'top 50%',
+                scrub: true,
+                markers: false
+            },
+            y: -20,
+            opacity: 0,
+            stagger: 0.1
+        });
+
+    });
 
     // mouse followers
     blobs.forEach(function(blob) {
