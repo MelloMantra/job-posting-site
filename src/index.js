@@ -1,5 +1,5 @@
 //node src/index.js
-
+// Below is an example of how to add a new page to the backend for Matteo.
 /*
 app.get('pageName', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'pageFolder', 'page.html'));
