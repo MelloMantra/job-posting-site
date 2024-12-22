@@ -18,6 +18,13 @@ h1 {
     vertical-align: top;
 }
 
+h2 {
+    text-align: left;
+    font-family: 'Josefin Sans';
+    vertical-align: top;
+    font-size: medium;
+}
+
 .title {
     margin:0;
     font-size: clamp(8rem, 12vw, 20rem);
@@ -28,7 +35,7 @@ h1 {
 }
 
 section {
-    height: 90vh;
+    height: 100vh;
     width: 100%;
     padding: 0 clamp(6rem, 14vw, 22rem);
     display: block;
@@ -36,17 +43,17 @@ section {
     
     h2 {
         font-size: clamp(3rem, 5vw, 9rem);
-        padding: 0;
+        padding: 20px;
     }
 
     p {
         font-size: clamp(1rem, 2vw, 4rem);
-        padding:0;
         margin: 0;
+        display: block;
     }
 
     &:nth-of-type(1) {
-        height: 85vh;
+        height: 83vh;
         background-color: white;
         background-image: url("../assets/logobg3.png");
         background-size: cover;
@@ -57,7 +64,7 @@ section {
         color: white;
     }
     &:nth-of-type(3) {
-        border-bottom: 1px solid black;
+        /*border-bottom: 1px solid black;*/
     }
     &:nth-of-type(5) {
         background-color: rgb(65, 201, 106);
@@ -84,8 +91,16 @@ section {
 .logospace {
     color: white;
     display: inline-block;
-    padding-left: clamp(0px, 20rem, 30rem);
-    padding-right: clamp(0px, 20rem, 30rem);
+    /*padding-left: clamp(0px, 20rem, 30rem);
+    padding-right: clamp(0px, 20rem, 30rem);*/
+}
+
+.spanbar {
+    display:inline-block;
+    height: 3px;
+    width: clamp(0px, 10vw, 20vw);
+    background-color: rgb(185, 185, 185);
+    vertical-align: middle;
 }
 
 header {
@@ -112,7 +127,7 @@ ul {
     list-style-type: none;
     margin: 0px;
     overflow: hidden;
-    text-align: center
+    text-align: center;
 }
 
 nav ul:hover {
@@ -125,6 +140,7 @@ nav img:hover {
 
 ul li {
     display: inline;
+    vertical-align: middle;
 }
 
 ul li a {
@@ -144,6 +160,22 @@ nav a {
 nav a:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-top: 3px;
+    border-color: white;
+    div {
+        padding: 5px;
+    }
+    a {
+        color: white;
+    }
 }
 
 .blob {
@@ -176,6 +208,49 @@ nav a:hover {
     transform: scale(1.2) rotate(5deg);
 }
 
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.popButton {
+    background-color: rgb(77, 149, 217);
+    color: white;
+    border-radius: 25px;
+    padding: 15px;
+    margin: 5px;
+    font-weight: bold;
+    font-family: "Josefin Sans";
+    vertical-align: middle;
+    &:nth-of-type(2) {
+        background-color: black;
+        color: white;
+    }
+}
+
+.dullButton {
+    border-radius: 25px;
+    padding: 15px;
+    margin: 5px;
+    background-color: black;
+    color: white;
+    font-family: "Josefin Sans";
+    vertical-align: middle;
+}
+
+.popButton:hover {
+    background-color: rgb(75, 161, 243);
+    text-decoration: none;
+}
+
+.dullButton:hover {
+    background-color: rgb(48, 48, 48);
+    text-decoration: none;
+}
 
 /*
 
