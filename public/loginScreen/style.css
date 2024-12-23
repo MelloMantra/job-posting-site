@@ -9,16 +9,20 @@ html, body {
     padding: 0px;
     font-family: "Cousine";
     background-color: rgb(255, 255, 255);
-    display: block;
     align-items: center;
+    vertical-align: middle;
+    text-align: center;
+    align-content: center;
 }
 
 .loginbox {
     background-color: white;
-    border-radius: 5px;
+    border-radius: 10px;
+    height: 30vh;
+    width: 25vw;
     z-index: 1;
-    height: 30%;
-    width: 25%;
+    display: inline-table;
+    align-self: center;
 }
 
 .background {
@@ -34,7 +38,7 @@ html, body {
     z-index: -1;
 }
 
-.background div {
+.background span {
     position: absolute;
     border-radius: 100%;
     height: 0;
@@ -42,7 +46,7 @@ html, body {
     opacity: 1.5;
 }
 
-.background div:nth-child(1) {
+.background span:nth-child(1) {
     background: linear-gradient(132deg, #1FCFC3 0.00%, #1F91CF 100.00%);
     width: 40%;
     padding-top: 40%;
@@ -53,7 +57,7 @@ html, body {
     animation: moveCircle1 22s infinite linear;
 }
 
-.background div:nth-child(2) {
+.background span:nth-child(2) {
     background: linear-gradient(132deg, #7700ff 0%, #6f00ff 30%, #912ae5 70%, #b02ae5 100%);
     width: 40%;
     padding-top: 40%;
@@ -63,6 +67,29 @@ html, body {
     transform: translateX(-50%) translateY(-50%);
     animation: moveCircle2 22s infinite linear;
 }
+
+
+.blob {
+    background-color: black;
+    border-radius: 100%;
+    border: 1px solid white;
+    opacity: 1;
+    position:absolute;
+    z-index: 9999;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+    display: block;
+}
+
+.mouse {
+    mix-blend-mode: difference;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
 
 @keyframes moveCircle1 {
     0% {
