@@ -14,7 +14,7 @@ console.log(path.join(__dirname, '..'));
 const initialpath = path.join(__dirname, "..");
 const fs = require("fs");
 const session = require('express-session');
-const mysql = require("mysql2");
+const pool = require('./db');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -29,21 +29,9 @@ app.use(session({
     }
 }));
 
-const dbConfig = {
-    connectionLimit: 10,
-    host: 'sql.freedb.tech',
-    user: 'freedb_JobifyAdmin',
-    password: 'u&W8pCAh68#pkue',
-    database: 'freedb_jobify-database',
-    port: 3306,
-    connectTimeout: 60000
-};
-
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 }); 
-
-var pool = mysql.createPool(dbConfig);
 
 
 //Test connection

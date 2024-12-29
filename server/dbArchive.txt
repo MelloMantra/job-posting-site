@@ -1,0 +1,116 @@
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(255),
+    password VARCHAR(255),
+    lastName VARCHAR(255),
+    email VARCHAR(255),
+    aboutMe LONGTEXT,
+    userResume BLOB,
+    createdAt DATE,
+    majorType INT NOT NULL,
+    majorLevel ENUM('Associates', 'Bachelors', 'Masters', 'PhD', 'Null'),
+    universityId INT,
+    educationLevel ENUM('HS Diploma', 'College Degree', 'Trade Certificate'),
+    pastExperienceTitle VARCHAR(255),
+    pastExperienceCompany VARCHAR(255)
+);
+CREATE TABLE openApplications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user INT NOT NULL,
+    job INT NOT NULL,
+    coverLetter LONGTEXT,
+    otherOptions VARCHAR(255),
+    state ENUM('being reviewed', 'accepted', 'rejected', 'archived') NOT NULL
+);
+CREATE TABLE majors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    majorName VARCHAR(255),
+    majorType VARCHAR(255)
+);
+CREATE TABLE universities (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+CREATE TABLE companies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description LONGTEXT NOT NULL, 
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+CREATE TABLE postedJob (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    company INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    description LONGTEXT NOT NULL,
+    hours ENUM('Part Time', 'Full Time', 'Seasonal') NOT NULL,
+    estimatedPay FLOAT NOT NULL,
+    requiredExperience LONGTEXT,
+    preferredExperience LONGTEXT,
+    occupation INT NOT NULL,
+    industry INT NOT NULL,
+    date_created DATE NOT NULL
+);
+
+CREATE TABLE occupation (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE occupationRef (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    occupationId INT,
+    refStrength FLOAT,
+    industryId INT
+);
+CREATE TABLE industry (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+-- Adding foreign key constraints
+
+-- users.majorType references majors.id
+ALTER TABLE users
+ADD CONSTRAINT fk_majorType
+FOREIGN KEY (majorType) REFERENCES majors(id);
+
+-- openApplications.user references users.id
+ALTER TABLE openApplications
+ADD CONSTRAINT fk_user
+FOREIGN KEY (user) REFERENCES users(id);
+
+-- users.universityId references universities.id
+ALTER TABLE users
+ADD CONSTRAINT fk_university
+FOREIGN KEY (universityId) REFERENCES universities(id);
+
+ALTER TABLE openApplications
+ADD CONSTRAINT fk_job
+FOREIGN KEY (job) REFERENCES postedJob(id);
+
+-- postedJob.company references companies.id
+ALTER TABLE postedJob
+ADD CONSTRAINT fk_company
+FOREIGN KEY (company) REFERENCES companies(id);
+
+-- occupationRef.occupationId references occupation.id
+ALTER TABLE occupationRef
+ADD CONSTRAINT fk_occupation
+FOREIGN KEY (occupationId) REFERENCES occupation(id);
+
+-- occupationRef.industryId references industry.id
+ALTER TABLE occupationRef
+ADD CONSTRAINT fk_industry
+FOREIGN KEY (industryId) REFERENCES industry(id);
+
+-- postedJob.occupation references occupation.id
+ALTER TABLE postedJob
+ADD CONSTRAINT fk_postedJob_occupation
+FOREIGN KEY (occupation) REFERENCES occupation(id);
+
+-- postedJob.industry references industry.id
+ALTER TABLE postedJob
+ADD CONSTRAINT fk_postedJob_industry
+FOREIGN KEY (industry) REFERENCES industry(id);
+
