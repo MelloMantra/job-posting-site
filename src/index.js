@@ -6,15 +6,23 @@ app.get('pageName', (req, res) => {
 });
 */
 
+// Node Modules
 const express = require("express");
 const path = require("path");
-const app = express();
-const port = process.env.PORT || 3000;
-console.log(path.join(__dirname, '..'));
-const initialpath = path.join(__dirname, "..");
-const fs = require("fs");
 const session = require('express-session');
+
+//Constants & Setup
+const port = process.env.PORT || 3000;
+const initialpath = path.join(__dirname, "..");
+
+//Local Modules
 const pool = require('./db');
+const userRoutes = require('./user/userRoutes');
+const companyRoutes = require('./company/companyRoutes');
+
+//Middleware Setup
+  //App
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -29,30 +37,21 @@ app.use(session({
     }
 }));
 
+  //Router
+const router = express.Router();
+router.use('/user', userRoutes);
+router.use('/company', companyRoutes);
+app.use('/api', router);
+
+console.log(path.join(__dirname, '..'));
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 }); 
 
 
 //Test connection
-pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.message);
-        return;
-    }
-    
-    console.log('Connected to the database successfully!');
-    
-    connection.release();
-    
-    pool.end((endErr) => {
-        if (endErr) {
-            console.error('Error closing the connection pool:', endErr.message);
-        } else {
-            console.log('Connection pool closed successfully.');
-        }
-    });
-});
+dbTest =  pool.query("SELECT * FROM universities WHERE id = 200");
+console.log(dbTest);
 
 app.use(express.static(path.join(initialpath, 'public'), {
     setHeaders: (res, path, stat) => {
@@ -62,6 +61,7 @@ app.use(express.static(path.join(initialpath, 'public'), {
     },
 }));
 
+//Page Redirects (NOT API)
 app.get('/', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'homeScreen', 'index.html'));
 });
