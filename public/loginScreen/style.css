@@ -15,6 +15,15 @@ html, body {
     align-content: center;
 }
 
+body {
+    background-image:url('../assets/gradient.gif');
+    background-size:100%;
+    background-size: cover;
+    background-attachment: fixed;
+    height:100vh;
+    width:100%;
+}
+
 .loginbox {
     background-color: white;
     border-radius: 10px;
