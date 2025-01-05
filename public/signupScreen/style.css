@@ -73,10 +73,6 @@ h2 {
     box-shadow: none;
 }
 
-input:focus {
-    box-shadow: 0 0 3px 1px rgb(77, 149, 217);
-}
-
 .remember-forgot {
     display: flex;
     justify-content: space-between;
@@ -120,12 +116,8 @@ input:focus {
     color: rgb(255, 255, 255);
 }
 
-#passwordwrapper {
+#passwordarea {
     padding-bottom: 20px;
-}
-
-.textinput input.invalid {
-    box-shadow: 0 0 3px 1px rgb(255, 124, 124);
 }
 
 .unselectable {
@@ -167,10 +159,12 @@ input:focus {
 
 .popButton:hover {
     background-color: rgb(75, 161, 243);
+    cursor: pointer;
 }
 
 .dullButton:hover {
     background-color: rgb(48, 48, 48);
+    cursor: pointer;
 }
 
 a {
