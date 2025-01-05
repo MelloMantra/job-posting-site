@@ -17,10 +17,8 @@
     </head>
     <body>
 
-        <div class="mouse"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
-
         <div class="loginbox">
-            <div class="header">
+            <div class="header unselectable">
                 <h2>Log in</h2>
                 <a href="../homeScreen/index.html"><img src="../assets/icon.png" class="minilogo"></a>
             </div>
@@ -28,12 +26,12 @@
             <div class="form">
 
                 <div class="textinput">
-                    <p id="bademail">Invalid email</p>
+                    <p id="bademail" class="unselectable">Invalid email</p>
                     <input type="text" placeholder="Email" required id="email">
                 </div>
 
-                <div class="textinput" id = passwordwrapper>
-                    <p id="badpw">Incorrect password</p>
+                <div class="textinput" id="passwordwrapper">
+                    <p id="badpw" class="unselectable">Incorrect password</p>
                     <input type="password" placeholder="Password" required id="password">
                 </div>
 

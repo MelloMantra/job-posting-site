@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jobify</title>
+        <meta name="description" content="Login to Jobify">
+        <link rel="icon" href="../assets/icon.png">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src="https://unpkg.com/split-type"></script>
+        <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body>
+
+        <div class="loginbox">
+            <div class="header">
+                <h2>Sign up</h2>
+                <a href="../homeScreen/index.html"><img src="../assets/icon.png" class="minilogo"></a>
+            </div>
+            <p>for Jobify</p>
+            <div class="form">
+
+                <div class="textinput">
+                    <p id="bademail">Invalid email</p>
+                    <input type="text" placeholder="Email" required id="email">
+                </div>
+
+                <div class="textinput" id = passwordwrapper>
+                    <p id="badpw">Incorrect password</p>
+                    <input type="password" placeholder="Password" required id="password">
+                </div>
+
+                <button type="submit" class="popButton" onclick="submit()">Next</button>
+
+                <div class="gotosignup">
+                    <p>Already have a Jobify account? <a href="../loginScreen/login.html">Log in</a></p>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>

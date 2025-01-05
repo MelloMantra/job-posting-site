@@ -63,17 +63,6 @@ section {
         background-color: black;
         color: white;
     }
-    &:nth-of-type(3) {
-        /*border-bottom: 1px solid black;*/
-    }
-    &:nth-of-type(5) {
-        background-color: rgb(65, 201, 106);
-        color: black;
-    }
-    &:nth-of-type(6) {
-        background-color: rgb(26, 39, 33);
-        color: white;
-    }
 }
 
 .bottomtab {
