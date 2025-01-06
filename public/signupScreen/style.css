@@ -32,6 +32,13 @@ h2 {
     text-align: left;
 }
 
+h3 {
+    font-family: "Josefin Sans";
+    font-size: x-large;
+    padding-top: 30px;
+    text-align: left;
+}
+
 .loginbox p {
     text-align: left;
     padding: 10px;
@@ -50,10 +57,10 @@ h2 {
     align-self: center;
 }
 
-.form {
+.tab {
     display:flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     margin: 30px;
 }
 
@@ -67,10 +74,14 @@ h2 {
     padding: 0.75em;
     background-color: rgba(160, 160, 160, 0.3);
     border: none;
-    border-radius: 1em;
+    border-radius: 10px;
     font-family: "Cousine";
     outline: none;
     box-shadow: none;
+}
+
+input:focus {
+    box-shadow: 0 0 3px 1px rgb(77, 149, 217);
 }
 
 .remember-forgot {
@@ -78,13 +89,13 @@ h2 {
     justify-content: space-between;
 }
 
-.gotosignup {
+.gotologin {
     padding-bottom: 15px;
 }
 
-.gotosignup p {
+.gotologin p {
     padding: 0px;
-    padding-left: 2.5em;
+    padding-left: 1.5em;
 }
 
 .loginbox a {
@@ -120,6 +131,48 @@ h2 {
     padding-bottom: 20px;
 }
 
+#phonewrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-direction: unset;
+}
+
+#phoneprefix {
+    font-size: 1rem;
+    background-color: rgb(226, 226, 226);
+    padding: 0.75em;
+    white-space: nowrap;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+#phone {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+}
+
+.privacy {
+    font-size: small;
+    display: flex;
+    justify-content: space-evenly;
+    padding-right: 50%;
+}
+
+#progressbar {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#bgbar {
+    width:100%;
+    height: 2em;
+    background-color: rgb(226, 226, 226);
+}
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -139,22 +192,21 @@ h2 {
     font-family: "Josefin Sans";
     font-size: larger;
     vertical-align: middle;
-    &:nth-of-type(2) {
-        background-color: black;
-        color: white;
-    }
     border: none;
+    width: 40%;
 }
 
 .dullButton {
     border-radius: 25px;
     padding: 15px;
     margin: 5px;
-    background-color: black;
-    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.75);
     font-family: "Josefin Sans";
+    font-size: larger;
     vertical-align: middle;
-    border: none;
+    border: 2px solid rgba(0, 0, 0, 0.247);
+    width: 40%;
 }
 
 .popButton:hover {
@@ -163,7 +215,7 @@ h2 {
 }
 
 .dullButton:hover {
-    background-color: rgb(48, 48, 48);
+    background-color: rgba(48, 48, 48, 0.3);
     cursor: pointer;
 }
 

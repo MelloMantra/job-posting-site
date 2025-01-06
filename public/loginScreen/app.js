@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // text field listeners
     email.addEventListener("blur", checkemail);
     password.addEventListener("blur", checkpw);
+
     email.addEventListener("focus", function() {
         email.style.boxShadow = "0 0 3px 1px rgb(77, 149, 217)"
     });
@@ -33,7 +34,7 @@ function setCookie()
     var exdays = 1;
     var d = new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
-    var expires = "expires="+d.toGMTString();
+    var expires = "expires="+d.toUTCString();
     document.cookie = cname+"="+cvalue+"; "+expires+"; Secure; SameSite=Strict";
 }
 

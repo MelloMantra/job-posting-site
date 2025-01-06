@@ -80,8 +80,7 @@ section {
 .logospace {
     color: white;
     display: inline-block;
-    /*padding-left: clamp(0px, 20rem, 30rem);
-    padding-right: clamp(0px, 20rem, 30rem);*/
+    cursor: auto;
 }
 
 .spanbar {
@@ -90,6 +89,7 @@ section {
     width: clamp(0px, 10vw, 20vw);
     background-color: rgb(185, 185, 185);
     vertical-align: middle;
+    cursor: auto;
 }
 
 header {
@@ -102,7 +102,8 @@ header {
 
 nav {
     text-align: center;
-    width: 100%
+    width: 100%;
+    cursor: auto;
 }
 
 nav ul {
@@ -130,6 +131,7 @@ nav img:hover {
 ul li {
     display: inline;
     vertical-align: middle;
+    cursor: auto;
 }
 
 ul li a {
@@ -164,6 +166,7 @@ footer {
     }
     a {
         color: white;
+        cursor: pointer;
     }
 }
 

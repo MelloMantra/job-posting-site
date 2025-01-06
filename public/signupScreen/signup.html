@@ -18,28 +18,86 @@
     <body>
 
         <div class="loginbox">
-            <div class="header">
+            <div class="header unselectable">
                 <h2>Sign up</h2>
                 <a href="../homeScreen/index.html"><img src="../assets/icon.png" class="minilogo"></a>
             </div>
             <p>for Jobify</p>
-            <div class="form">
+            <div class="form" action="">
 
-                <div class="textinput" id="emailwrapper">
-                    <p id="bademail">Invalid email</p>
-                    <input type="text" placeholder="Email" required id="email">
+
+                <div class="tab">
+                    <div class="textinput">
+                        <p id="bademail" class="unselectable">Invalid email</p>
+                        <input type="text" placeholder="Email" required id="email">
+                    </div>
+
+                    <div class="textinput">
+                        <p id="bademail2" class="unselectable">Emails dont match</p>
+                        <input type="text" placeholder="Confirm email" required id="email2">
+                    </div>
+
+                    <div></div>
+
+                    <div class="textinput" id="passwordarea">
+                        <p id="badpw" class="unselectable">Incorrect password</p>
+                        <input type="password" placeholder="Password" required id="password">
+                    </div>
+
+                    <div>
+                        <button type="button" class="popButton" onclick="nextTab()">Next</button>
+                    </div>
+
+                    <div class="gotologin">
+                        <p>Already have a Jobify account? <a href="../loginScreen/login.html">Log in</a></p>
+                    </div>
                 </div>
 
-                <div class="textinput" id="passwordwrapper">
-                    <p id="badpw">Incorrect password</p>
-                    <input type="password" placeholder="Password" required id="password">
+
+                <div class="tab">
+                    <h3>Personal Information</h3>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="First name" required id="firstname">
+                    </div>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="Last name" required id="lastname">
+                    </div>
+
+                    <div class="textinput" id="phonewrapper">
+                        <span id="phoneprefix">+1</span>
+                        <input type="text" placeholder="Phone (xxx) xxx-xxxx" id="phone">
+                    </div>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="Country" id="country">
+                    </div>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="State/Province" id="state">
+                    </div>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="City" id="city">
+                    </div>
+
+                    <div>
+                        <button type="button" class="dullButton" onclick="prevTab()">Back</button>
+                        <button type="button" class="popButton" onclick="nextTab()">Next</button>
+                    </div>
+
+                    <div class="privacy">
+                        <a href="../privacy/privacy.html">Privacy</a>
+                        <a href="../privacy/terms.html">Terms</a>
+                    </div>
                 </div>
 
-                <button type="submit" class="popButton" onclick="submit()">Next</button>
-
-                <div class="gotosignup">
-                    <p>Already have a Jobify account? <a href="../loginScreen/login.html">Log in</a></p>
+                <div id="progressbar">
+                    <span id="bgbar"></span>
+                    <span id="fgbar"></span>
                 </div>
+
             </form>
         </div>
 
