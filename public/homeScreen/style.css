@@ -246,6 +246,16 @@ footer {
     text-decoration: none;
 }
 
+.popButton:active {
+    transform: scale(0.95);
+    box-shadow: 3px 2px 22px 1px rgba(75, 161, 243, 0.24);
+}
+
+.dullButton:active {
+    transform: scale(0.95);
+    box-shadow: 3px 2px 22px 1px rgba(0,0,0, 0.24);
+}
+
 /*
 
 ANIMATIONS

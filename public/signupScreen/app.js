@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     phone = document.getElementById("phone");
     bademail = document.getElementById("bademail");
     badpw = document.getElementById("badpw");
+    badphone = document.getElementById("badphone");
     tabs = document.getElementsByClassName("tab");
     tab = 0;
 
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     email.addEventListener("blur", checkemail);
     password.addEventListener("blur", checkpw);
     email2.addEventListener("blur", checkemail);
+    phone.addEventListener("blur", checkphone);
 
     email.addEventListener("focus", function() {
         email.style.boxShadow = "0 0 3px 1px rgb(77, 149, 217)";
@@ -23,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     email2.addEventListener("focus", function() {
         email2.style.boxShadow = "0 0 3px 1px rgb(77, 149, 217)";
+    });
+    phone.addEventListener("focus", function() {
+        phone.style.boxShadow = "0 0 3px 1px rgb(77, 149, 217)";
     });
 
     // display only one tab
@@ -39,6 +44,15 @@ function isValidEmail(str) {
 function isValidPhone(str) {
     const regex = /^\+?[1-9]\d{0,2}[-.\s]?(\(\d{1,4}\)|\d{1,4})[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
     return regex.test(str);;
+}
+
+// glean numbers from string
+function extractNums(str) {
+    var nums = ""
+    for (var i=0; i<str.length(); i++) {
+        if (!isNaN(str.charAt(i))) nums+=str.charAt(i);
+    }
+    return parseInt(nums);
 }
 
 // wait function
@@ -81,10 +95,11 @@ function checkCookie()
 }
 
 // form progression functions
-function nextTab() {
+async function nextTab() {
+    // check appropriate fields before proceeding
     if (tab==0) {
-        goodemail = checkemail();
-        goodpw = checkpw()
+        var goodemail = checkemail();
+        var goodpw = checkpw()
         if (goodemail && goodpw) {
             emailvalue = email.value;
             passwordvalue = password.value;
@@ -95,33 +110,61 @@ function nextTab() {
             return false;
         }
     } else if (tab==1) {
-        if (isValidPhone(phone.value)) {
+        var goodphone = checkphone();
+        if (goodphone) {
             firstnamevalue = document.getElementById("firstname").value;
             lastnamevalue = document.getElementById("lastname").value;
-            phonevalue = phone.value;
+            phoneprefixvalue = extractNums(document.getElementById("phoneprefix").value);
+            phonevalue = extractNums(phone.value);
+            countryvaleue = document.getElementById("country").value;
+            statevalue = document.getElementById("state").value;
+            cityvalue = document.getElementById("city").value;
         }
     }
 
     // fade animation
     tabs[tab+1].style.opacity = 0;
-    var duration = 1000; // animation duration in ms
-    var steps = 120; // frame count
+    var duration = 300; // animation duration in ms
+    var steps = 60; // frame count
 
     for (var i=1; i<steps; i++) {
-        tabs[tab].style.opacity = 1-(i/duration);
-        wait(duration/steps)
+        tabs[tab].style.opacity = 1-(i/steps);
+        await wait(duration/steps)
     }
     tabs[tab].style.display = "none";
     tabs[tab+1].style.display = "flex";
     tabs[tab].style.opacity = 1;
     for (var i=1; i<steps; i++) {
-        tabs[tab+1].style.opacity = i/duration;
-        wait(duration/steps)
+        tabs[tab+1].style.opacity = i/steps;
+        await wait(duration/steps)
     }
     tabs[tab+1].style.opacity = 1;
 
     // increment tab
     tab+=1;
+}
+
+async function prevTab() {
+    // fade animation
+    tabs[tab-1].style.opacity = 0;
+    var duration = 300; // animation duration in ms
+    var steps = 60; // frame count
+
+    for (var i=1; i<steps; i++) {
+        tabs[tab].style.opacity = 1-(i/steps);
+        await wait(duration/steps)
+    }
+    tabs[tab].style.display = "none";
+    tabs[tab-1].style.display = "flex";
+    tabs[tab].style.opacity = 1;
+    for (var i=1; i<steps; i++) {
+        tabs[tab-1].style.opacity = i/steps;
+        await wait(duration/steps)
+    }
+    tabs[tab-1].style.opacity = 1;
+
+    // increment tab
+    tab-=1;
 }
 
 // text input validation functions
@@ -150,7 +193,7 @@ function checkemail() {
 function checkpw() {
     if (password.value!="") {
         badpw.style.color = "white";
-        password.style.boxShadow = "none"
+        password.style.boxShadow = "none";
     } else {
         badpw.innerHTML = "Please enter a password";
         badpw.style.color = "rgb(255, 124, 124)";
@@ -158,4 +201,17 @@ function checkpw() {
     }
 
     return password.value!="";
+}
+
+function checkphone() {
+    var validPhone = isValidPhone(phone.value);
+    if (validPhone) {
+        badphone.style.color = "white";
+        phone.style.boxShadow = "none";
+    } else {
+        badphone.innerHTML = "Please enter a valid phone number";
+        badphone.style.color = "rgb(255, 124, 124)";
+        phone.style.boxShadow = "0 0 3px 1px rgb(255, 124, 124)";
+    }
+    return validPhone;
 }

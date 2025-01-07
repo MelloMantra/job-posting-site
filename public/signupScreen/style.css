@@ -35,7 +35,7 @@ h2 {
 h3 {
     font-family: "Josefin Sans";
     font-size: x-large;
-    padding-top: 30px;
+    padding-top: 0px;
     text-align: left;
 }
 
@@ -55,6 +55,7 @@ h3 {
     z-index: 1;
     display: inline-table;
     align-self: center;
+    box-shadow: 0 0 30px black;
 }
 
 .tab {
@@ -147,6 +148,7 @@ input:focus {
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    width: 12%
 }
 
 #phone {
@@ -165,12 +167,17 @@ input:focus {
 #progressbar {
     text-align: center;
     margin-top: 40px;
+    width: 60%;
 }
 
 #bgbar {
     width:100%;
     height: 2em;
     background-color: rgb(226, 226, 226);
+}
+
+#fgbar {
+
 }
 
 .unselectable {
@@ -200,12 +207,12 @@ input:focus {
     border-radius: 25px;
     padding: 15px;
     margin: 5px;
-    background-color: rgba(0, 0, 0, 0.3);
-    color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.62);
     font-family: "Josefin Sans";
     font-size: larger;
     vertical-align: middle;
-    border: 2px solid rgba(0, 0, 0, 0.247);
+    border: 2px solid rgba(0, 0, 0, 0.25);
     width: 40%;
 }
 
@@ -217,6 +224,16 @@ input:focus {
 .dullButton:hover {
     background-color: rgba(48, 48, 48, 0.3);
     cursor: pointer;
+}
+
+.popButton:active {
+    transform: scale(0.95);
+    box-shadow: 3px 2px 22px 1px rgba(75, 161, 243, 0.24);
+}
+
+.dullButton:active {
+    transform: scale(0.95);
+    box-shadow: 3px 2px 22px 1px rgba(0,0,0, 0.24);
 }
 
 a {
