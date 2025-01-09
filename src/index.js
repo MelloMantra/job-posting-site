@@ -19,6 +19,7 @@ const initialpath = path.join(__dirname, "..");
 const pool = require('./db');
 const userRoutes = require('./user/userRoutes');
 const companyRoutes = require('./company/companyRoutes');
+const generalRoutes = require('./routes');
 
 //Middleware Setup
   //App
@@ -39,6 +40,8 @@ app.use(session({
 
   //Router
 const router = express.Router();
+
+router.use('/all', generalRoutes);
 router.use('/user', userRoutes);
 router.use('/company', companyRoutes);
 app.use('/api', router);
