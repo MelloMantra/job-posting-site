@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jobify</title>
+        <meta name="description" content="Login to Jobify">
+        <link rel="icon" href="../assets/icon.png">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src="https://unpkg.com/split-type"></script>
+        <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body>
+
+        <div class="loginbox">
+            <div class="header unselectable">
+                <h2>Sign up</h2>
+                <a href="../homeScreen/index.html"><img src="../assets/icon.png" class="minilogo"></a>
+            </div>
+            <p>for Jobify</p>
+            <div class="form" action="">
+
+
+                <div class="tab">
+                    <div class="textinput">
+                        <p id="bademail" class="unselectable">Invalid email</p>
+                        <input type="text" placeholder="Email" required id="email">
+                    </div>
+
+                    <div class="textinput">
+                        <p id="bademail2" class="unselectable">Emails dont match</p>
+                        <input type="text" placeholder="Confirm email" required id="email2">
+                    </div>
+
+                    <div></div>
+
+                    <div class="textinput" id="passwordarea">
+                        <p id="badpw" class="unselectable">Incorrect password</p>
+                        <input type="password" placeholder="Password" required id="password">
+                    </div>
+
+                    <div>
+                        <button type="button" class="popButton" onclick="nextTab()">Next</button>
+                    </div>
+
+                    <div class="gotologin">
+                        <p>Already have a Jobify account? <a href="../loginScreen/login.html">Log in</a></p>
+                    </div>
+                </div>
+
+
+                <div class="tab">
+                    <h3>Personal Information</h3>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="First name" required id="firstname">
+                    </div>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="Last name" required id="lastname">
+                    </div>
+
+                    <div class="textinput">
+                        <p id="badphone" class="unselectable">Please enter a valid phone number</p>
+                        <div class="textinput" id="phonewrapper">
+                            <input type="text" id="phoneprefix" placeholder="+1">
+                            <input type="text" placeholder="Phone (xxx) xxx-xxxx" id="phone">
+                        </div>
+                    </div>
+
+                    <div class="textinput">
+                        <p class="unselectable">P</p>
+                        <input type="text" placeholder="Country" id="country">
+                    </div>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="State/Province" id="state">
+                    </div>
+
+                    <div class="textinput">
+                        <input type="text" placeholder="City" id="city">
+                    </div>
+
+                    <div>
+                        <button type="button" class="dullButton" onclick="prevTab()">Back</button>
+                        <button type="button" class="popButton" onclick="nextTab()">Next</button>
+                    </div>
+
+                    <div class="privacy">
+                        <a href="../privacy/privacy.html">Privacy</a>
+                        <a href="../privacy/terms.html">Terms</a>
+                    </div>
+                </div>
+
+                <div id="progressbar">
+                    <span id="bgbar"></span>
+                    <span id="fgbar"></span>
+                </div>
+
+            </form>
+        </div>
+
+    </body>
+</html>
