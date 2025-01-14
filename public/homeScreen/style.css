@@ -40,6 +40,7 @@ section {
     padding: 0 clamp(6rem, 14vw, 22rem);
     display: block;
     align-content: center;
+    z-index: -1;;
     
     h2 {
         font-size: clamp(3rem, 5vw, 9rem);
@@ -89,7 +90,6 @@ section {
     width: clamp(0px, 10vw, 20vw);
     background-color: rgb(185, 185, 185);
     vertical-align: middle;
-    cursor: auto;
 }
 
 header {
@@ -98,12 +98,13 @@ header {
     animation-name: quickfade;
     animation-duration: 3s;
     animation-iteration-count: 1;
+    position: sticky;
+    z-index: 998;
 }
 
 nav {
     text-align: center;
     width: 100%;
-    cursor: auto;
 }
 
 nav ul {
@@ -120,10 +121,6 @@ ul {
     text-align: center;
 }
 
-nav ul:hover {
-    cursor: auto;
-}
-
 nav img:hover {
     cursor: pointer;
 }
@@ -131,7 +128,6 @@ nav img:hover {
 ul li {
     display: inline;
     vertical-align: middle;
-    cursor: auto;
 }
 
 ul li a {
@@ -188,7 +184,8 @@ footer {
     display: block;
     top: 0;
     left: 0;
-    z-index: 9999;
+    z-index: 999;
+    position: absolute;
 }
 
 .poppyText {
@@ -254,6 +251,14 @@ footer {
 .dullButton:active {
     transform: scale(0.95);
     box-shadow: 3px 2px 22px 1px rgba(0,0,0, 0.24);
+}
+
+#bearnotes {
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    left:-100px;
+    transition: transform;
 }
 
 /*
