@@ -3,18 +3,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const jobId = window.location.pathname.split('/').pop();
   try {
-    const response = await fetch('api/general/getJob', {
-      method: 'POST',
+    const response = await fetch(`../api/all/getJob/${jobId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ jobId: jobId })
     });
     if (response.ok) {
       data = await response.json();
       console.log(data);
     } else {
-      console.log("Error: ${response.status} ${response.statusText}");
+      console.log(`Error: ${response.status} ${response.statusText}`);
       alert("Internal server error.");
     } 
   } catch (err) {
