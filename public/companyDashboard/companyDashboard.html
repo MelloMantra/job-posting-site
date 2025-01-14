@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jobify</title>
+        <meta name="description" content="Login to Jobify">
+        <link rel="icon" href="../assets/icon.png">
+        <link rel="stylesheet" href="../companyDashboard/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src="https://unpkg.com/split-type"></script>
+        <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body>
+
+        <div class="sidebar">
+            <button class="tabBtn" data-tab="search" id="searchEmployeesBtn">Tab 1</button>
+            <button class="tabBtn active" data-tab="dashboard" id="dashboardHomeBtn">Tab 2</button>
+            <button class="tabBtn" data-tab="postings" id="allPostingsBtn">Tab 3</button>
+            <button class="tabBtn" data-tab="profile" id="companyProfileBtn">Tab 4</button>
+        </div>
+
+        <div class="contentwrapper">
+
+            <div class="tab" id="search">
+                lol
+            </div>
+
+            <div class="tab active" id="dashboard">
+                <div class="jobListing">
+                    <h3 class="jobTitle">Example Job</h3>
+                    <p>0 Applicants</p>
+                    <img><p>Location, LOL</p>
+                </div>
+            </div>
+
+            <div class="tab" id="postings">
+                lol
+            </div>
+
+            <div class="tab" id="profile">
+                <h3>Company Profile</h3>
+                <div class="textinput">
+                    <input type="text" placeholder="First name" required id="firstname">
+                </div>
+
+                <div class="textinput">
+                    <input type="text" placeholder="Last name" required id="lastname">
+                </div>
+
+                <div class="textinput">
+                    <p id="badphone" class="unselectable">Please enter a valid phone number</p>
+                    <div class="textinput" id="phonewrapper">
+                        <input type="text" id="phoneprefix" placeholder="+1">
+                        <input type="text" placeholder="Phone (xxx) xxx-xxxx" id="phone">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</html>
