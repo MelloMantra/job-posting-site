@@ -90,7 +90,7 @@ async function submit() {
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {
-                    console.log("Error: ${response.status} ${response.statusText}");
+                    console.log(`Error: ${response.status} ${response.statusText}`);
                     alert("Internal server error");
                 }
             } else if (loginType == "company") {
@@ -110,7 +110,7 @@ async function submit() {
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {
-                    console.error('Error: ${response.status} ${response.statusText}');
+                    console.error(`Error: ${response.status} ${response.statusText}`);
                     alert("Internal server error");
                 }
             }
