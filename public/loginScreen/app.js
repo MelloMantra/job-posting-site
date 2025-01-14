@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     password.addEventListener("focus", function() {
         password.style.boxShadow = "0 0 3px 1px rgb(77, 149, 217)"
     });
+
 });
 
 // email validation
@@ -61,7 +62,7 @@ function checkCookie()
 }
 
 // login form submit function
-function submit() {
+async function submit() {
     if (rememberbox.checked) {
         setCookie();
         console.log("cookie stored. yum!");
@@ -69,7 +70,54 @@ function submit() {
     goodemail = checkemail();
     goodpw = checkpw()
     if (goodemail && goodpw) {
-        
+        const loginType = window.location.pathname.split('/').pop();
+        console.log(loginType);
+        try {
+            if (loginType == "user") {
+                const response = await fetch('../api/user/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email.value, password: password.value })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    alert("Login successful.");
+                    console.log(data);
+                    //window.location.href = '/user/' + data.id;
+                } else if (response.status == 401) {
+                    alert("Invalid email or password");
+                } else {
+                    console.log("Error: ${response.status} ${response.statusText}");
+                    alert("Internal server error");
+                }
+            } else if (loginType == "company") {
+                const response = await fetch('../api/company/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email.value, password: password.value })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    alert("Login successful.");
+                    console.log(data);
+                    //window.location.href = '/company/' + data.id;
+                } else if (response.status == 401) {
+                    alert("Invalid email or password");
+                } else {
+                    console.error('Error: ${response.status} ${response.statusText}');
+                    alert("Internal server error");
+                }
+            }
+        } catch (err) {
+            console.error('Error querying database:', err);
+            alert("Internal server error");
+        }
     }
 }
 

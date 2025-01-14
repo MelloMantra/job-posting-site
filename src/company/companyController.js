@@ -266,9 +266,9 @@ exports.makeDecision = async (req, res) => {
 }
 
 exports.downloadResume = async (req, res) => {
+    const jobId = req.params.jobId;
     const applicationId = req.params.applicationId;
     const companyId = req.session?.companyId;
-    const jobId = req.params.jobId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });

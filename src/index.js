@@ -69,16 +69,25 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'homeScreen', 'index.html'));
 });
 
-app.get('/signUp', (req, res) => {
+app.get('/userSignUp', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'signupScreen', 'signup.html'));
 });
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'loginScreen', 'login.html'));
+//Either login/user or login/company
+app.get('/login/:loginType', (req, res) => {
+    if (req.params.loginType != "user" && req.params.loginType != "company") {
+        res.status(400).json({ error: 'Invalid login type. Must be "user" or "company"' });
+    } else {
+        res.sendFile(path.join(initialpath, 'public', 'loginScreen', 'login.html'));
+    }
 });
 
 app.get('/privacy' , (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'privacyScreen', 'privacy.html'));
+    res.sendFile(path.join(initialpath, 'public', 'privacy', 'privacy.html'));
+});
+
+app.get('/terms' , (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'privacy', 'terms.html'));
 });
 
 app.get('/forgot' , (req, res) => {
