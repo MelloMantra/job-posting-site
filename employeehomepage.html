@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Board (Professional Look)</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://unpkg.com/lucide-react/build/lucide-react.js"></script>
+  <style>
+    /* Remove color-shifting from headings, keep them in a standard white color */
+    .pinned-heading h2 {
+      color: #ffffff;
+    }
+
+    /* Keep headings pinned */
+    .pinned-heading {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #1a1a1a;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #2f2f2f;
+    }
+
+    /* Fade-in animation for main sections */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+
+    /* Make buttons stand out with a professional but visible color */
+    .action-button {
+      background-color: #3b82f6; /* Tailwind blue-500 */
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .action-button:hover {
+      background-color: #2563eb; /* Tailwind blue-600 */
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Scroll-to-top button styling */
+    #scrollTopBtn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background-color: rgb(31 41 55); /* Tailwind gray-800 */
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px; 
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    #scrollTopBtn.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Cards default style */
+    .card {
+      background-color: #000000;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Constantly animating top line on hover */
+    .card:hover::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, #3b82f6, #2563eb);
+      animation: slideLine 1s linear infinite;
+    }
+    .card {
+      position: relative; /* Needed for the absolutely positioned ::before element */
+    }
+
+    /* Animation for the top line sliding from left to right */
+    @keyframes slideLine {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#1A1A1A]">
+
+  <!-- Pinned Heading: Top Opportunities -->
+  <div class="pinned-heading text-center">
+    <h2 class="text-2xl font-bold">
+      Top Opportunities
+    </h2>
+  </div>
+
+  <!-- Opportunities Section -->
+  <div class="px-8 fade-in">
+    <div id="jobsContainer" class="grid grid-cols-3 gap-4">
+      <!-- Job cards will be injected here -->
+    </div>
+
+    <!-- Button (no special animation, just professional color) -->
+    <button class="mx-auto block action-button my-8">
+      View All Opportunities
+    </button>
+  </div>
+
+  <!-- Pinned Heading: Application Status -->
+  <div class="pinned-heading text-center" style="margin-top: 4rem;">
+    <h2 class="text-2xl font-bold">
+      Application Status
+    </h2>
+  </div>
+
+  <!-- Application Status Section -->
+  <div class="px-8 fade-in">
+    <div id="applicationsContainer" class="grid grid-cols-3 gap-4">
+      <!-- Status cards will be injected here -->
+    </div>
+
+    <!-- Button (no special animation, just professional color) -->
+    <button class="mx-auto block action-button my-8">
+      All Application Statuses
+    </button>
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" onclick="scrollToTop()">Top</button>
+
+  <script>
+    // Example opportunities and applications
+    const placeholderOpportunities = [
+      {
+        company: "OpenAI",
+        title: "Product Director Internship",
+        recruiter: "John Banks",
+        location: "San Francisco, CA",
+        salary: "$71-95/hr",
+      },
+      {
+        company: "McDonalds",
+        title: "Paid Loitering Intern",
+        recruiter: "Josh Liu",
+        location: "Stanford, MS",
+        salary: "$1.75",
+      },
+      {
+        company: "Fry's Food Stores",
+        title: "Director of Goods",
+        recruiter: "Spencer Goons",
+        location: "New Haven, CT",
+        salary: "$134,000/yr",
+      },
+    ];
+
+    const applications = [
+      {
+        company: "Albertos Gym",
+        title: "Training Team Member",
+        location: "Boston, MA",
+        salary: "$17.50/hr",
+        status: "In Progress",
+      },
+      {
+        company: "Adidas Inc.",
+        title: "Design Engineer",
+        location: "Berkeley, CA",
+        salary: "$25.90/hr",
+        status: "Rejected",
+      },
+      {
+        company: "Google Corp.",
+        title: "Network Designer",
+        location: "New York, NY",
+        salary: "$190,000/yr",
+        status: "Accepted",
+      },
+    ];
+
+    // Renders a single job card
+    function renderJobCard(job) {
+      return `
+        <div class="card">
+          <div class="p-6">
+            <div class="text-gray-300 text-sm mb-1">${job.company}</div>
+            <h3 class="text-white text-lg font-semibold mb-2">${job.title}</h3>
+            <div class="text-gray-400 text-sm mb-4">
+              Recruiter: ${job.recruiter}
+            </div>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center text-gray-400 text-sm">
+                <i class="lucide icon-map-pin mr-1 flex-shrink-0"></i>
+                <span>${job.location}</span>
+              </div>
+              <span class="text-white text-sm">${job.salary}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Renders a single application status card
+    function renderStatusCard(app) {
+      const statusColor =
+        app.status === "Accepted"
+          ? "text-green-400"
+          : app.status === "Rejected"
+          ? "text-red-400"
+          : "text-gray-400 italic";
+
+      return `
+        <div class="card">
+          <div class="p-6">
+            <div class="text-gray-300 text-sm mb-1">${app.company}</div>
+            <h3 class="text-white text-lg font-semibold mb-2">${app.title}</h3>
+            <div class="text-sm mb-4 ${statusColor}">
+              ${app.status}
+            </div>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center text-gray-400 text-sm">
+                <i class="lucide icon-map-pin mr-1 flex-shrink-0"></i>
+                <span>${app.location}</span>
+              </div>
+              <span class="text-white text-sm">${app.salary}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Show/hide the scroll to top button
+    function checkScroll() {
+      const scrollTopBtn = document.getElementById("scrollTopBtn");
+      if (
+        document.body.scrollTop > 200 ||
+        document.documentElement.scrollTop > 200
+      ) {
+        scrollTopBtn.classList.add("show");
+      } else {
+        scrollTopBtn.classList.remove("show");
+      }
+    }
+
+    // Smooth scroll to the top of the page
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Populate cards on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      const jobsContainer = document.getElementById("jobsContainer");
+      const applicationsContainer = document.getElementById("applicationsContainer");
+
+      placeholderOpportunities.forEach((job) => {
+        jobsContainer.innerHTML += renderJobCard(job);
+      });
+
+      applications.forEach((app) => {
+        applicationsContainer.innerHTML += renderStatusCard(app);
+      });
+    });
+
+    // Listen for scroll events
+    window.addEventListener("scroll", checkScroll);
+  </script>
+</body>
+</html>
