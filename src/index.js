@@ -97,3 +97,14 @@ app.get('/forgot' , (req, res) => {
 app.get('/job/:jobId', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'jobDetails', 'job.html'));
 })
+
+app.get('/createJob', (req, res) => {
+    //Uncomment below portion once done testing
+    /*
+    const companyId = req.session?.companyId;
+    if (!companyId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+    */
+    res.sendFile(path.join(initialpath, 'public', 'createJob', 'createJob.html'));
+});
