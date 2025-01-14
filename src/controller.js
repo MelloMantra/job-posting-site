@@ -14,3 +14,21 @@ exports.logout = async (req, res) => {
         return res.status(200).json({ message: 'Logout successful.' }); 
     }); 
 };
+
+exports.getJob = async (req, res) => {
+    const jobId = req.params.jobId;
+
+    try {
+        const sql = "SELECT * FROM postedJob WHERE id = ?";
+        const [rows] = await pool.query(sql, [jobId]);
+
+        if (rows.length() > 0) {
+            return res.status(200).json({ jobs: rows[0] });
+        } else {
+            return res.status(404).json({ error: 'Job not found.' });
+        }
+    } catch (err) {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
