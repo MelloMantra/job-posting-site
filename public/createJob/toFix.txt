@@ -6,3 +6,4 @@
 - add search bar as specified
 - fix remote work available staying selected after mouse moves off
 - fix description resizing, either restyle based on description size or turn off resizing
+- make sure everything works on mobile
