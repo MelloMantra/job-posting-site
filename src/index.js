@@ -69,6 +69,18 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'homeScreen', 'index.html'));
 });
 
-app.get('signUp', (req, res) => {
+app.get('/signUp', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'signupScreen', 'signup.html'));
 });
+
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'loginScreen', 'login.html'));
+});
+
+app.get('/privacy' , (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'privacyScreen', 'privacy.html'));
+});
+
+app.get('/forgot' , (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'forgotScreen', 'forgot.html'));
+})

@@ -69,7 +69,7 @@ function submit() {
     goodemail = checkemail();
     goodpw = checkpw()
     if (goodemail && goodpw) {
-        console.log("submit stuff! idk how tho")
+        
     }
 }
 
