@@ -19,7 +19,7 @@ exports.getJob = async (req, res) => {
     const jobId = req.params.jobId;
 
     try {
-        const sql = "SELECT * FROM postedJob WHERE id = ?";
+        const sql = "SELECT pj.*, ind.name AS industry_name, occ.name AS occupation_name FROM postedJob pj JOIN industry ind ON pj.industry = ind.id JOIN occupation occ ON pj.occupation = occ.id WHERE pj.id = ?;";
         const [rows] = await pool.query(sql, [jobId]);
 
         if (rows.length() > 0) {
