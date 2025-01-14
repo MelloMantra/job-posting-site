@@ -1,0 +1,7 @@
+- add a view that allows users to click on the job which gives them a detailed view, and they can apply for it as well.
+I'd make this general and on a seperate file so that it can be used in the main job search part as well.
+- make sure it works on mobile
+- make sure the json data being used is in the same format as that which will be inputted by my integration, because I'm almost certain it is not
+text me or check one of the many schema diagrams I've sent for the fields and their order.
+- there is a weird loading bar at the top of the applications/opportunities, not sure why or if that should be there but if not I'd fix
+- also please do the same thing with applications and open up a detailed view of the job when it's clicked on using the json job data (which should also be in proper format)
