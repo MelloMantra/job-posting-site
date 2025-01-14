@@ -1,0 +1,8 @@
+- put options on multiple screens to fit with other design patterns on screens
+- restyle to fit with other screens and to generally look less plain
+- add input sanitization and length/existence checking before submission (and proper error messages for users if inputs are incorrect)
+- remove job status option
+- modify hours and estimated pay to either specify what it's per, or allow users to pick if it's per week, month, year, etc.
+- add search bar as specified
+- fix remote work available staying selected after mouse moves off
+- fix description resizing, either restyle based on description size or turn off resizing
