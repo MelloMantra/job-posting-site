@@ -93,3 +93,7 @@ app.get('/terms' , (req, res) => {
 app.get('/forgot' , (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'forgotScreen', 'forgot.html'));
 })
+
+app.get('/job/:jobId', (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'jobDetails', 'job.html'));
+})
