@@ -294,6 +294,8 @@ a:hover {
     &:first-of-type {
         border-radius: 10px 10px 0px 0px;
         border: none;
+        border-bottom: 2px solid rgb(184, 184, 184);
+        font-weight: bold;
     }
     &:last-of-type {
         border-radius: 0px 0px 10px 10px;
@@ -303,6 +305,10 @@ a:hover {
 
 .dropdownItem:hover {
     background-color: rgb(160, 160, 160);
+    &:first-of-type {
+        background-color: transparent;
+    }
+    cursor: pointer;
 }
 
 .dropdownIcon {
@@ -330,6 +336,7 @@ a:hover {
 
 .seemoreBtn:hover {
     background-color: rgb(230, 230, 230);
+    cursor: pointer;
 }
 
 .arrow {
