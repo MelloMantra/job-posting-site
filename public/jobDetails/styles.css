@@ -1,1 +1,134 @@
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: 'Josefin Sans', 'Cousine', 'Rubik Mono One', serif;
+    background: radial-gradient(circle at 30% 40%, 
+        rgba(0, 0, 0, 1) 0%, 
+        rgba(55, 0, 110, 0.8) 25%, 
+        rgba(128, 0, 255, 0.6) 35%, 
+        rgba(55, 0, 110, 0.8) 45%, 
+        rgba(0, 0, 0, 1) 60%
+    );
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.header .company-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.header .job-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.header .job-status {
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.status-open {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-decided {
+    background-color: #ffc107;
+    color: black;
+}
+
+.status-closed {
+    background-color: #dc3545;
+    color: white;
+}
+
+.info-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.info-box {
+    flex: 1;
+    background-color: #F8F8F8;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.info-box:hover {
+    background-color: #00BFFF;
+    color: #fff;
+}
+
+.description {
+    margin-top: 20px;
+}
+
+.description h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+
+.description p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #444;
+}
+
+.accent {
+    color: #00BFFF;
+}
+
+.accent:hover {
+    color: #005F99;
+}
+
+.experience-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
 
