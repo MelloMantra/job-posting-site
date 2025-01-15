@@ -40,8 +40,7 @@
      varchar(255) "occupation_name": "Occupation Name",
      varchar(255) "industry_name": "Industry Name"
      } */
-*/
-*/});*/
+/*});*/
 
 document.addEventListener("DOMContentLoaded", async function () {
     const jobId = window.location.pathname.split('/').pop();
