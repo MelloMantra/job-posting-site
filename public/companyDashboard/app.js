@@ -1,10 +1,9 @@
 // Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', () => {
-    // Get all tab buttons and tab content sections
+    // tab stuff
     const tabButtons = document.querySelectorAll('.tabBtn');
     const tabs = document.querySelectorAll('.tab');
 
-    // Add event listeners to each tab button
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             document.querySelector('.tabBtn.active').classList.remove('active');
@@ -14,4 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
             targetTab.classList.add('active');
         });
     });
+
+    // pop up menu stuff
+    const jobs = document.querySelectorAll('.jobListing');
+
+    for (i=0; i<jobs.length; i++) {
+        
+        //addEventListener
+    }
 });

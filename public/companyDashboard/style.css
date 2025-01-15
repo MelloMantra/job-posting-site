@@ -8,24 +8,21 @@ html, body {
     padding: 0px;
     font-family: "Cousine";
     background-color: rgb(255, 255, 255);
-    align-items: center;
-    vertical-align: middle;
-    text-align: center;
-    align-content: center;
 }
 
 body {
     width:100vw;
-    height: 100vh;
     display: flex;
 }
 
 .sidebar {
     width: 200px;
-    background-color: #2c3e50;
+    height: 92.1vh;
+    background-color: black;
     color: white;
     display: flex;
     flex-direction: column;
+    margin-top: 75px;
 }
 
 .sidebar .tabBtn {
@@ -44,7 +41,27 @@ body {
 }
 
 .sidebar .tabBtn.active {
-    background-color: #1abc9c;
+    background-color: rgb(75, 161, 243);
+}
+
+.tab {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    flex-direction: column;
+    margin-left: 15px;
+}
+.tab.active {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+}
+.contentwrapper {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    margin-top: 75px;
+    box-shadow: 10px 0 1px 0px rgb(75, 161, 243) inset
 }
 
 h2 {
@@ -63,143 +80,57 @@ h3 {
     text-align: left;
 }
 
-.contentwrapper {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
+.logospace {
+    color: white;
+    display: inline-block;
+    cursor: auto;
 }
 
-.tabinnards {
-    display:flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: 30px;
+.spanbar {
+    display:inline-block;
+    height: 3px;
+    width: clamp(0px, 30vw, 40vw);
+    background-color: rgb(185, 185, 185);
+    vertical-align: middle;
 }
 
-.tab {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.tab.active {
-    display: block;
-    opacity: 1;
-    transform: scale(1);
-}
-
-.textinput {
-    display: flex;
-    flex-direction: column;
-}
-
-.textinput input {
-    font-size: 1rem;
-    padding: 0.75em;
-    background-color: rgba(160, 160, 160, 0.3);
-    border: none;
-    border-radius: 10px;
-    font-family: "Cousine";
-    outline: none;
-    box-shadow: none;
-}
-
-input:focus {
-    box-shadow: 0 0 3px 1px rgb(77, 149, 217);
-}
-
-.remember-forgot {
-    display: flex;
-    justify-content: space-between;
-}
-
-.gotologin {
-    padding-bottom: 15px;
-}
-
-.gotologin p {
-    padding: 0px;
-    padding-left: 1.5em;
-}
-
-.loginbox a {
-    color: rgb(77, 149, 217);
-}
-
-.header a {
-    width: 30%;
-    height: 30%;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.minilogo {
-    width: 65%;
-    height: 65%;
-    padding-top: 50px;
-    padding-right: 30px;
-}
-
-.textinput p {
-    text-align: left;
-    padding: 0px;
-    padding-left: 5%;
-    font-size: small;
-    color: rgb(255, 255, 255);
-}
-
-#passwordarea {
-    padding-bottom: 20px;
-}
-
-#phonewrapper {
-    display: flex;
+.navbar {
+    position: fixed; /* Fix the navbar at the top of the viewport */
+    top: 0;
+    left: 0;
+    width: 100%; /* Span the full width of the screen */
+    z-index: 0; /* Place it above other elements */
+    display: flex; /* Align navbar contents */
+    justify-content: center; /* Center-align navbar items */
     align-items: center;
-    gap: 15px;
-    flex-direction: unset;
 }
 
-#phoneprefix {
-    font-size: 1rem;
-    background-color: rgb(226, 226, 226);
-    padding: 0.75em;
-    white-space: nowrap;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    width: 12%
-}
-
-#phone {
-    width: auto;
-    flex: 1;
-    min-width: 0;
-}
-
-.privacy {
-    font-size: small;
-    display: flex;
-    justify-content: space-evenly;
-    padding-right: 50%;
-}
-
-#progressbar {
+nav {
     text-align: center;
-    margin-top: 40px;
-    width: 60%;
+    width: 100%;
 }
 
-#bgbar {
-    width:100%;
-    height: 2em;
-    background-color: rgb(226, 226, 226);
+nav ul {
+    background-color: rgb(255, 255, 255);
+    font-size: 20px;
+    padding: 20px;
+    border-bottom: 1px black solid;
 }
 
-#fgbar {
+ul {
+    list-style-type: none;
+    margin: 0px;
+    overflow: hidden;
+    text-align: center;
+}
 
+nav img:hover {
+    cursor: pointer;
+}
+
+ul li {
+    display: inline;
+    vertical-align: middle;
 }
 
 .unselectable {
@@ -223,6 +154,7 @@ input:focus {
     vertical-align: middle;
     border: none;
     width: 40%;
+    text-align: center;
 }
 
 .dullButton {
@@ -236,6 +168,7 @@ input:focus {
     vertical-align: middle;
     border: 2px solid rgba(0, 0, 0, 0.25);
     width: 40%;
+    text-align: center;
 }
 
 .popButton:hover {
@@ -258,6 +191,15 @@ input:focus {
     box-shadow: 3px 2px 22px 1px rgba(0,0,0, 0.24);
 }
 
+.corner {
+    position: fixed;
+    top: 5px;
+    right: 0;
+    left: 90vw;
+    z-index: 999;
+    width: 6em;
+}
+
 a {
     text-decoration: none;
 }
@@ -266,6 +208,132 @@ a:hover {
     text-decoration: underline;
 }
 
-img:hover {
+.minilogo:hover {
     cursor: pointer;
+}
+
+.jobsWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.jobListing {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 25em;
+    height: fit-content;
+    transition: 0.3s ease;
+    margin: 10px;
+}
+
+.jobListing:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+.line {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+
+.line img {
+    width: 1em;
+    height: 1em;
+    filter: invert(1);
+}
+
+.moreinfo {
+    background-color: transparent;
+}
+
+.moreinfo:hover {
+    background-color: rgba(255, 255, 255, 0.753);
+}
+
+.location {
+    justify-self: right;
+    color: rgb(156, 156, 156)
+}
+
+.location img {
+    filter: invert(0.6);
+    transform: translateY(2px);
+}
+
+.popLabel {
+    padding: 2px 5px 0px;
+    outline: 0.2em solid rgb(123, 255, 47);
+    border-radius: 15px;
+    color: rgb(123, 255, 47);
+}
+
+.popUp {
+    background-color: rgba(61, 61, 61, 0.658);
+    color: white;
+    padding: 0;
+    border-radius: 10px;
+    width: 10em;
+    height: fit-content;
+    margin: 10px;
+}
+
+.dropdownItem {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 10px 10px;
+    border-top: 0.1em solid rgb(184, 184, 184);
+    &:first-of-type {
+        border-radius: 10px 10px 0px 0px;
+        border: none;
+    }
+    &:last-of-type {
+        border-radius: 0px 0px 10px 10px;
+    }
+    transition: 0.1s;
+}
+
+.dropdownItem:hover {
+    background-color: rgb(160, 160, 160);
+}
+
+.dropdownIcon {
+    width: 1em;
+    height: 1em;
+    filter: invert(1);
+}
+
+.seemore {
+    text-align: center;
+}
+
+.seemoreBtn {
+    border: none;
+    width: 20em;
+    padding: 10px 0px 15px 10px;
+    font-family: "Josefin Sans";
+    font-size: 1rem;
+    vertical-align: text-top;
+    font-weight: bold;
+    border-radius: 10em;
+    background-color: rgb(212, 212, 212);
+    transition: 0.1s;
+}
+
+.seemoreBtn:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.arrow {
+    width: 1.2em;
+    height: auto;
+    transform: translate(10px,3px);
 }

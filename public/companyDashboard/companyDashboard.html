@@ -17,6 +17,17 @@
     </head>
     <body>
 
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li><span class="spanbar"></span></li>
+                    <li><a href="../homeScreen/index.html"><span class="logospace"><img src="../assets/icon.png" style="width: 30px;"></span></a></li>
+                    <li><span class="spanbar"></span></li>
+                </ul>
+            </nav>
+        </div>
+        <a href="../loginScreen/login.html" class="dullButton corner">Log Out</a>
+
         <div class="sidebar">
             <button class="tabBtn" data-tab="search" id="searchEmployeesBtn">Tab 1</button>
             <button class="tabBtn active" data-tab="dashboard" id="dashboardHomeBtn">Tab 2</button>
@@ -31,11 +42,19 @@
             </div>
 
             <div class="tab active" id="dashboard">
-                <div class="jobListing">
-                    <h3 class="jobTitle">Example Job</h3>
-                    <p>0 Applicants</p>
-                    <img><p>Location, LOL</p>
+                <div class="jobsWrapper">
+                    <div class="jobListing">
+                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing</h3><img src="../assets/3dots.png" class="moreinfo" id="job1"></div>
+                        <div class="line"><p class="popLabel unselectable">Public</p><p>0 Applicants</p></div>
+                        <div class="line location"><div><img src="../assets/location.png"> Location, LOL</div></div>
+                    </div>
+
+                    <div class="popUp">
+                        <div class="dropdownItem"><img src="../assets/edit.png" class="dropdownIcon"><p>Edit</p></div>
+                        <div class="dropdownItem"><img src="../assets/delete2.png" class="dropdownIcon"><p>Delete</p></div>
+                    </div>
                 </div>
+                <div class="seemore"><button class="seemoreBtn">ALL POSITIONS<img src="../assets/arrow.png" class="arrow"></button></div>
             </div>
 
             <div class="tab" id="postings">
