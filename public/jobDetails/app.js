@@ -56,22 +56,22 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.log(data);
 
             // Populate the page with job data
-            document.getElementById('companyName').textContent = data.company;
-            document.getElementById('jobTitle').textContent = data.title;
-            document.getElementById('jobStatus').textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);
-            document.getElementById('jobStatus').className = `job-status status-${data.status}`;
-            document.getElementById('jobDescription').textContent = data.description;
-            document.getElementById('jobLocation').textContent = data.address;
-            document.getElementById('jobHours').textContent = data.hours;
-            document.getElementById('jobPay').textContent = `$${data.estimatedPay.toLocaleString()} per year`;
-            document.getElementById('jobIndustry').textContent = data.industry_name;
-            document.getElementById('jobOccupation').textContent = data.occupation_name;
-            document.getElementById('jobRemote').textContent = data.isRemote ? 'Yes' : 'No';
-            document.getElementById('requiredExperience').textContent = data.requiredExperience;
-            document.getElementById('preferredExperience').textContent = data.preferredExperience;
+            document.getElementById('companyName').textContent = data.jobs.company;
+            document.getElementById('jobTitle').textContent = data.jobs.title;
+            document.getElementById('jobStatus').textContent = data.jobs.status.charAt(0).toUpperCase() + data.jobs.status.slice(1);
+            document.getElementById('jobStatus').className = `job-status status-${data.jobs.status}`;
+            document.getElementById('jobDescription').textContent = data.jobs.description;
+            document.getElementById('jobLocation').textContent = data.jobs.address;
+            document.getElementById('jobHours').textContent = data.jobs.hours;
+            document.getElementById('jobPay').textContent = `$${data.jobs.estimatedPay.toLocaleString()} per year`;
+            document.getElementById('jobIndustry').textContent = data.jobs.industry_name;
+            document.getElementById('jobOccupation').textContent = data.jobs.occupation_name;
+            document.getElementById('jobRemote').textContent = data.jobs.isRemote ? 'Yes' : 'No';
+            document.getElementById('requiredExperience').textContent = data.jobs.requiredExperience;
+            document.getElementById('preferredExperience').textContent = data.jobs.preferredExperience;
 
             // Update page title
-            document.title = `${data.title} at ${data.company}`;
+            document.title = `${data.jobs.title} at ${data.jobs.company}`;
         } else {
             console.log(`Error: ${response.status} ${response.statusText}`);
             alert("Internal server error.");
