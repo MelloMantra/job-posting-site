@@ -1,7 +1,39 @@
 <!DOCTYPE html>
-<html>
-    <script src="../jobDetails/app.js"></script>
-    <body>
-        <h1>Job Details</h1>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Display</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <p class="company-name accent" id="companyName">Loading...</p>
+            <h1 class="job-title" id="jobTitle">Loading...</h1>
+            <span class="job-status" id="jobStatus">Loading...</span>
+        </div>
+        <div class="info-boxes">
+            <div class="info-box">Remote: <span id="jobRemote">Loading...</span></div>
+            <div class="info-box">Location: <span id="jobLocation">Loading...</span></div>
+            <div class="info-box">Hours: <span id="jobHours">Loading...</span></div>
+            <div class="info-box">Pay: <span id="jobPay">Loading...</span></div>
+        </div>
+        <div class="info-boxes">
+            <div class="info-box">Industry: <span id="jobIndustry">Loading...</span></div>
+            <div class="info-box">Occupation: <span id="jobOccupation">Loading...</span></div>
+        </div>
+        <div class="description">
+            <h3 class="accent">Job Description</h3>
+            <p id="jobDescription">Loading...</p>
+        </div>
+        <div class="experience-section">
+            <h3 class="accent">Required Experience</h3>
+            <p id="requiredExperience">Loading...</p>
+            <h3 class="accent">Preferred Experience</h3>
+            <p id="preferredExperience">Loading...</p>
+        </div>
+    </div>
+</body>
 </html>
