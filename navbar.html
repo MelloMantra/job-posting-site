@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-10px) translateX(10px); }
+            50% { transform: translateY(0px) translateX(0px); }
+            75% { transform: translateY(10px) translateX(-10px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #000;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .navbar-background {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 40%, 
+                rgba(0, 0, 0, 1) 0%,
+                rgba(55, 0, 110, 0.8) 25%,
+                rgba(128, 0, 255, 0.6) 35%,
+                rgba(55, 0, 110, 0.8) 45%,
+                rgba(0, 0, 0, 1) 60%
+            );
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        /* Additional animated background elements */
+        .animated-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .animated-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(128, 0, 255, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: pulse 4s infinite, float 8s infinite;
+        }
+
+        .circle-1 {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: -30px;
+            animation-delay: -2s;
+        }
+
+        .circle-3 {
+            width: 180px;
+            height: 180px;
+            bottom: 10%;
+            left: 20px;
+            animation-delay: -4s;
+        }
+
+        .moving-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, 
+                transparent 0%,
+                rgba(128, 0, 255, 0.1) 45%,
+                rgba(128, 0, 255, 0.2) 50%,
+                rgba(128, 0, 255, 0.1) 55%,
+                transparent 100%
+            );
+            animation: rotate 10s linear infinite;
+        }
+
+        .noise {
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1Ii8+PC9zdmc+');
+            opacity: 0.2;
+        }
+
+        .navbar-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .logo-container {
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+        }
+
+        .nav-links {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 25px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: #FFD700;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item.active::before {
+            width: 100%;
+        }
+
+        .nav-item.active .nav-link {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #FFD700;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-image {
+            padding: 20px;
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-background"></div>
+        <div class="animated-bg">
+            <div class="moving-gradient"></div>
+            <div class="animated-circle circle-1"></div>
+            <div class="animated-circle circle-2"></div>
+            <div class="animated-circle circle-3"></div>
+            <div class="noise"></div>
+        </div>
+        <div class="navbar-content">
+            <div class="logo-container">
+                <img src="../assets/Jobify.png" alt="Jobify Logo" class="logo">
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-item active">
+                    <a href="/" class="nav-link">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/search" class="nav-link">Search for Jobs</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/applications" class="nav-link">Applications</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/profile" class="nav-link">Profile</a>
+                </div>
+            </div>
+
+            <div class="footer-image">
+                <img src="https://media.discordapp.net/attachments/1310020099108901007/1328889122286207077/f763CJf.png?ex=678857f0&is=67870670&hm=ff223c55600fc3435d44593fa1d11b4abc629caa2e6b12860937634505c0f5bf&=&width=524&height=958" alt="Footer Image">
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    navItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
