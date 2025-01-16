@@ -140,8 +140,16 @@ exports.applyToJob = async (req, res) => {
             return res.status(404).json({ error: 'Resume not found.' });
         }
 
-        const sql2 = "INSERT INTO openApplications (user, job, coverLetter, otherOptions, state, resume, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        const [rows] = await pool.query(sql2, [userId, jobId, coverLetter, otherOptions, 'pending', resume[0].resume, formattedDate]);
+        const sql2 = "SELECT * FROM openApplications WHERE user = ? AND job = ?";
+        const [existingApps] = await pool.query(sql2, [userId, jobId]);
+        
+
+        if (!(existingApps.length === 0)) {
+            return res.status(500).json({ error: 'Item already exists.' });
+        }
+
+        const sql3 = "INSERT INTO openApplications (user, job, coverLetter, otherOptions, state, resume, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        const [rows] = await pool.query(sql3, [userId, jobId, coverLetter, otherOptions, 'pending', resume[0].resume, formattedDate]);
 
         if (rows.affectedRows === 0 || !rows.insertId) {
             return res.status(500).json({ error: 'Internal server error.' });
