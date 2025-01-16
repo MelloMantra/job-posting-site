@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -244,6 +244,208 @@
                     navItems.forEach(i => i.classList.remove('active'));
                     
                     // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #000;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .navbar-background {
+            position: absolute;
+            inset: 0;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            mix-blend-mode: screen;
+        }
+
+       .orb-1 {
+    width: 150px;
+    height: 150px;
+    left: -50px;
+    top: 20%;
+    background: radial-gradient(circle, rgba(123, 31, 162, 0.7) 0%, rgba(123, 31, 162, 0) 70%);
+    animation: floatOrb1 8s ease-in-out infinite;  /* Reduced from 15s to 8s */
+}
+
+.orb-2 {
+    width: 200px;
+    height: 200px;
+    right: -50px;
+    top: 40%;
+    background: radial-gradient(circle, rgba(103, 58, 183, 0.7) 0%, rgba(103, 58, 183, 0) 70%);
+    animation: floatOrb2 10s ease-in-out infinite;  /* Reduced from 20s to 10s */
+}
+
+
+
+@keyframes floatOrb1 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(100px, 50px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes floatOrb2 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-100px, -50px); }
+    100% { transform: translate(0, 0); }
+}
+
+        .navbar-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .logo-container {
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+        }
+
+        .nav-links {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 25px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: #FFD700;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item.active::before {
+            width: 100%;
+        }
+
+        .nav-item.active .nav-link {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #FFD700;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-image {
+            padding: 20px;
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="navbar-content">
+            <div class="logo-container">
+                <img src="../assets/Jobify.png" alt="Jobify Logo" class="logo">
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-item active">
+                    <a href="/" class="nav-link">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/search" class="nav-link">Search for Jobs</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/applications" class="nav-link">Applications</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/profile" class="nav-link">Profile</a>
+                </div>
+            </div>
+
+            <div class="footer-image">
+                <img src="/api/placeholder/200/200" alt="Footer Image">
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(i => i.classList.remove('active'));
                     this.classList.add('active');
                 });
             });
