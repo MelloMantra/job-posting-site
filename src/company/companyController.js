@@ -206,7 +206,7 @@ exports.updateJobStatus = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
     const jobId = req.params.jobId;
-    const companyId = req.session?.companyId;
+    const companyId = 1;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -217,7 +217,7 @@ exports.getApplications = async (req, res) => {
     }
 
     try {
-        const sql = "SELECT * FROM openApplications WHERE job = ? AND company = ?";
+        const sql = "SELECT openApplications.* FROM openApplications JOIN postedJob ON openApplications.job = postedJob.id WHERE openApplications.job = ? AND postedJob.company = ?;";
         const [rows] = await pool.query(sql, [jobId, companyId]);
 
         //rows can be empty if no applications have been made

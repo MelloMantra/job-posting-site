@@ -19,6 +19,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     } catch (err) {
       console.error('Error querying database:', err);
     }
-
-    //This will get
 });
