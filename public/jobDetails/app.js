@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             document.getElementById('jobIndustry').textContent = data.jobs.industry_name;
             document.getElementById('jobOccupation').textContent = data.jobs.occupation_name;
             document.getElementById('jobRemote').textContent = data.jobs.isRemote ? 'Yes' : 'No';
-            document.getElementById('requiredExperience').textContent = data.jobs.requiredExperience;
             document.getElementById('preferredExperience').textContent = data.jobs.preferredExperience;
 
             // Update page title
