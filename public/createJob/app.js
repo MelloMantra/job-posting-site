@@ -7,7 +7,7 @@ const occupations = [
 const industries = [
     'Technology', 'Healthcare', 'Finance', 'Education', 
     'Retail', 'Manufacturing', 'Transportation', 
-    'Real Estate', 'Hospitality', 'Energy'
+    'Real Estate', 'Hospitality', 'Energy' 
 ];
 
 function showTypeahead(field) {
@@ -36,5 +36,6 @@ function showTypeahead(field) {
 
 document.getElementById('jobForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    // Handle form submission
+    // Handle form submission here
+    alert('Job posting created successfully!');
 });
