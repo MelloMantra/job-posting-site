@@ -140,11 +140,12 @@ exports.applyToJob = async (req, res) => {
             return res.status(404).json({ error: 'Resume not found.' });
         }
 
-        const sql2 = "GET * FROM openApplications WHERE user = ? AND job = ? AND state = 'pending'";
-        const [rows2] = await pool.query(sql2, [userId, jobId]);
+        const sql2 = "SELECT * FROM openApplications WHERE user = ? AND job = ?";
+        const [existingApps] = await pool.query(sql2, [userId, jobId]);
+        
 
-        if (rows2.length > 0) {
-            return res.status(400).json({ error: 'You have already applied to this job.' });
+        if (!(existingApps.length === 0)) {
+            return res.status(500).json({ error: 'Item already exists.' });
         }
 
         const sql3 = "INSERT INTO openApplications (user, job, coverLetter, otherOptions, state, resume, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
