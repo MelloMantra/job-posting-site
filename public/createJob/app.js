@@ -10,6 +10,10 @@ const industries = [
     'Real Estate', 'Hospitality', 'Energy' 
 ];
 
+Document.addEventListener('DOMContentLoaded', function() {
+    
+});
+
 function showTypeahead(field) {
     const input = document.getElementById(field);
     const list = field === 'occupation' ? occupations : industries;
