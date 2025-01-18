@@ -5,6 +5,7 @@ company/ and user/ are the folders for the controllers and routers specific to c
 const express = require('express');
 const pool = require('./db');
 const occupationCache = new Map();
+const industryCache = new Map();
 
 exports.logout = async (req, res) => { 
     req.session.destroy((err) => { 
@@ -35,25 +36,37 @@ exports.getJob = async (req, res) => {
 }
 
 //a query would look something like:
-//../api/all/searchOccupations?occName=blahblahblah
-exports.searchOccupations = async (req, res) => {
-    const { occName } = req.query.occName;
+//../api/all/searchCategory/industry?name=blahblahblah
+exports.searchCategory = async (req, res) => {
+    const { query } = req.query.query;
+    const { itemType } = req.params.itemType
 
-    if ( !occName ) {
+    if ( !query ) {
         return res.status(200).json({ occupations: []});
     }
+    if ( !itemType ) {
+        return res.status(400).json({ error: 'Item type is required.' });
+    } else if (itemType !== 'industry' && itemType !== 'occupation') {
+        return res.status(400).json({ error: 'Invalid item type.' });
+    } 
 
-    if (occupationCache.has(occName)) {
-        return res.status(200).json({ occupations: occupationCache.get(q) })
+    if (itemType == 'occupation' && occupationCache.has(query)) {
+        return res.status(200).json({ occupations: occupationCache.get(query) })
+    } else if (itemType == 'industry' && industryCache.has(query)) {
+        return res.status(200).json({ occupations: industryCache.get(query) })
     }
 
     try {
-        const sql = "SELECT * FROM occupations WHERE MATCH(name) AGAINST(? WITH QUERY EXPANSION) LIMIT 30"
-        const [rows] = await pool.query(sql, [occName]); 
+        const sql = "SELECT * FROM ? WHERE MATCH(name) AGAINST(? WITH QUERY EXPANSION) LIMIT 30"
+        const [rows] = await pool.query(sql, [query, itemType]); 
         
-        occupationCache.set(occName, rows);
+        if (itemType == 'industry') {
+            industryCache.set(query, rows);
+        } else if (itemType == 'occupation') {
+            occupationCache.set(query, rows);
+        }
 
-        return res.status(200).json({ occupations: rows});
+        return itemType == 'industry' ? res.status(200).json({ industries: rows}) : res.status(200).json({ occupations: rows});
     } catch {err} {
         console.error('Error querying database:', err);
         return res.status(500).json({ error: 'Internal server error.' });
@@ -61,3 +74,4 @@ exports.searchOccupations = async (req, res) => {
 }
 
 exports.occupationCache = occupationCache;
+exports.industryCache = industryCache;

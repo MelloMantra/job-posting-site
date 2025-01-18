@@ -9,6 +9,6 @@ const { logout, getJob, searchOccupations } = require('./controller');
 
 router.get('/logout', logout);
 router.get('/getJob/:jobId', getJob);
-router.get('/searchOccupations', searchOccupations)
+router.get('/searchOccupations/:itemType', searchOccupations)
 
 module.exports = router;
