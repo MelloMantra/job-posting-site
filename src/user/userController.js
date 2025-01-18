@@ -145,7 +145,7 @@ exports.applyToJob = async (req, res) => {
         
 
         if (!(existingApps.length === 0)) {
-            return res.status(500).json({ error: 'Item already exists.' });
+            return res.status(409).json({ error: 'Item already exists.' });
         }
 
         const sql3 = "INSERT INTO openApplications (user, job, coverLetter, otherOptions, state, resume, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";

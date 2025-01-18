@@ -4,6 +4,7 @@ company/ and user/ are the folders for the controllers and routers specific to c
 */
 const express = require('express');
 const pool = require('./db');
+const occupationCache = new Map();
 
 exports.logout = async (req, res) => { 
     req.session.destroy((err) => { 
@@ -32,3 +33,31 @@ exports.getJob = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 }
+
+//a query would look something like:
+//../api/all/searchOccupations?occName=blahblahblah
+exports.searchOccupations = async (req, res) => {
+    const { occName } = req.query.occName;
+
+    if ( !occName ) {
+        return res.status(200).json({ occupations: []});
+    }
+
+    if (occupationCache.has(occName)) {
+        return res.status(200).json({ occupations: occupationCache.get(q) })
+    }
+
+    try {
+        const sql = "SELECT * FROM occupations WHERE MATCH(name) AGAINST(? WITH QUERY EXPANSION) LIMIT 30"
+        const [rows] = await pool.query(sql, [occName]); 
+        
+        occupationCache.set(occName, rows);
+
+        return res.status(200).json({ occupations: rows});
+    } catch {err} {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
+
+exports.occupationCache = occupationCache;
