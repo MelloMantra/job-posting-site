@@ -1,3 +1,4 @@
+/*
 const occupations = [
     'Software Engineer', 'Data Scientist', 'Product Manager', 'Designer', 
     'Marketing Specialist', 'Sales Representative', 'Customer Support', 
@@ -9,34 +10,61 @@ const industries = [
     'Retail', 'Manufacturing', 'Transportation', 
     'Real Estate', 'Hospitality', 'Energy' 
 ];
+*/
+//Above are the lists of occupations and industries, no longer in use since the data is stored in the database and fetched from there
 
-Document.addEventListener('DOMContentLoaded', function() {
-    
-});
+function debounce(func, delay) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => func(...args), delay);
+    };
+}
 
-function showTypeahead(field) {
+const showTypeahead = debounce(async (field) => {
     const input = document.getElementById(field);
-    const list = field === 'occupation' ? occupations : industries;
     const typeahead = document.getElementById(`${field}Typeahead`);
     typeahead.innerHTML = '';
-    const query = input.value.toLowerCase();
     if (query) {
-        const matches = list.filter(item => item.toLowerCase().includes(query));
-        matches.forEach(match => {
+        var matches;
+        try {
+            matches = await fetch(`/searchCategory/${field}?query=${query}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (matches.ok) {
+                matches = await matches.json();
+            } else {
+                console.log(`Error: ${matches.status} ${matches.statusText}`);
+                alert("Internal server error.");
+            }
+            if (matches.result.length === 0) {
+                typeahead.classList.add('hidden');
+                return;
+            }
+        } catch (err) {
+            console.error('Error querying database:', err);
+        }
+
+        matches.result.forEach(match => {
             const div = document.createElement('div');
             div.className = 'typeahead-item';
-            div.textContent = match;
+            div.textContent = match.name;
             div.onclick = () => {
-                input.value = match;
+                input.value = match.name;
                 typeahead.classList.add('hidden');
             };
             typeahead.appendChild(div);
         });
+        
         typeahead.classList.remove('hidden');
     } else {
         typeahead.classList.add('hidden');
-    }
-}
+    }  
+})
 
 document.getElementById('jobForm').addEventListener('submit', function(event) {
     event.preventDefault();

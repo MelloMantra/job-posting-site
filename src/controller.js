@@ -42,7 +42,7 @@ exports.searchCategory = async (req, res) => {
     const { itemType } = req.params.itemType
 
     if ( !query ) {
-        return res.status(200).json({ occupations: []});
+        return res.status(200).json({ result: []});
     }
     if ( !itemType ) {
         return res.status(400).json({ error: 'Item type is required.' });
@@ -51,9 +51,9 @@ exports.searchCategory = async (req, res) => {
     } 
 
     if (itemType == 'occupation' && occupationCache.has(query)) {
-        return res.status(200).json({ occupations: occupationCache.get(query) })
+        return res.status(200).json({ result: occupationCache.get(query) })
     } else if (itemType == 'industry' && industryCache.has(query)) {
-        return res.status(200).json({ occupations: industryCache.get(query) })
+        return res.status(200).json({ result: industryCache.get(query) })
     }
 
     try {
@@ -66,7 +66,7 @@ exports.searchCategory = async (req, res) => {
             occupationCache.set(query, rows);
         }
 
-        return itemType == 'industry' ? res.status(200).json({ industries: rows}) : res.status(200).json({ occupations: rows});
+        return itemType == 'industry' ? res.status(200).json({ result: rows}) : res.status(200).json({ result: rows});
     } catch {err} {
         console.error('Error querying database:', err);
         return res.status(500).json({ error: 'Internal server error.' });
