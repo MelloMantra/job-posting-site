@@ -29,10 +29,10 @@
         <a href="../loginScreen/login.html" class="dullButton corner">Log Out</a>
 
         <div class="sidebar">
-            <button class="tabBtn" data-tab="search" id="searchEmployeesBtn">Tab 1</button>
-            <button class="tabBtn active" data-tab="dashboard" id="dashboardHomeBtn">Tab 2</button>
-            <button class="tabBtn" data-tab="postings" id="allPostingsBtn">Tab 3</button>
-            <button class="tabBtn" data-tab="profile" id="companyProfileBtn">Tab 4</button>
+            <button class="tabBtn" data-tab="search" id="searchEmployeesBtn">Search Employees</button>
+            <button class="tabBtn active" data-tab="dashboard" id="dashboardHomeBtn">Dashboard</button>
+            <button class="tabBtn" data-tab="postings" id="allPostingsBtn">All Listings</button>
+            <button class="tabBtn" data-tab="profile" id="companyProfileBtn">Company Profile</button>
         </div>
 
         <div class="contentwrapper">
@@ -42,20 +42,56 @@
             </div>
 
             <div class="tab active" id="dashboard">
+
+                <div class="popUp unselectable">
+                    <div class="dropdownItem" style="cursor: default;"><p>Actions</p></div>
+                    <div class="dropdownItem"><img src="../assets/details.png" class="dropdownIcon"><p>Review</p></div>
+                    <div class="dropdownItem"><img src="../assets/edit.png" class="dropdownIcon"><p>Edit</p></div>
+                    <div class="dropdownItem"><img src="../assets/close.png" class="dropdownIcon"><p>Close</p></div>
+                </div>
+
                 <div class="jobsWrapper">
                     <div class="jobListing">
-                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing</h3><img src="../assets/3dots.png" class="moreinfo" id="job1"></div>
-                        <div class="line"><p class="popLabel unselectable">Public</p><p>0 Applicants</p></div>
+                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 1</h3><img src="../assets/3dots.png" class="moreinfo" id="job1"></div>
+                        <div class="line"><p class="openLabel unselectable">OPEN</p><p>0 Applicants</p></div>
                         <div class="line location"><div><img src="../assets/location.png"> Location, LOL</div></div>
                     </div>
 
-                    <div class="popUp unselectable">
-                        <div class="dropdownItem"><p>Actions</p></div>
-                        <div class="dropdownItem"><img src="../assets/edit.png" class="dropdownIcon"><p>Edit</p></div>
-                        <div class="dropdownItem"><img src="../assets/delete2.png" class="dropdownIcon"><p>Delete</p></div>
+                    <div class="jobListing">
+                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 2</h3><img src="../assets/3dots.png" class="moreinfo" id="job2"></div>
+                        <div class="line"><p class="closedLabel unselectable">CLOSED</p><p>92 Applicants</p></div>
+                        <div class="line location"><div><img src="../assets/location.png"> Place, EX</div></div>
                     </div>
+
+                    <div class="jobListing">
+                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 3</h3><img src="../assets/3dots.png" class="moreinfo" id="job3"></div>
+                        <div class="line"><p class="openLabel unselectable">OPEN</p><p>0 Applicants</p></div>
+                        <div class="line location"><div><img src="../assets/location.png"> Location, LOL</div></div>
+                    </div>
+
+                    <div class="jobListing">
+                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 4</h3><img src="../assets/3dots.png" class="moreinfo" id="job4"></div>
+                        <div class="line"><p class="archivedLabel unselectable">ARCHIVED</p><p>(N/A)</p></div>
+                        <div class="line location"><div><img src="../assets/location.png"> Place, EX</div></div>
+                    </div>
+
                 </div>
+
                 <div class="seemore"><button class="seemoreBtn">ALL POSITIONS<img src="../assets/arrow.png" class="arrow"></button></div>
+
+                <hr>
+
+                <div class="applicantsWrapper">
+
+                    <div class="jobListing">
+                        <div class="line"><h3 class="jobTitle unselectable">Ann Example</h3><img src="../assets/3dots.png" class="moreinfo" id="job1"></div>
+                        <div class="line"><p class="openLabel unselectable">REVIEWING</p><p>0 Applicants</p></div>
+                        <div class="line location"><div><img src="../assets/details.png"> Applied on 01/01/2025</div></div>
+                    </div>
+
+                    <div class="seemore"><button class="seemoreBtn">ALL APPLICANTS<img src="../assets/arrow.png" class="arrow"></button></div>
+
+                </div>
             </div>
 
             <div class="tab" id="postings">
