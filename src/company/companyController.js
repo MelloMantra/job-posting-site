@@ -171,6 +171,7 @@ exports.updateJobStatus = async (req, res) => {
             const [rows2] = await pool.query(sql2, [jobId]);
 
             //schedule a node-cron event to delete the job, and all it's applications in 2 weeks
+            //if this doesn't work just comment it out, not necessary for MVP
             const deleteDate = new Date();
             deleteDate.setDate(deleteDate.getDate() + 14);
 
@@ -207,6 +208,7 @@ exports.updateJobStatus = async (req, res) => {
 exports.getApplications = async (req, res) => {
     const jobId = req.params.jobId;
     const companyId = 1;
+    //const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -217,7 +219,7 @@ exports.getApplications = async (req, res) => {
     }
 
     try {
-        const sql = "SELECT openApplications.* FROM openApplications JOIN postedJob ON openApplications.job = postedJob.id WHERE openApplications.job = ? AND postedJob.company = ?;";
+        const sql = "SELECT openApplications.*, user.firstName as firstName, user.lastName as lastName, user.email as email, user.educationLevel as educationLevel, user.majorLevel as majorLevel, user.pastExperienceTitle as pastExperienceTitle, user.pastExperienceCompany as pastExperienceCompany, university.name as university, major.majorName as major, major.majorType as majorType FROM openApplications JOIN postedJob ON openApplications.job = postedJob.id JOIN users as user ON openApplications.user = user.id JOIN universities as university ON user.universityId = university.id JOIN majors as major ON user.majorId = major.id WHERE openApplications.job = ? AND postedJob.company = ? AND openApplications.state != 'archived' ORDER BY openApplications.created_at DESC;";
         const [rows] = await pool.query(sql, [jobId, companyId]);
 
         //rows can be empty if no applications have been made
@@ -231,7 +233,8 @@ exports.getApplications = async (req, res) => {
 
 exports.makeDecision = async (req, res) => {
     const applicationId = req.params.applicationId;
-    const companyId = req.session?.companyId;
+    const companyId = 1;
+    //const companyId = req.session?.companyId;
     const decision = req.body.decision;
 
     if (!companyId) {
@@ -251,7 +254,7 @@ exports.makeDecision = async (req, res) => {
     }
 
     try {
-        const sql = "UPDATE openApplications SET state = ? WHERE id = ? AND company = ?";
+        const sql = "UPDATE openApplications JOIN postedJob ON openApplications.job = postedJob.id SET state = ? WHERE openApplications.id = ? AND postedJob.company = ?";
         const [rows] = await pool.query(sql, [decision, applicationId, companyId]);
 
         if (rows.affectedRows === 0) {

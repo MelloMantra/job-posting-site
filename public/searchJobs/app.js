@@ -53,6 +53,8 @@ result: [
         preferredExperience: "Job Required Experience", //this is a long text field, do not display this
         title: "Job Title", //this is the title of the job so like "Software Developer"
         ScheduleType: "Full Time", //or "Part Time" or "Seasonal" or "Internship"
+        id: 1, //this is the id of the job, please use this to link to the job details page (/JobDetails/{id})
+        company: 1, //this is the id of the company that made the job, please use this to link to the company profile page (/companyProfile/{companyName}) (note that this page isn't yet implemented so this will link to nothing)
     }
 ]
 */
