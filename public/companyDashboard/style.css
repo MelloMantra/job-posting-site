@@ -16,7 +16,7 @@ body {
 }
 
 .sidebar {
-    width: 200px;
+    width: 12em;
     height: 92.1vh;
     background-color: black;
     color: white;
@@ -48,9 +48,10 @@ body {
 .tab {
     opacity: 0;
     transform: scale(0.95);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity ease, transform 0.3s ease;
     flex-direction: column;
     margin-left: 15px;
+    display: none
 }
 
 .tab.active {
@@ -64,7 +65,8 @@ body {
     padding: 20px;
     overflow-y: auto;
     margin-top: 75px;
-    box-shadow: 10px 0 1px 0px rgb(75, 161, 243) inset
+    box-shadow: 10px 0 1px 0px rgb(75, 161, 243) inset;
+    position: relative;
 }
 
 h2 {
@@ -195,7 +197,7 @@ ul li {
 }
 
 .corner {
-    position: fixed;
+    position: absolute;
     top: 5px;
     right: 0;
     left: 90vw;
@@ -229,7 +231,7 @@ a:hover {
     color: white;
     padding: 10px 20px;
     border-radius: 10px;
-    width: 24.25em;
+    width: 24.4em;
     height: fit-content;
     transition: 0.3s ease;
     margin: 10px;
@@ -310,6 +312,7 @@ a:hover {
     position: absolute;
     z-index: 2;
     opacity: 0;
+    transition: ease 0.15s;
 }
 
 .dropdownItem {
@@ -375,5 +378,16 @@ a:hover {
 }
 
 hr {
+    margin: 10px;
+}
+
+.applicantBox {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 24.4em;
+    height: fit-content;
+    transition: 0.3s ease;
     margin: 10px;
 }
