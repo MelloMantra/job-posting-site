@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            background-size: 400% 400%;
+            animation: backgroundAnimation 10s infinite alternate;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .profile-container {
+            background: linear-gradient(145deg, #111, #1a1a1a);
+            padding: 3rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .edit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .edit-header h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .field-container {
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .field-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .field-label h2 {
+            font-size: 1rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .edit-btn {
+            background: transparent;
+            border: none;
+            color: #4a9eff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .edit-btn:hover {
+            opacity: 1;
+            background: rgba(74, 158, 255, 0.1);
+        }
+
+        .field-content {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .field-content:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .field-content.editing {
+            background: rgba(74, 158, 255, 0.05);
+            box-shadow: 0 0 0 1px rgba(74, 158, 255, 0.3);
+        }
+
+        .field-value {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #fff;
+            word-break: break-word;
+        }
+
+        .field-input {
+            width: 100%;
+            background: #111;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            color: #fff;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: rgba(74, 158, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+        }
+
+        .field-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .save-cancel {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .save-btn, .cancel-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background: #4a9eff;
+            color: #fff;
+            border: none;
+        }
+
+        .save-btn:hover {
+            background: #3a8ee6;
+        }
+
+        .cancel-btn {
+            background: transparent;
+            color: #888;
+            border: 1px solid #333;
+        }
+
+        .cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .success-message {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #22c55e;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            transform: translateX(200%);
+            animation: slideIn 0.3s forwards, slideOut 0.3s forwards 2s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            to {
+                transform: translateX(200%);
+            }
+        }
+
+        .loading {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .loading::after {
+            content: '';
+            width: 30px;
+            height: 30px;
+            border: 2px solid #4a9eff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="edit-header">
+            <h1>Edit Company Profile</h1>
+        </div>
+
+        <div class="field-container" style="animation-delay: 0.1s">
+            <div class="field-label">
+                <h2>Company Name</h2>
+                <button class="edit-btn" onclick="startEditing('company-name')">Edit</button>
+            </div>
+            <div class="field-content" id="company-name-field">
+                <div class="field-value" id="company-name-value"></div>
+            </div>
+        </div>
+
+        <div class="field-container" style="animation-delay: 0.2s">
+            <div class="field-label">
+                <h2>Email</h2>
+                <button class="edit-btn" onclick="startEditing('email')">Edit</button>
+            </div>
+            <div class="field-content" id="email-field">
+                <div class="field-value" id="email-value"></div>
+            </div>
+        </div>
+
+        <div class="field-container" style="animation-delay: 0.3s">
+            <div class="field-label">
+                <h2>Company Description</h2>
+                <button class="edit-btn" onclick="startEditing('description')">Edit</button>
+            </div>
+            <div class="field-content" id="description-field">
+                <div class="field-value" id="description-value"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Same JavaScript from the earlier example to handle profile editing.
+        let employerData = {
+            companyName: "TechCorp Solutions",
+            email: "contact@techcorp.com",
+            description: "Leading provider of innovative software solutions..."
+        };
+
+        function initializeProfile() {
+            document.getElementById('company-name-value').textContent = employerData.companyName;
+            document.getElementById('email-value').textContent = employerData.email;
+            document.getElementById('description-value').textContent = employerData.description;
+        }
+
+        function startEditing(fieldId) {
+            const fieldContent = document.getElementById(`${fieldId}-field`);
+            const fieldValue = document.getElementById(`${fieldId}-value`);
+            const currentValue = fieldValue.textContent;
+
+            fieldContent.classList.add('editing');
+            
+            const input = document.createElement(fieldId === 'description' ? 'textarea' : 'input');
+            input.value = currentValue;
+            input.className = `field-input ${fieldId === 'description' ? 'field-textarea' : ''}`;
+            
+            if (fieldId === 'email') {
+                input.type = 'email';
+            }
+
+            const saveCancel = document.createElement('div');
+            saveCancel.className = 'save-cancel';
+            saveCancel.innerHTML = `
+                <button class="save-btn" onclick="saveChanges('${fieldId}')">Save Changes</button>
+                <button class="cancel-btn" onclick="cancelEditing('${fieldId}')">Cancel</button>
+            `;
+
+            fieldContent.innerHTML = '';
+            fieldContent.appendChild(input);
+            fieldContent.appendChild(saveCancel);
+            input.focus();
+        }
+
+        function saveChanges(fieldId) {
+            const fieldContent = document.getElementById(`${fieldId}-field`);
+            const input = fieldContent.querySelector('.field-input');
+            const newValue = input.value.trim();
+
+            if (!newValue) {
+                showError(`${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)} cannot be empty`);
+                return;
+            }
+
+            if (fieldId === 'email' && !isValidEmail(newValue)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            const loading = document.createElement('div');
+            loading.className = 'loading';
+            fieldContent.appendChild(loading);
+
+            setTimeout(() => {
+                switch(fieldId) {
+                    case 'company-name':
+                        employerData.companyName = newValue;
+                        break;
+                    case 'email':
+                        employerData.email = newValue;
+                        break;
+                    case 'description':
+                        employerData.description = newValue;
+                        break;
+                }
+
+                fieldContent.classList.remove('editing');
+                fieldContent.innerHTML = `<div class="field-value" id="${fieldId}-value">${newValue}</div>`;
+
+                const success = document.createElement('div');
+                success.className = 'success-message';
+                success.textContent = 'Changes saved successfully';
+                document.body.appendChild(success);
+
+                setTimeout(() => success.remove(), 2500);
+            }, 800);
+        }
+
+        function cancelEditing(fieldId) {
+            const fieldContent = document.getElementById(`${fieldId}-field`);
+            fieldContent.classList.remove('editing');
+            fieldContent.innerHTML = `<div class="field-value" id="${fieldId}-value">${employerData[mapFieldToProperty(fieldId)]}</div>`;
+        }
+
+        function mapFieldToProperty(fieldId) {
+            switch(fieldId) {
+                case 'company-name':
+                    return 'companyName';
+                default:
+                    return fieldId;
+            }
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showError(message) {
+            const error = document.createElement('div');
+            error.className = 'success-message';
+            error.style.background = '#ef4444';
+            error.textContent = message;
+            document.body.appendChild(error);
+            setTimeout(() => error.remove(), 2500);
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeProfile);
+    </script>
+</body>
+</html>
