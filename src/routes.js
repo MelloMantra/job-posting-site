@@ -5,10 +5,10 @@ company/ and user/ are the folders for the controllers and routers specific to c
 const express = require('express');
 const router = express.Router();
 
-const { logout, getJob, searchOccupations } = require('./controller');
+const { logout, getJob, searchCategory } = require('./controller');
 
 router.get('/logout', logout);
 router.get('/getJob/:jobId', getJob);
-router.get('/searchCateogory/:itemType', searchOccupations)
+router.get('/searchCategory/:itemType', searchCategory);
 
 module.exports = router;

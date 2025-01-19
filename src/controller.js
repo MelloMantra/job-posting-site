@@ -38,8 +38,8 @@ exports.getJob = async (req, res) => {
 //a query would look something like:
 //../api/all/searchCategory/industry?name=blahblahblah
 exports.searchCategory = async (req, res) => {
-    const { query } = req.query.query;
-    const { itemType } = req.params.itemType
+    const { query } = req.query;
+    const { itemType } = req.params
 
     if ( !query ) {
         return res.status(200).json({ result: []});
@@ -57,8 +57,8 @@ exports.searchCategory = async (req, res) => {
     }
 
     try {
-        const sql = "SELECT * FROM ? WHERE MATCH(name) AGAINST(? WITH QUERY EXPANSION) LIMIT 30"
-        const [rows] = await pool.query(sql, [query, itemType]); 
+        const sql = `SELECT * FROM ${itemType} WHERE name LIKE CONCAT('%', ?, '%') LIMIT 30`
+        const [rows] = await pool.query(sql, [query]); 
         
         if (itemType == 'industry') {
             industryCache.set(query, rows);

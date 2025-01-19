@@ -25,10 +25,12 @@ const showTypeahead = debounce(async (field) => {
     const input = document.getElementById(field);
     const typeahead = document.getElementById(`${field}Typeahead`);
     typeahead.innerHTML = '';
+
+    const query = input.value;
     if (query) {
         var matches;
         try {
-            matches = await fetch(`/searchCategory/${field}?query=${query}`, {
+            matches = await fetch(`../api/all/searchCategory/${field}?query=${query}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -37,6 +39,7 @@ const showTypeahead = debounce(async (field) => {
 
             if (matches.ok) {
                 matches = await matches.json();
+                console.log(matches);
             } else {
                 console.log(`Error: ${matches.status} ${matches.statusText}`);
                 alert("Internal server error.");
@@ -64,7 +67,7 @@ const showTypeahead = debounce(async (field) => {
     } else {
         typeahead.classList.add('hidden');
     }  
-})
+}, 300);
 
 document.getElementById('jobForm').addEventListener('submit', function(event) {
     event.preventDefault();
