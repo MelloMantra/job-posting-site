@@ -49,15 +49,18 @@ result: [
         description: "Job Description", //this is a long text field, do not display this
         estimatedPay: 10, //in dollars
         industryName: "Job Industry",
-        isRemote: True, //for UI I would personally just mark any remote jobs with "remote job" or something like that, but leave non-remote jobs blank
+        isRemote: True, //for UI I would personally just mark any remote jobs with "remote job" or something like that where address would normally go (address can be null)
         preferredExperience: "Job Required Experience", //this is a long text field, do not display this
         title: "Job Title", //this is the title of the job so like "Software Developer"
         ScheduleType: "Full Time", //or "Part Time" or "Seasonal" or "Internship"
+        id: 1, //this is the id of the job, please use this to link to the job details page (/JobDetails/{id})
+        company: 1, //this is the id of the company that made the job, please use this to link to the company profile page (/companyProfile/{companyName}) (note that this page isn't yet implemented so this will link to nothing)
     }
 ]
 */
+//note address is allowed to be null for cases of virtual jobs or jobs that just don't have one for whatever reason so make sure having nothing there doesn't ruin your UI
 
-async function searchJobs(query, filterOptions) {
+async function searchJobs(query, filterOptions) { //filterOptions can be null and no filtering will be applied for cases where sorting/filtering is turned off, otherwise it must be in the format aboce
     if (!query) {
         return [];
     }

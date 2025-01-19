@@ -48,14 +48,15 @@ exports.signUp = async (req, res) => {
 
 exports.postJob = async (req, res) => { 
     const { title, address, description, hours, estimatedPay, preferredExperience, occupation, industry, isRemote } = req.body;
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
     
-    //address is optional
-    if (!title || !description || !hours || !estimatedPay || !preferredExperience || !occupation || !industry || !isRemote) {
+    //address is optional if it's remote or something
+    if (!title || !description || !hours || !estimatedPay || !preferredExperience || !occupation || !industry || isRemote === undefined) {
+        console.log("All fields are required.");
         return res.status(400).json({ error: 'All fields are required.' });
-    }
+    }    
 
-    const companyId = req.session?.companyId;
-    
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
@@ -64,8 +65,8 @@ exports.postJob = async (req, res) => {
     const formattedDate = currentDate.toISOString().slice(0, 10);
 
     try {
-        const sql = "INSERT INTO postedJob (company, title, address, description, scheduleType, estimatedPay, preferredExperience, occupation, industry, date_created, isRemote, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'open')";
-        const  [rows] = await pool.query(sql, [companyId, title, address, description, hours, estimatedPay, preferredExperience, occupation, industry, formattedDate, isRemote]);
+        const sql = "INSERT INTO postedJob (company, title, address, description, scheduleType, estimatedPay, preferredExperience, occupation, industry, date_created, isRemote, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        const  [rows] = await pool.query(sql, [companyId, title, address, description, hours, parseInt(estimatedPay), preferredExperience, occupation, industry, formattedDate, isRemote, 'open']);
     
         if (rows.affectedRows === 0 || !rows.insertId) {
             return res.status(500).json({ error: 'Internal server error.' });
@@ -136,7 +137,8 @@ exports.deleteJob = async (req, res) => {
 
 exports.updateJobStatus = async (req, res) => {
     const jobId = req.params.jobId;
-    const companyId = req.session?.companyId;
+    const companyId = 2; //for testing purposes
+    //const companyId = req.session?.companyId;
     const status = req.body.status;
 
     if (!companyId) {
@@ -157,7 +159,7 @@ exports.updateJobStatus = async (req, res) => {
 
     try {
         //first, update the job
-        const sql = "UPDATE postedJob SET status = ? WHERE id = ? AND company = ?";
+        const sql = "UPDATE postedJob SET status = ? WHERE id = ? AND company = ? AND status != 'decided'";
         const [rows] = await pool.query(sql, [status, jobId, companyId]);
 
         if (rows.affectedRows === 0) {
@@ -171,6 +173,8 @@ exports.updateJobStatus = async (req, res) => {
             const [rows2] = await pool.query(sql2, [jobId]);
 
             //schedule a node-cron event to delete the job, and all it's applications in 2 weeks
+            //if this doesn't work just comment it out, not necessary for MVP
+            /*
             const deleteDate = new Date();
             deleteDate.setDate(deleteDate.getDate() + 14);
 
@@ -195,6 +199,7 @@ exports.updateJobStatus = async (req, res) => {
                     console.error('Error querying database:', err);
                 }
             });
+            */
         }
 
         return res.status(200).json({ message: 'Job status updated successfully.' });
@@ -206,7 +211,8 @@ exports.updateJobStatus = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
     const jobId = req.params.jobId;
-    const companyId = 1;
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -217,7 +223,7 @@ exports.getApplications = async (req, res) => {
     }
 
     try {
-        const sql = "SELECT openApplications.* FROM openApplications JOIN postedJob ON openApplications.job = postedJob.id WHERE openApplications.job = ? AND postedJob.company = ?;";
+        const sql = "SELECT openApplications.*, user.firstName as firstName, user.lastName as lastName, user.email as email, user.educationLevel as educationLevel, user.majorLevel as majorLevel, user.pastExperienceTitle as pastExperienceTitle, user.pastExperienceCompany as pastExperienceCompany, university.name as university, major.majorName as major, major.majorType as majorType FROM openApplications JOIN postedJob ON openApplications.job = postedJob.id JOIN users as user ON openApplications.user = user.id JOIN universities as university ON user.universityId = university.id JOIN majors as major ON user.majorId = major.id WHERE openApplications.job = ? AND postedJob.company = ? AND openApplications.state != 'archived' ORDER BY openApplications.created_at DESC;";
         const [rows] = await pool.query(sql, [jobId, companyId]);
 
         //rows can be empty if no applications have been made
@@ -231,7 +237,8 @@ exports.getApplications = async (req, res) => {
 
 exports.makeDecision = async (req, res) => {
     const applicationId = req.params.applicationId;
-    const companyId = req.session?.companyId;
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
     const decision = req.body.decision;
 
     if (!companyId) {
@@ -251,7 +258,7 @@ exports.makeDecision = async (req, res) => {
     }
 
     try {
-        const sql = "UPDATE openApplications SET state = ? WHERE id = ? AND company = ?";
+        const sql = "UPDATE openApplications JOIN postedJob ON openApplications.job = postedJob.id SET state = ? WHERE openApplications.id = ? AND postedJob.company = ? AND openApplications.state != 'decided'";
         const [rows] = await pool.query(sql, [decision, applicationId, companyId]);
 
         if (rows.affectedRows === 0) {

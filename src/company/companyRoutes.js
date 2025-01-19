@@ -10,7 +10,7 @@ router.get('/getJobs', getJobs);
 router.post('/deleteJob/:jobId', deleteJob);
 router.post('/updateJobStatus/:jobId', updateJobStatus);
 router.get('/getApplications/:jobId', getApplications);
-router.post('/makeDecision', makeDecision);
+router.post('/makeDecision/:applicationId', makeDecision);
 router.get('/downloadResume/:jobId/:applicationId', downloadResume);
 
 
