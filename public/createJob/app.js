@@ -71,6 +71,5 @@ const showTypeahead = debounce(async (field) => {
 
 document.getElementById('jobForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    // Handle form submission here
-    alert('Job posting created successfully!');
+    
 });

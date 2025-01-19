@@ -59,10 +59,6 @@
         <h1 class="text-2xl font-bold mb-6">Create Job Posting</h1>
         <form id="jobForm">
             <div class="mb-4">
-                <label for="company" class="block text-gray-700">Company</label>
-                <input type="text" id="company" name="company" class="mt-1 block w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
                 <label for="title" class="block text-gray-700">Job Title</label>
                 <input type="text" id="title" name="title" class="mt-1 block w-full p-2 border border-gray-300 rounded">
             </div>
@@ -75,8 +71,13 @@
                 <textarea id="description" name="description" class="mt-1 block w-full p-2 border border-gray-300 rounded" rows="5"></textarea>
             </div>
             <div class="mb-4">
-                <label for="hours" class="block text-gray-700">Hours per Week</label>
-                <input type="number" id="hours" name="hours" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                <label for="scheduleType" class="block text-gray-700">Schedule</label>
+                <select id="scheduleType" name="scheduleType" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
+                    <option value="Seasonal">Seasonal</option>
+                    <option value="Internship">Internship</option>
+                </select>
             </div>
             <div class="mb-4">
                 <label for="estimatedPay" class="block text-gray-700">Estimated Pay</label>
@@ -97,22 +98,34 @@
             </div>
             <div class="mb-4 typeahead">
                 <label for="industry" class="block text-gray-700">Industry</label>
-                <input type="text" id="industry" name="industry" class="mt-1 block w-full p-2 border border-gray-300 rounded" oninput="showTypeahead('industry')">
-                <div id="industryTypeahead" class="typeahead-list hidden"></div>
+                <select id="industry" name="industry" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                    <option value="1">Accommodation and Food Services</option>
+                    <option value="2">Administrative and Support Services</option>
+                    <option value="3">Agriculture, Forestry, Fishing, and Hunting</option>
+                    <option value="4">Arts, Entertainment, and Recreation</option>
+                    <option value="5">Construction</option>
+                    <option value="6">Educational Services</option>
+                    <option value="7">Finance and Insurance</option>
+                    <option value="8">Government</option>
+                    <option value="9">Health Care and Social Assistance</option>
+                    <option value="10">Information</option>
+                    <option value="11">Management of Companies and Enterprises</option>
+                    <option value="12">Manufacturing</option>
+                    <option value="13">Mining, Quarrying, and Oil and Gas Extraction</option>
+                    <option value="14">Other Services (except Public Administration)</option>
+                    <option value="15">Professional, Scientific, and Technical Services</option>
+                    <option value="16">Real Estate and Rental and Leasing</option>
+                    <option value="17">Retail Trade</option>
+                    <option value="18">Transportation and Warehousing</option>
+                    <option value="19">Utilities</option>
+                    <option value="20">Wholesale Trade</option>
+                </select>
             </div>
             <div class="mb-4">
                 <label for="isRemote" class="block text-gray-700">Remote</label>
                 <select id="isRemote" name="isRemote" class="mt-1 block w-full p-2 border border-gray-300 rounded">
                     <option value="true">Yes</option>
                     <option value="false">No</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="status" class="block text-gray-700">Status</label>
-                <select id="status" name="status" class="mt-1 block w-full p-2 border border-gray-300 rounded">
-                    <option value="open">Open</option>
-                    <option value="filled">Filled</option>
-                    <option value="closed">Closed</option>
                 </select>
             </div>
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create Job Posting</button>

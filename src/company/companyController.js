@@ -64,7 +64,7 @@ exports.postJob = async (req, res) => {
     const formattedDate = currentDate.toISOString().slice(0, 10);
 
     try {
-        const sql = "INSERT INTO postedJob (company, title, address, description, hours, estimatedPay, preferredExperience, occupation, industry, date_created, isRemote, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'open')";
+        const sql = "INSERT INTO postedJob (company, title, address, description, scheduleType, estimatedPay, preferredExperience, occupation, industry, date_created, isRemote, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'open')";
         const  [rows] = await pool.query(sql, [companyId, title, address, description, hours, estimatedPay, preferredExperience, occupation, industry, formattedDate, isRemote]);
     
         if (rows.affectedRows === 0 || !rows.insertId) {
