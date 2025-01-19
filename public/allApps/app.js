@@ -1,3 +1,4 @@
+//If you are getting errors for like the URL and stuff, make sure you're running using node src/index.js and are on localhost:300/allApps/:jobId (I usually use jobId 1)
 document.addEventListener("DOMContentLoaded", async function () {
     var data;
   
@@ -82,3 +83,39 @@ async function makeDecision(applicationId, decision) {
   }
 }
 //I'd recommend adding frontend code that locks this once the decision is made (ie: disable the decision button), but that's up to you and not 100% necessary
+
+async function closeJob(statusChange) {//status should be "closed" or "decided". Closed means no longer accepting applications, but not decided on who to hire, decided means someone is hired and no longer accepting applications
+  const jobId = window.location.pathname.split('/').pop();
+  if (statusChange !== "closed" && statusChange !== "decided") {
+    alert("Status must be 'closed' or 'decided'.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`../api/company/updateJobStatus/${jobId}`, { //note that if status is "decided", then all applications not already accepted will be rejected
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ status: statusChange })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.message);
+      return
+    } else {
+      console.log(`Error: ${response.status} ${response.statusText}`);
+      alert("Internal server error.");
+    }
+    
+  } catch (err) {
+    console.error('Error querying database:', err);
+  }
+}
+/*
+I'd recommend adding frontend code that locks this and updates all non-accepted applications to rejected if the job is decided (this will be done on backend as well, but
+frontend won't sync with that unless the page is reloaded (so you could also just reload the page)). Keep in mind any attempts to update applications after the job is 
+decided will be rejected on the backend, so I'd also reflect that in the frontend (and perhaps include a "warning" message that the job will be locked if it's decided).
+This also means that a company can't reopen or switch a job to closed once it's decided (though I may implement a reopen feature in the future).
+*/
