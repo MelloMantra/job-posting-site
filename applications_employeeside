@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 4rem;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .stat-card {
+      background: #161616;
+      padding: 2rem;
+      border-radius: 15px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .applications {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .application-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      background: #161616;
+      padding: 2rem;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: translateX(-30px);
+      position: relative;
+    }
+
+    .application-card:hover {
+      transform: translateY(-5px);
+      background: #1a1a1a;
+    }
+
+    .company {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .role {
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .status {
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .status-pending {
+      background: #3a3a3a;
+      color: #ffd700;
+    }
+
+    .status-accepted {
+      background: #1a472a;
+      color: #4ade80;
+    }
+
+    .status-rejected {
+      background: #4a1818;
+      color: #f87171;
+    }
+
+    .date {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .loading-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: #fff;
+      width: 0%;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .highlight {
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-bar"></div>
+  
+  <div class="container">
+    <header>
+      <h1>Application Tracker</h1>
+    </header>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Total Applications</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Interviews Scheduled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Offers Received</div>
+      </div>
+    </div>
+
+    <div class="applications">
+      <div class="application-card">
+        <div class="content">
+          <div class="company">Google</div>
+          <div class="role">Senior Software Engineer</div>
+          <div class="date">Applied Jan 15, 2025</div>
+        </div>
+        <span class="status status-pending">Pending</span>
+      </div>
+
+      <div class="application-card">
+        <div class="content">
+          <div class="company">Tesla</div>
+          <div class="role">AI Research Engineer</div>
+          <div class="date">Applied Jan 12, 2025</div>
+        </div>
+        <span class="status status-accepted">Accepted</span>
+      </div>
+
+      <div class="application-card">
+        <div class="content">
+          <div class="company">Meta</div>
+          <div class="role">Full Stack Developer</div>
+          <div class="date">Applied Jan 10, 2025</div>
+        </div>
+        <span class="status status-rejected">Rejected</span>
+      </div>
+
+      <div class="application-card">
+        <div class="content">
+          <div class="company">Apple</div>
+          <div class="role">iOS Platform Engineer</div>
+          <div class="date">Applied Jan 8, 2025</div>
+        </div>
+        <span class="status status-pending">Pending</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Initial loading animation
+    gsap.to('.loading-bar', {
+      width: '100%',
+      duration: 1.5,
+      ease: 'power2.inOut'
+    });
+
+    // Animate header
+    gsap.to('h1', {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      delay: 0.5,
+      ease: 'power3.out'
+    });
+
+    // Animate stat cards
+    gsap.to('.stat-card', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      delay: 0.8,
+      ease: 'power3.out'
+    });
+
+    // Animate application cards
+    gsap.to('.application-card', {
+      opacity: 1,
+      x: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      delay: 1.2,
+      ease: 'power3.out'
+    });
+
+    // Scroll animations
+    gsap.utils.toArray('.application-card').forEach((card, i) => {
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top bottom-=100',
+        onEnter: () => {
+          gsap.to(card, {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            delay: i * 0.1
+          });
+        }
+      });
+    });
+
+    // Add hover effect to stat cards
+    document.querySelectorAll('.stat-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          scale: 1.05,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          scale: 1,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      });
+    });
+
+    // Confetti animation for accepted applications
+    document.querySelectorAll('.application-card').forEach(card => {
+      if (card.querySelector('.status-accepted')) {
+        let confettiRunning = false;
+        
+        card.addEventListener('mouseenter', () => {
+          if (!confettiRunning) {
+            confettiRunning = true;
+
+            // Sky-wide confetti effect
+            const duration = 2000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            const interval = setInterval(() => {
+              const timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                confettiRunning = false;
+                return clearInterval(interval);
+              }
+
+              const particleCount = 50 * (timeLeft / duration);
+
+              // Confetti burst from the sky
+              confetti(Object.assign({}, defaults, {
+                particleCount,
+                origin: {
+                  x: Math.random(),
+                  y: -0.1
+                },
+                gravity: 0.6,
+              }));
+            }, 250);
+          }
+        });
+      }
+    });
+
+    // Random highlight animation for pending applications
+    setInterval(() => {
+      const pendingCards = document.querySelectorAll('.status-pending');
+      const randomCard = pendingCards[Math.floor(Math.random() * pendingCards.length)];
+      randomCard.classList.add('highlight');
+      setTimeout(() => {
+        randomCard.classList.remove('highlight');
+      }, 2000);
+    }, 4000);
+  </script>
+</body>
+</html>
