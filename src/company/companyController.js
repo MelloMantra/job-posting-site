@@ -48,10 +48,12 @@ exports.signUp = async (req, res) => {
 
 exports.postJob = async (req, res) => { 
     const { title, address, description, hours, estimatedPay, preferredExperience, occupation, industry, isRemote } = req.body;
-    const companyId = req.session?.companyId;
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
     
     //address is optional if it's remote or something
-    if (!title || !description || !hours || !estimatedPay || !preferredExperience || !occupation || !industry || !isRemote) {
+    if (!title || !description || !hours || !estimatedPay || !preferredExperience || !occupation || !industry || isRemote === undefined) {
+        console.log("All fields are required.");
         return res.status(400).json({ error: 'All fields are required.' });
     }    
 
@@ -63,8 +65,8 @@ exports.postJob = async (req, res) => {
     const formattedDate = currentDate.toISOString().slice(0, 10);
 
     try {
-        const sql = "INSERT INTO postedJob (company, title, address, description, scheduleType, estimatedPay, preferredExperience, occupation, industry, date_created, isRemote, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'open')";
-        const  [rows] = await pool.query(sql, [companyId, title, address, description, hours, estimatedPay, preferredExperience, occupation, industry, formattedDate, isRemote]);
+        const sql = "INSERT INTO postedJob (company, title, address, description, scheduleType, estimatedPay, preferredExperience, occupation, industry, date_created, isRemote, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        const  [rows] = await pool.query(sql, [companyId, title, address, description, hours, parseInt(estimatedPay), preferredExperience, occupation, industry, formattedDate, isRemote, 'open']);
     
         if (rows.affectedRows === 0 || !rows.insertId) {
             return res.status(500).json({ error: 'Internal server error.' });
