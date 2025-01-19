@@ -111,12 +111,15 @@ app.get('/createJob', (req, res) => {
 
 //delete this if we end up putting all the application pages together into a single page
 app.get('/allApps/:jobId', (req, res) => {
-    //Uncomment below portion once done testing
-    /*
+    //comment below portion if testing
     const companyId = req.session?.companyId;
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    */
     res.sendFile(path.join(initialpath, 'public', 'allApps', 'allApps.html'));
-})
+});
+
+app.get('/searchJobs', (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'searchJobs', 'searchJobs.html'));
+});
+

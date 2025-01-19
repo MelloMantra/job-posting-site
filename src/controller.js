@@ -75,3 +75,68 @@ exports.searchCategory = async (req, res) => {
 
 exports.occupationCache = occupationCache;
 exports.industryCache = industryCache;
+
+/*
+Filtering options:
+1. filter by industry or occupation
+2. filter by location (this is hard, not necessary for MVP)
+3. filter by remote or in-person
+5. filter by pay
+6. filter by job type (internship, full-time, part-time, seasonal)
+
+Sorting options:
+1. sort by date posted
+2. sort by pay
+*/
+
+exports.searchJobs = async (req, res) => {
+    const { query, industry, occupation, isRemote, minPay, jobType, sort } = req.query;
+
+    if ( !query ) {
+        return res.status(200).json({ result: []});
+    }
+
+    try {
+        let sql = "SELECT  postedJob.*, companies.name AS companyName, occupation.name AS occupationName, industry.name AS industryName FROM postedJob LEFT JOIN companies ON postedJob.company = companies.id LEFT JOIN occupation ON postedJob.occupation = occupation.id LEFT JOIN industry ON postedJob.industry = industry.id WHERE title LIKE CONCAT('%', ?, '%') AND status = 'open'";
+        const params = [query];
+
+        if (industry) {
+            sql += " AND industry = ?";
+            params.push(industry);
+        }
+
+        if (occupation) {
+            sql += " AND occupation = ?";
+            params.push(occupation);
+        }
+
+        if (isRemote !== undefined) { //isRemote is a boolean
+            sql += " AND isRemote = ?";
+            params.push(isRemote);
+        }
+
+        if (minPay) {
+            sql += " AND estimatedPay >= ?";
+            params.push(minPay);
+        }
+
+        if (jobType) {
+            sql += " AND scheduleType = ?";
+            params.push(jobType);
+        }
+
+        if (sort) {
+            sql += " ORDER BY " + sort + " DESC"; 
+        }
+
+        sql += " LIMIT 50";
+
+        const [rows] = await pool.query(sql, params); 
+        
+        return res.status(200).json({ result: rows});
+
+    } catch {err} {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
