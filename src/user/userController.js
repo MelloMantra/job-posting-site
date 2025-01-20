@@ -208,7 +208,7 @@ exports.getApplications = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 }
-
+/*
 app.post('/upload-resume', upload.single('resume'), async (req, res) => {
     const { jobId, applicationId } = req.body;
 
@@ -235,3 +235,4 @@ app.post('/upload-resume', upload.single('resume'), async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 });
+*/
