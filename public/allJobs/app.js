@@ -1,6 +1,7 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+/*
 const jobs = [
     {
         title: "Senior Frontend Developer",
@@ -65,6 +66,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         document.querySelector('.loading-overlay').style.display = 'none';
+    }, 1500);
+});
+*/
+async function fetchJobs() {
+    try {
+        const response = await fetch('../api/company/getJobs', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to fetch jobs.');
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data.jobs || [];
+    } catch (err) {
+        console.error('Error fetching jobs:', err);
+        alert('An error occurred while fetching jobs. Please try again later.');
+        return [];
+    }
+}
+
+function createJobCard(job) {
+    const card = document.createElement('div');
+    card.className = 'job-card';
+    card.innerHTML = `
+        <div class="job-content">
+            <a class="job-title" href="../job/${job.id}" target="_blank" style="text-decoration: none; font-weight: bold; font-size: 1.5em; color: inherit; display: inline-block;">${job.title}</a>
+            <p class="job-description">${job.description}</p>
+        </div>
+        <div class="job-footer">
+            <div class="job-meta">
+                <span class="job-date">${formatDate(job.date_created)}</span>
+                <span class="job-applicants">${job.applicantCount || 0} applicants</span>
+            </div>
+            <a class="view-button" href="../allApps/${job.id}">View Details</a>
+        </div>
+    `;
+    return card;
+}
+
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    }).format(date);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const jobsGrid = document.querySelector('.jobs-grid');
+
+    const jobs = await fetchJobs();
+    jobs.forEach(job => {
+        console.log(job);
+        const card = createJobCard(job);
+        jobsGrid.appendChild(card);
+    });
+
+    setTimeout(() => {
+        document.getElementsByClassName('loading-overlay')[0].style.display = 'none';
     }, 1500);
 });
 
