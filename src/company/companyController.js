@@ -281,21 +281,22 @@ exports.downloadResume = async (req, res) => {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
 
-    if (!applicationId) {
-        return res.status(400).json({ error: 'Application ID is required.' });
-    }
-
-    if (!jobId) {
-        return res.status(400).json({ error: 'Job ID is required.' });
+    if (!applicationId || !jobId) {
+        return res.status(400).json({ error: 'Application ID and Job ID are required.' });
     }
 
     try {
-        //assure that the application is for the correct job, and that the company is the one who made the job
-        sql = "SELECT a.resume FROM openApplications a JOIN postedJob p ON a.job = p.id WHERE a.id = ? AND a.job = ? AND p.company = ?";
+        // Assure the application is for the correct job, and the company owns the job
+        const sql = `
+            SELECT a.resume 
+            FROM openApplications a 
+            JOIN postedJob p ON a.job = p.id 
+            WHERE a.id = ? AND a.job = ? AND p.company = ?
+        `;
         const [rows] = await pool.query(sql, [applicationId, jobId, companyId]);
 
         if (rows.length === 0) {
-            return res.status(404).json({ error: 'Application not found.' });
+            return res.status(200).json({ message: 'Application or resume not found.' });//resume can be empty
         }
 
         const resume = rows[0].resume;
@@ -308,10 +309,9 @@ exports.downloadResume = async (req, res) => {
         res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
         res.setHeader('Content-Length', resume.length);
 
-        res.write(resume);
-        res.end();
+        res.end(resume);
     } catch (err) {
         console.error('Error downloading resume:', err);
-        return res.status(500).json({ error: 'Internal server error.' });
+        res.status(500).json({ error: 'Internal server error.' });
     }
-}
+};
