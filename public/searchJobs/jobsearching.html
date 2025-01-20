@@ -240,6 +240,14 @@
                 <option value="">Seasonal</option>
             </select>
         </div>
+        <div class="filter-box">
+            Sort by Date
+            <select id="sort-date">
+                <option value="">Select</option>
+                <option value="asc">Date Ascending</option>
+                <option value="desc">Date Descending</option>
+            </select>
+        </div>
     </div>
 
     <!-- Job Results -->
@@ -263,7 +271,7 @@
             isRemote: document.getElementById("remote").value,
             minPay: document.getElementById("salary").value,
             jobType: document.getElementById("job-type").value,
-            sort: 'estimatedPay' // Default sort order
+            sort: document.getElementById("sort-date").value || 'estimatedPay' // Default sort order
         };
 
         searchJobs(query, filters);
@@ -279,20 +287,21 @@
                 isRemote: document.getElementById("remote").value,
                 minPay: document.getElementById("salary").value,
                 jobType: document.getElementById("job-type").value,
-                sort: 'estimatedPay' // Default sort order
+                sort: document.getElementById("sort-date").value || 'estimatedPay' // Default sort order
             };
 
             searchJobs(query, filters);
         }
     });
 
+    // Function to search jobs based on query and filters
     async function searchJobs(query, filterOptions) {
         if (!query) {
             return [];
         }
 
         try {
-            var URL = `../api/all/searchJobs?query=${query}`;
+            let URL = `../api/all/searchJobs?query=${query}`;
 
             if (filterOptions?.industry) {
                 URL += `&industry=${filterOptions.industry}`;
@@ -302,7 +311,7 @@
                 URL += `&occupation=${filterOptions.occupation}`;
             }
 
-            if (filterOptions?.isRemote !== '') {
+            if (filterOptions?.isRemote !== undefined) {
                 URL += `&isRemote=${filterOptions.isRemote}`;
             }
 
@@ -336,6 +345,7 @@
         }
     }
 
+    // Function to display jobs in the UI
     function displayJobs(jobs) {
         const jobListElement = document.getElementById("job-list");
         jobListElement.innerHTML = ""; // Clear previous jobs
