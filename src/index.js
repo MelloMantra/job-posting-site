@@ -133,3 +133,7 @@ app.get('/testPdfUpload', (req, res) => {
         res.status(401).json({ error: 'Not in testing mode.' });
     }
 })
+
+app.get('/allJobs', (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'allJobs', 'allJobs.html'));
+});
