@@ -271,7 +271,7 @@ exports.makeDecision = async (req, res) => {
     }
 
     try {
-        const sql = "UPDATE openApplications JOIN postedJob ON openApplications.job = postedJob.id SET state = ? WHERE openApplications.id = ? AND postedJob.company = ? AND openApplications.state != 'decided'";
+        const sql = "UPDATE openApplications JOIN postedJob ON openApplications.job = postedJob.id SET state = ? WHERE openApplications.id = ? AND postedJob.company = ? AND postedJob.status != 'decided' AND openApplications.state = 'pending'";
         const [rows] = await pool.query(sql, [decision, applicationId, companyId]);
 
         if (rows.affectedRows === 0) {
