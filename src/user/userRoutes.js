@@ -11,6 +11,6 @@ router.post('/applyToJob/:jobId', applyToJob);
 router.post('/deleteApplication/:applicationId', deleteApplication);
 router.get('/getApplications', getApplications);
 
-router.post('/upload-resume', upload.single('resume'), uploadResume);
+router.post('/uploadResume/:jobId/:applicationId', upload.single('resume'), uploadResume);
 
 module.exports = router;
