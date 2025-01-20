@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #1a1a1a, #2e2e2e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+        }
+
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f5f5f5;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-bar input {
+            padding: 12px 20px;
+            font-size: 16px;
+            width: 50%;
+            border: 2px solid #f5f5f5;
+            border-radius: 10px;
+            background: transparent;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: #ff8000;
+        }
+
+        .search-bar button {
+            padding: 12px 20px;
+            margin-left: 15px;
+            background-color: #ff8000;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #cc6600;
+            transform: scale(1.05);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-box {
+            background-color: #333;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-box:hover {
+            border: 2px solid #ff8000;
+        }
+
+        .filter-box select {
+            background-color: transparent;
+            color: #f5f5f5;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .filter-box select:focus {
+            border-color: #ff8000;
+        }
+
+        .job-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .job-item {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .job-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-item .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .job-item .company,
+        .job-item .location,
+        .job-item .pay,
+        .job-item .industry,
+        .job-item .occupation {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #bbb;
+        }
+
+        .job-item a {
+            color: #ff8000;
+            text-decoration: none;
+        }
+
+        .apply-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #ff8000;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .apply-button:hover {
+            background-color: #cc6600;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Job Search</h1>
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-query" placeholder="Search for jobs...">
+        <button id="search-btn">Search</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+        <div class="filter-box">
+            Industry
+            <select id="industry">
+                <option value="">Select Industry</option>
+                <option value="1">Tech</option>
+                <option value="2">Finance</option>
+                <option value="3">Healthcare</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Occupation
+            <select id="occupation">
+                <option value="">Select Occupation</option>
+                <option value="101">Developer</option>
+                <option value="102">Manager</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Remote
+            <select id="remote">
+                <option value="">Select</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Min Pay
+            <select id="min-pay">
+                <option value="">Min Pay</option>
+                <option value="10">10 USD</option>
+                <option value="20">20 USD</option>
+                <option value="30">30 USD</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Job Type
+            <select id="job-type">
+                <option value="">Select Job Type</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Internship">Internship</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Job Results -->
+    <div class="job-list" id="job-list">
+        <!-- Job items will be appended here -->
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>&copy; 2025 Job Search. All rights reserved.</p>
+</div>
+
+<script>
+    document.getElementById("search-btn").addEventListener("click", function() {
+        // Simulate job search and filter
+        const query = document.getElementById("search-query").value;
+        const filters = {
+            industry: document.getElementById("industry").value,
+            occupation: document.getElementById("occupation").value,
+            isRemote: document.getElementById("remote").value,
+            minPay: document.getElementById("min-pay").value,
+            jobType: document.getElementById("job-type").value
+        };
+
+        const jobList = [
+            { title: "Software Engineer", company: "TechCorp", location: "New York, NY", pay: "$60,000", industry: "Tech", occupation: "Developer", id: 1 },
+            { title: "Data Analyst", company: "DataWorld", location: "Remote", pay: "$50,000", industry: "Tech", occupation: "Analyst", id: 2 },
+        ];
+
+        let filteredJobs = jobList.filter(job => {
+            if (filters.industry && job.industry !== filters.industry) return false;
+            if (filters.occupation && job.occupation !== filters.occupation) return false;
+            if (filters.isRemote && job.location !== "Remote") return false;
+            if (filters.minPay && parseInt(job.pay.replace(/\D/g, '')) < filters.minPay) return false;
+            if (filters.jobType && job.jobType !== filters.jobType) return false;
+            return true;
+        });
+
+        displayJobs(filteredJobs);
+    });
+
+    function displayJobs(jobs) {
+        const jobListElement = document.getElementById("job-list");
+        jobListElement.innerHTML = ""; // Clear previous jobs
+
+        jobs.forEach(job => {
+            const jobItem = document.createElement("div");
+            jobItem.classList.add("job-item");
+            jobItem.innerHTML = `
+                <div class="title"><a href="/jobDetails/${job.id}">${job.title}</a></div>
+                <div class="company"><a href="/companyProfile/${job.company}">${job.company}</a></div>
+                <div class="location">${job.location}</div>
+                <div class="pay">${job.pay}</div>
+                <div class="industry">${job.industry}</div>
+                <div class="occupation">${job.occupation}</div>
+                <button class="apply-button">Apply Now</button>
+            `;
+            jobListElement.appendChild(jobItem);
+        });
+    }
+</script>
+
+</body>
+</html>
