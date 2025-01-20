@@ -334,6 +334,7 @@
 
             if (!response.ok) {
                 alert("Internal server error.");
+                console.log(await response.json());
                 return [];
             }
 
