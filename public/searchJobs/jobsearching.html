@@ -74,15 +74,9 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
-        /* 2D Button Style */
-        .search-bar button {
-            box-shadow: none; /* Remove 3D effect */
-            transition: background-color 0.3s ease;
-        }
-
         .search-bar button:hover {
             background-color: #5fadd3;
-            transform: scale(1); /* Remove scaling effect for 2D look */
+            transform: scale(1.05);
         }
 
         .filters {
@@ -164,7 +158,6 @@
             text-decoration: none;
         }
 
-        /* 2D Apply Button Style */
         .apply-button {
             margin-top: 15px;
             padding: 10px 20px;
@@ -174,12 +167,12 @@
             font-size: 16px;
             border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
         .apply-button:hover {
             background-color: #5fadd3;
-            transform: scale(1); /* Remove scaling effect for 2D look */
+            transform: scale(1.05);
         }
 
         .footer {
@@ -192,40 +185,6 @@
         .small-text {
             font-size: 12px;
             color: #bbb;
-        }
-
-        /* Job Detail Formatting */
-        .job-detail {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            margin-top: 30px;
-        }
-
-        .job-detail .title {
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        .job-detail .company {
-            font-size: 20px;
-            color: #bbb;
-            margin-top: 10px;
-        }
-
-        .job-detail .location,
-        .job-detail .pay,
-        .job-detail .industry,
-        .job-detail .occupation {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #bbb;
-        }
-
-        .job-detail a {
-            color: #89CFF0;
-            text-decoration: none;
         }
     </style>
 </head>
@@ -295,6 +254,7 @@
 </div>
 
 <script>
+    // Event listener for the "Search" button click
     document.getElementById("search-btn").addEventListener("click", function() {
         const query = document.getElementById("search-query").value;
         const filters = {
@@ -307,6 +267,23 @@
         };
 
         searchJobs(query, filters);
+    });
+
+    // Event listener for pressing Enter key in the search input
+    document.getElementById("search-query").addEventListener("keypress", function(event) {
+        if (event.key === 'Enter') {
+            const query = document.getElementById("search-query").value;
+            const filters = {
+                industry: document.getElementById("industry").value,
+                occupation: document.getElementById("occupation").value,
+                isRemote: document.getElementById("remote").value,
+                minPay: document.getElementById("salary").value,
+                jobType: document.getElementById("job-type").value,
+                sort: 'estimatedPay' // Default sort order
+            };
+
+            searchJobs(query, filters);
+        }
     });
 
     async function searchJobs(query, filterOptions) {
@@ -325,7 +302,7 @@
                 URL += `&occupation=${filterOptions.occupation}`;
             }
 
-            if (filterOptions?.isRemote !== undefined) {
+            if (filterOptions?.isRemote !== '') {
                 URL += `&isRemote=${filterOptions.isRemote}`;
             }
 
