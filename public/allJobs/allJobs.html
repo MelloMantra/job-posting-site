@@ -36,30 +36,8 @@
             padding: 2rem;
         }
 
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
         .dashboard-title {
-            margin-top: 100px;
+            margin-top: 0;
             font-size: 2.5rem;
             margin-bottom: 2rem;
         }
@@ -214,6 +192,36 @@
             color: #666;
         }
 
+        .create-job-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .create-job-button:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .create-job-button:active {
+            transform: scale(0.95);
+        }
+
         @media (max-width: 768px) {
             .jobs-grid {
                 grid-template-columns: 1fr;
@@ -233,17 +241,14 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">EMPLOYER HUB</div>
-                <nav>
-                    <button class="view-button">Dashboard</button>
-                </nav>
+                <nav></nav>
             </div>
         </div>
     </header>
 
     <main class="container">
         <h1 class="dashboard-title">Job Postings</h1>
-        
+
         <div class="search-bar">
             <input type="text" class="search-input" placeholder="Search job postings...">
             <i class="fas fa-search search-icon"></i>
@@ -254,11 +259,11 @@
         </div>
     </main>
 
+    <a href="#" class="create-job-button">Create a Job +</a>
+
     <script>
-        // Initialize GSAP ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // Sample job data
         const jobs = [
             {
                 title: "Senior Frontend Developer",
@@ -286,7 +291,6 @@
             },
         ];
 
-        // Function to create job cards
         function createJobCard(job) {
             const card = document.createElement('div');
             card.className = 'job-card';
@@ -306,7 +310,6 @@
             return card;
         }
 
-        // Format date function
         function formatDate(dateStr) {
             const date = new Date(dateStr);
             return new Intl.DateTimeFormat('en-US', {
@@ -316,9 +319,7 @@
             }).format(date);
         }
 
-        // Initialize page
         document.addEventListener('DOMContentLoaded', () => {
-            // Create job cards immediately
             const jobsGrid = document.querySelector('.jobs-grid');
             jobs.forEach(job => {
                 const card = createJobCard(job);
@@ -326,21 +327,30 @@
             });
 
             setTimeout(() => {
-                // Remove loading overlay
                 document.querySelector('.loading-overlay').style.display = 'none';
             }, 1500);
         });
 
-        // Search functionality
         const searchInput = document.querySelector('.search-input');
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             const jobCards = document.querySelectorAll('.job-card');
-            
+
+            if (searchTerm === '') {
+                jobCards.forEach(card => {
+                    card.style.display = 'flex';
+                    gsap.to(card, {
+                        opacity: 1,
+                        duration: 0.3
+                    });
+                });
+                return;
+            }
+
             jobCards.forEach(card => {
                 const title = card.querySelector('.job-title').textContent.toLowerCase();
                 const description = card.querySelector('.job-description').textContent.toLowerCase();
-                
+
                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
                     card.style.display = 'flex';
                     gsap.to(card, {

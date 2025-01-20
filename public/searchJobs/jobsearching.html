@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Search</title>
+    <title>Search for Jobs</title>
     <style>
         /* General Reset */
         * {
@@ -59,13 +59,13 @@
         }
 
         .search-bar input:focus {
-            border-color: #ff8000;
+            border-color: #89CFF0;
         }
 
         .search-bar button {
             padding: 12px 20px;
             margin-left: 15px;
-            background-color: #ff8000;
+            background-color: #89CFF0;
             border: none;
             color: white;
             font-size: 16px;
@@ -75,7 +75,7 @@
         }
 
         .search-bar button:hover {
-            background-color: #cc6600;
+            background-color: #5fadd3;
             transform: scale(1.05);
         }
 
@@ -99,12 +99,13 @@
         }
 
         .filter-box:hover {
-            border: 2px solid #ff8000;
+            border: 2px solid #89CFF0;
         }
 
-        .filter-box select {
-            background-color: transparent;
-            color: #f5f5f5;
+        .filter-box select,
+        .filter-box input {
+            background-color: black;
+            color: white;
             border: none;
             outline: none;
             font-size: 14px;
@@ -113,8 +114,9 @@
             border-radius: 5px;
         }
 
-        .filter-box select:focus {
-            border-color: #ff8000;
+        .filter-box select:focus,
+        .filter-box input:focus {
+            border-color: #89CFF0;
         }
 
         .job-list {
@@ -152,14 +154,14 @@
         }
 
         .job-item a {
-            color: #ff8000;
+            color: #89CFF0;
             text-decoration: none;
         }
 
         .apply-button {
             margin-top: 15px;
             padding: 10px 20px;
-            background-color: #ff8000;
+            background-color: #89CFF0;
             border: none;
             color: white;
             font-size: 16px;
@@ -169,7 +171,7 @@
         }
 
         .apply-button:hover {
-            background-color: #cc6600;
+            background-color: #5fadd3;
             transform: scale(1.05);
         }
 
@@ -177,6 +179,11 @@
             text-align: center;
             margin-top: 50px;
             font-size: 14px;
+            color: #bbb;
+        }
+
+        .small-text {
+            font-size: 12px;
             color: #bbb;
         }
     </style>
@@ -219,13 +226,9 @@
             </select>
         </div>
         <div class="filter-box">
-            Min Pay
-            <select id="min-pay">
-                <option value="">Min Pay</option>
-                <option value="10">10 USD</option>
-                <option value="20">20 USD</option>
-                <option value="30">30 USD</option>
-            </select>
+            Salary
+            <input type="number" id="salary" placeholder="Min Salary">
+            <div class="small-text">Hourly</div>
         </div>
         <div class="filter-box">
             Job Type
@@ -234,6 +237,7 @@
                 <option value="Full Time">Full Time</option>
                 <option value="Part Time">Part Time</option>
                 <option value="Internship">Internship</option>
+                <option value="">Seasonal</option>
             </select>
         </div>
     </div>
@@ -246,37 +250,73 @@
 </div>
 
 <div class="footer">
-    <p>&copy; 2025 Job Search. All rights reserved.</p>
+    <p>&copy; 2025 Jobify. All rights reserved.</p>
 </div>
 
 <script>
     document.getElementById("search-btn").addEventListener("click", function() {
-        // Simulate job search and filter
         const query = document.getElementById("search-query").value;
         const filters = {
             industry: document.getElementById("industry").value,
             occupation: document.getElementById("occupation").value,
             isRemote: document.getElementById("remote").value,
-            minPay: document.getElementById("min-pay").value,
-            jobType: document.getElementById("job-type").value
+            minPay: document.getElementById("salary").value,
+            jobType: document.getElementById("job-type").value,
+            sort: 'estimatedPay' // Default sort order
         };
 
-        const jobList = [
-            { title: "Software Engineer", company: "TechCorp", location: "New York, NY", pay: "$60,000", industry: "Tech", occupation: "Developer", id: 1 },
-            { title: "Data Analyst", company: "DataWorld", location: "Remote", pay: "$50,000", industry: "Tech", occupation: "Analyst", id: 2 },
-        ];
-
-        let filteredJobs = jobList.filter(job => {
-            if (filters.industry && job.industry !== filters.industry) return false;
-            if (filters.occupation && job.occupation !== filters.occupation) return false;
-            if (filters.isRemote && job.location !== "Remote") return false;
-            if (filters.minPay && parseInt(job.pay.replace(/\D/g, '')) < filters.minPay) return false;
-            if (filters.jobType && job.jobType !== filters.jobType) return false;
-            return true;
-        });
-
-        displayJobs(filteredJobs);
+        searchJobs(query, filters);
     });
+
+    async function searchJobs(query, filterOptions) {
+        if (!query) {
+            return [];
+        }
+
+        try {
+            var URL = `../api/all/searchJobs?query=${query}`;
+
+            if (filterOptions?.industry) {
+                URL += `&industry=${filterOptions.industry}`;
+            }
+
+            if (filterOptions?.occupation) {
+                URL += `&occupation=${filterOptions.occupation}`;
+            }
+
+            if (filterOptions?.isRemote !== undefined) {
+                URL += `&isRemote=${filterOptions.isRemote}`;
+            }
+
+            if (filterOptions?.minPay) {
+                URL += `&minPay=${filterOptions.minPay}`;
+            }
+
+            if (filterOptions?.jobType) {
+                URL += `&jobType=${filterOptions.jobType}`;
+            }
+
+            if (filterOptions?.sort) {
+                URL += `&sort=${filterOptions.sort}`;
+            }
+
+            const response = await fetch(URL, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) {
+                alert("Internal server error.");
+                return [];
+            }
+
+            const data = await response.json();
+            displayJobs(data.result);
+        } catch (err) {
+            console.error('Error querying database:', err);
+            return [];
+        }
+    }
 
     function displayJobs(jobs) {
         const jobListElement = document.getElementById("job-list");
@@ -287,10 +327,10 @@
             jobItem.classList.add("job-item");
             jobItem.innerHTML = `
                 <div class="title"><a href="/jobDetails/${job.id}">${job.title}</a></div>
-                <div class="company"><a href="/companyProfile/${job.company}">${job.company}</a></div>
-                <div class="location">${job.location}</div>
-                <div class="pay">${job.pay}</div>
-                <div class="industry">${job.industry}</div>
+                <div class="company"><a href="/companyProfile/${job.companyName}">${job.companyName}</a></div>
+                <div class="location">${job.isRemote ? "Remote" : job.address}</div>
+                <div class="pay">$${job.estimatedPay}</div>
+                <div class="industry">${job.industryName}</div>
                 <div class="occupation">${job.occupation}</div>
                 <button class="apply-button">Apply Now</button>
             `;
