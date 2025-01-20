@@ -36,30 +36,14 @@
             padding: 2rem;
         }
 
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-        }
+       
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+       
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
+      
 
         .dashboard-title {
-            margin-top: 100px;
+            margin-top: 000px;
             font-size: 2.5rem;
             margin-bottom: 2rem;
         }
@@ -214,6 +198,38 @@
             color: #666;
         }
 
+        /* Button styling */
+        /* Button styling */
+.create-job-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.create-job-button:hover {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    transform: scale(1.1);
+    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+}
+
+.create-job-button:active {
+    transform: scale(0.95);
+}
+
         @media (max-width: 768px) {
             .jobs-grid {
                 grid-template-columns: 1fr;
@@ -233,9 +249,9 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">EMPLOYER HUB</div>
+              
                 <nav>
-                    <button class="view-button">Dashboard</button>
+                  
                 </nav>
             </div>
         </div>
@@ -253,6 +269,11 @@
             <!-- Jobs will be dynamically inserted here -->
         </div>
     </main>
+
+    <!-- Create Job Button -->
+    <!-- Create Job Button -->
+<a href="#" class="create-job-button">Create a Job +</a>
+
 
     <script>
         // Initialize GSAP ScrollTrigger
