@@ -261,3 +261,34 @@ exports.uploadResume = async (req, res) => {
     }
 };
 
+exports.getApplications = async (req, res) => {
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+
+    try {
+        const sql = `
+            SELECT 
+                p.*, 
+                c.name AS companyName
+            FROM 
+                postedJob p
+            LEFT JOIN 
+                openApplications a ON p.id = a.job AND a.user = ?
+            LEFT JOIN 
+                companies c ON p.company = c.id
+            WHERE 
+                a.job IS NULL
+            LIMIT 3;
+        `;
+        const [rows] = await pool.query(sql, [userId]);
+
+        return res.status(200).json({ jobs: rows });
+    } catch (err) {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
