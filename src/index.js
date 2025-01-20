@@ -133,3 +133,18 @@ app.get('/testPdfUpload', (req, res) => {
         res.status(401).json({ error: 'Not in testing mode.' });
     }
 })
+
+app.get('/allJobs', (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'allJobs', 'allJobs.html'));
+});
+
+app.get('/userAllApps', (req, res) => {
+        //comment below portion if testing
+    /*
+    const userId = req.session?.userId;
+    if (!userId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+    */
+    res.sendFile(path.join(initialpath, 'public', 'userAllApps', 'userAllApps.html'));
+});

@@ -91,6 +91,8 @@ Sorting options:
 
 exports.searchJobs = async (req, res) => {
     const { query, industry, occupation, isRemote, minPay, jobType, sort } = req.query;
+    const userId = 1; //for testing purposes
+    //const userId = req.session?.userId
 
     if ( !query ) {
         return res.status(200).json({ result: []});
@@ -123,6 +125,18 @@ exports.searchJobs = async (req, res) => {
         if (jobType) {
             sql += " AND scheduleType = ?";
             params.push(jobType);
+        }
+
+        if (userId) {
+            // Exclude jobs the user has already applied to
+            sql += `
+                AND NOT EXISTS (
+                    SELECT 1 
+                    FROM openApplications 
+                    WHERE openApplications.job = postedJob.id AND openApplications.user = ?
+                )
+            `;
+            params.push(userId);
         }
 
         if (sort) {

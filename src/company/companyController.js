@@ -80,14 +80,27 @@ exports.postJob = async (req, res) => {
 }
 
 exports.getJobs = async (req, res) => {
-    const companyId = req.session?.companyId;
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
 
     try {
-        const sql = "SELECT * FROM postedJob WHERE company = ?";
+        const sql = `
+        SELECT 
+            p.*,
+            COUNT(a.id) AS applicantCount
+        FROM 
+            postedJob p
+        LEFT JOIN 
+            openApplications a ON p.id = a.job
+        WHERE 
+            p.company = ?
+        GROUP BY 
+            p.id;
+        `;
         const [rows] = await pool.query(sql, [companyId]);
 
         //rows can be empty if no jobs have been posted

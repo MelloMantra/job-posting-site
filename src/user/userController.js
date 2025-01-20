@@ -118,12 +118,11 @@ exports.signUp = async (req, res) => {
     }
 }
 
+//when resumes are switched to user, change this
 exports.applyToJob = async (req, res) => {
     const { jobId } = req.params;
-    const userId = req.session.userId;
-    const { coverLetter, otherOptions } = req.body;
-
-    //both coverLetter and otherOptions are not required
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
 
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -137,12 +136,15 @@ exports.applyToJob = async (req, res) => {
     const formattedDate = currentDate.toISOString().slice(0, 10);
 
     try {
+
+        /*
         const sql1 = "GET resume FROM user WHERE id = ?";
         const [resume] = await pool.query(sql1, [userId]);
 
         if (resume.length === 0) {
             return res.status(404).json({ error: 'Resume not found.' });
         }
+        */ //uncomment above if resumes are switched to user
 
         const sql2 = "SELECT * FROM openApplications WHERE user = ? AND job = ?";
         const [existingApps] = await pool.query(sql2, [userId, jobId]);
@@ -152,14 +154,14 @@ exports.applyToJob = async (req, res) => {
             return res.status(409).json({ error: 'Item already exists.' });
         }
 
-        const sql3 = "INSERT INTO openApplications (user, job, coverLetter, otherOptions, state, resume, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        const [rows] = await pool.query(sql3, [userId, jobId, coverLetter, otherOptions, 'pending', resume[0].resume, formattedDate]);
+        const sql3 = "INSERT INTO openApplications (user, job, state, resume, created_at) VALUES (?, ?, ?, ?, ?)";
+        const [rows] = await pool.query(sql3, [userId, parseInt(jobId), 'pending', null, formattedDate]);
 
         if (rows.affectedRows === 0 || !rows.insertId) {
             return res.status(500).json({ error: 'Internal server error.' });
         }
 
-        return res.status(200).json({ message: 'Application submitted successfully.' });
+        return res.status(200).json({ message: 'Application submitted successfully.', applicationId: rows.insertId});
     } catch (err) {
         console.error('Error querying database:', err);
         return res.status(500).json({ error: 'Internal server error.' });
@@ -194,19 +196,35 @@ exports.deleteApplication = async (req, res) => {
 }
 
 exports.getApplications = async (req, res) => {
-    const userId = req.session.userId;
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
 
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
 
     try {
-        const sql = "SELECT * FROM openApplications WHERE user = ?";
+        const sql = `
+            SELECT 
+                a.*, 
+                p.title, 
+                p.address, 
+                p.estimatedPay, 
+                c.name AS companyName
+            FROM 
+                openApplications a
+            JOIN 
+                postedJob p ON a.job = p.id
+            JOIN 
+                companies c ON p.company = c.id
+            WHERE 
+                a.user = ?
+        `;
         const [rows] = await pool.query(sql, [userId]);
 
         //user can have no applications
 
-        return res.status(200).json(rows);
+        return res.status(200).json({ applications: rows });
     } catch (err) {
         console.error('Error querying database:', err);
         return res.status(500).json({ error: 'Internal server error.' });
@@ -214,8 +232,10 @@ exports.getApplications = async (req, res) => {
 }
 
 exports.uploadResume = async (req, res) => {
-    const jobId = 1;
-    const applicationId = 2;
+    const jobId = req.params.jobId;
+    const applicationId = req.params.applicationId;
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
 
     if (!jobId || !applicationId) {
         return res.status(400).json({ error: 'Job ID and Application ID are required.' });
@@ -230,9 +250,9 @@ exports.uploadResume = async (req, res) => {
         const sql = `
             UPDATE openApplications 
             SET resume = ? 
-            WHERE id = ? AND job = ?
+            WHERE id = ? AND job = ? AND user = ?
         `;
-        await pool.query(sql, [req.file.buffer, applicationId, jobId]);
+        await pool.query(sql, [req.file.buffer, applicationId, jobId, userId]);
 
         return res.status(200).json({ message: 'Resume uploaded successfully.' });
     } catch (err) {
@@ -241,3 +261,34 @@ exports.uploadResume = async (req, res) => {
     }
 };
 
+exports.getApplications = async (req, res) => {
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+
+    try {
+        const sql = `
+            SELECT 
+                p.*, 
+                c.name AS companyName
+            FROM 
+                postedJob p
+            LEFT JOIN 
+                openApplications a ON p.id = a.job AND a.user = ?
+            LEFT JOIN 
+                companies c ON p.company = c.id
+            WHERE 
+                a.job IS NULL
+            LIMIT 3;
+        `;
+        const [rows] = await pool.query(sql, [userId]);
+
+        return res.status(200).json({ jobs: rows });
+    } catch (err) {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}

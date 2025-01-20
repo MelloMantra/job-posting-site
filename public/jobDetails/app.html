@@ -152,7 +152,7 @@
                     document.getElementById('preferredExperience').textContent = data.preferredExperience;
                     
                     // Update page title
-                    document.title = `${data.title} at ${data.company}`;
+                    document.title = `${data.title}`;
                 } else {
                     console.log(`Error: ${response.status} ${response.statusText}`);
                     alert("Internal server error.");

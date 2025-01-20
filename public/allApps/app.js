@@ -130,6 +130,24 @@ document.addEventListener("DOMContentLoaded", async function () {
   const jobId = window.location.pathname.split('/').pop();
 
   try {
+    const response = await fetch(`../api/all/getJob/${jobId}`);
+    if (response.ok) {
+      const { jobs } = await response.json();
+      console.log(jobs);
+      const jobTitle = document.querySelector('.job-title');
+      jobTitle.textContent = jobs.title;
+      const jobDate = document.querySelector('.job-date');
+      jobDate.textContent += " " + formatDate(jobs.date_created);
+    } else {
+      console.log(`Error: ${response.status} ${response.statusText}`);
+      alert("Internal server error.");
+    }
+  } catch (err) {
+    console.error('Error querying database:', err);
+    alert('An unexpected error occurred. Please try again.');
+  }
+
+  try {
     const response = await fetch(`../api/company/getApplications/${jobId}`);
     if (response.ok) {
       const { applications } = await response.json();
@@ -213,6 +231,15 @@ async function makeDecision(applicationId, decision) {
 function capitalizeFirstLetter(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+  }).format(date);
 }
 
 async function downloadResume(jobId, applicationId) {
