@@ -331,7 +331,7 @@ exports.downloadResume = async (req, res) => {
     }
 };
 
-exports.get4jobs = async (req, res) => {
+exports.get4Jobs = async (req, res) => {
     const companyId = 1; //for testing purposes
     //const companyId = req.session?.companyId;
 
@@ -367,7 +367,7 @@ exports.get4jobs = async (req, res) => {
     }
 }
 
-exports.get4applicants = async (req, res) => {
+exports.get4Applicants = async (req, res) => {
     const companyId = 1; //for testing purposes
     //const companyId = req.session?.companyId;
 
