@@ -1,3 +1,4 @@
+/*
 import React, { useState } from 'react';
 import { MapPin } from 'lucide-react';
 
@@ -106,14 +107,14 @@ const JobBoard = () => {
 
   return (
     <div className="flex min-h-screen bg-[#1A1A1A]">
-      {/* Navigation */}
+      { Navigation }
       <div className="fixed left-0 top-0 w-48 h-full bg-black">
-        {/* Logo space */}
+        {/* Logo space }
         <div className="h-24 border-b border-zinc-800 flex items-center justify-center">
           <div className="text-white text-xl font-bold">Jobify</div>
         </div>
         
-        {/* Navigation items */}
+        {/* Navigation items }
         <div className="mt-4">
           <NavItem text="Home" isActive={activeNav === 'Home'} onClick={() => setActiveNav('Home')} />
           <NavItem text="Search for Jobs" isActive={activeNav === 'Search'} onClick={() => setActiveNav('Search')} />
@@ -122,12 +123,12 @@ const JobBoard = () => {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content }
       <div className="ml-48 flex-1 p-8">
         <div className="mb-12">
           <h2 className="text-white text-2xl font-bold mb-6">Top Opportunities</h2>
           
-          {/* Jobs container - can be populated dynamically */}
+          {/* Jobs container - can be populated dynamically }
           <div id="jobsContainer" className="grid grid-cols-3 gap-4">
             {placeholderOpportunities.map((job, index) => (
               <JobCard key={index} {...job} />
@@ -154,3 +155,4 @@ const JobBoard = () => {
 };
 
 export default JobBoard;
+*/

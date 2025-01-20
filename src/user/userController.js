@@ -208,3 +208,30 @@ exports.getApplications = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 }
+
+app.post('/upload-resume', upload.single('resume'), async (req, res) => {
+    const { jobId, applicationId } = req.body;
+
+    if (!jobId || !applicationId) {
+        return res.status(400).json({ error: 'Job ID and Application ID are required.' });
+    }
+
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded or invalid file type.' });
+    }
+
+    try {
+        // Insert or update the resume into the openApplications table
+        const sql = `
+            UPDATE openApplications 
+            SET resume = ? 
+            WHERE id = ? AND job = ?
+        `;
+        await pool.query(sql, [req.file.buffer, applicationId, jobId]);
+
+        return res.status(200).json({ message: 'Resume uploaded successfully.' });
+    } catch (err) {
+        console.error('Error uploading resume:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+});
