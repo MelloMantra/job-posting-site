@@ -1,0 +1,319 @@
+!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background: #000;
+      min-height: 100vh;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cursor-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .grid-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      perspective: 1000px;
+    }
+
+    .grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(77, 154, 206, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77, 154, 206, 0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+      transform-style: preserve-3d;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .job-header {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .job-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #4D9ACE, #2d5a7a, #4D9ACE);
+      animation: borderFlow 2s linear infinite;
+    }
+
+    @keyframes borderFlow {
+      to {
+        left: 100%;
+      }
+    }
+
+    .job-title {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .job-date {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .view-details {
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(77, 154, 206, 0.3);
+      border-radius: 6px;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    }
+
+    .view-details:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(77, 154, 206, 0.3);
+      background: rgba(77, 154, 206, 0.5);
+    }
+
+    .candidates-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .candidate-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transform-origin: left;
+      animation: slideIn 0.5s ease-out;
+      text-decoration: none;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .candidate-card:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .candidate-info {
+      flex-grow: 1;
+    }
+
+    .candidate-name {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .candidate-date {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .status {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .status-pending {
+      background: rgba(255, 243, 205, 0.2);
+      color: #ffd700;
+    }
+
+    .status-accepted {
+      background: rgba(212, 237, 218, 0.2);
+      color: #98ff98;
+    }
+
+    .status-rejected {
+      background: rgba(248, 215, 218, 0.2);
+      color: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <div class="grid"></div>
+  </div>
+  <canvas id="cursor-gradient"></canvas>
+  
+  <div class="container">
+    <div class="job-header">
+      <h1 class="job-title">Senior Frontend Developer</h1>
+      <div class="job-date">Posted on January 5, 2025</div>
+      <a href="#" class="view-details">View Job Details</a>
+    </div>
+
+    <div class="candidates-list">
+      <!-- Candidates will be dynamically added here -->
+    </div>
+  </div>
+
+  <script>
+    // Cursor gradient and grid effect
+    const canvas = document.getElementById('cursor-gradient');
+    const ctx = canvas.getContext('2d');
+    const grid = document.querySelector('.grid');
+    let cursor = { x: 0, y: 0 };
+    let targetX = 0;
+    let targetY = 0;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    window.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    });
+
+    function lerp(start, end, factor) {
+      return start + (end - start) * factor;
+    }
+
+    function updateCursor() {
+      cursor.x = lerp(cursor.x, targetX, 0.1);
+      cursor.y = lerp(cursor.y, targetY, 0.1);
+    }
+
+    function drawGradient() {
+      updateCursor();
+      
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const gradient = ctx.createRadialGradient(
+        cursor.x, cursor.y, 0,
+        cursor.x, cursor.y, 300
+      );
+      
+      gradient.addColorStop(0, 'rgba(77, 154, 206, 0.3)');
+      gradient.addColorStop(1, 'transparent');
+      
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Calculate grid transformation
+      const dx = cursor.x - window.innerWidth / 2;
+      const dy = cursor.y - window.innerHeight / 2;
+      const tiltX = (dy / window.innerHeight) * 10;
+      const tiltY = -(dx / window.innerWidth) * 10;
+      
+      grid.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(0px)`;
+      
+      requestAnimationFrame(drawGradient);
+    }
+
+    drawGradient();
+
+    // Sample candidates data
+    const candidates = [
+      { name: 'John Smith', date: 'Jan 6, 2025', status: 'pending' },
+      { name: 'Sarah Johnson', date: 'Jan 7, 2025', status: 'accepted' },
+      { name: 'Mike Williams', date: 'Jan 7, 2025', status: 'rejected' },
+      { name: 'Emily Brown', date: 'Jan 8, 2025', status: 'pending' },
+      { name: 'David Wilson', date: 'Jan 8, 2025', status: 'accepted' }
+    ];
+
+    // Function to create candidate cards
+    function createCandidateCard(candidate) {
+      const card = document.createElement('a');
+      card.href = '#';
+      card.className = 'candidate-card';
+      card.innerHTML = `
+        <div class="candidate-info">
+          <div class="candidate-name">${candidate.name}</div>
+          <div class="candidate-date">Applied on ${candidate.date}</div>
+        </div>
+        <div class="status status-${candidate.status}">${
+          candidate.status.charAt(0).toUpperCase() + candidate.status.slice(1)
+        }</div>
+      `;
+      return card;
+    }
+
+    // Populate candidates list with animation delay
+    const candidatesList = document.querySelector('.candidates-list');
+    candidates.forEach((candidate, index) => {
+      setTimeout(() => {
+        const card = createCandidateCard(candidate);
+        candidatesList.appendChild(card);
+      }, index * 200);
+    });
+  </script>
+</body>
+</html>
