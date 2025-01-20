@@ -330,3 +330,76 @@ exports.downloadResume = async (req, res) => {
         res.status(500).json({ error: 'Internal server error.' });
     }
 };
+
+exports.get4jobs = async (req, res) => {
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
+
+    if (!companyId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+
+    try {
+        const sql = `
+        SELECT 
+            p.*, 
+            COUNT(a.id) AS applicantCount
+        FROM 
+            postedJob p
+        LEFT JOIN 
+            openApplications a ON p.id = a.job
+        WHERE 
+            p.company = ?
+        GROUP BY 
+            p.id
+        ORDER BY 
+            p.created_at DESC
+        LIMIT 4;
+        `;
+        const [rows] = await pool.query(sql, [companyId]);
+
+        //rows can be empty if no jobs have been posted
+
+        return res.status(200).json({ jobs: rows });
+    } catch (err) {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
+
+exports.get4applicants = async (req, res) => {
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
+
+    if (!companyId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+
+    try {
+        const sql = `
+        SELECT 
+            a.*, 
+            p.title AS jobTitle, 
+            p.address AS jobAddress, 
+            u.firstName, 
+            u.lastName
+        FROM 
+            openApplications a
+        JOIN 
+            postedJob p ON a.job = p.id
+        JOIN 
+            users u ON a.user = u.id
+        WHERE 
+            p.company = ?
+        ORDER BY 
+            a.created_at DESC
+        LIMIT 4;
+        `;
+        const [rows] = await pool.query(sql, [companyId]);
+        
+        return res.status(200).json({ applicants: rows });
+    } catch (err) {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}

@@ -13,6 +13,7 @@ exports.upload = multer({
     },
 });
 
+/* //Somehow there were two uploadResumes, so I'm comementing out this one cuz I'm pretty sure the other is the one being used
 exports.uploadResume = async (req, res) => {
     try {
         const file = req.file;
@@ -39,6 +40,7 @@ exports.uploadResume = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 };
+*/
 
 exports.downloadResume = async (req, res) => {
     const { userId } = req.session.userId;
@@ -261,7 +263,7 @@ exports.uploadResume = async (req, res) => {
     }
 };
 
-exports.getApplications = async (req, res) => {
+exports.get4Jobs = async (req, res) => {
     const userId = 1; //for testing purposes
     //const userId = req.session.userId;
 
@@ -282,7 +284,7 @@ exports.getApplications = async (req, res) => {
                 companies c ON p.company = c.id
             WHERE 
                 a.job IS NULL
-            LIMIT 3;
+            LIMIT 4;
         `;
         const [rows] = await pool.query(sql, [userId]);
 
