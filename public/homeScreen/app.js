@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // scrolling anim
     window.addEventListener('scroll', () => { {
         var scrollAmt = window.scrollY * 2;
-        var scrollStart = 1750;
+        var scrollStart = 1850;
         bearnotes.style.transform = `translate(${scrollAmt-scrollStart}px, -50%)`;
     }});
 
