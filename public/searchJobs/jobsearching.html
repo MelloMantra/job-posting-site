@@ -355,7 +355,7 @@
             const jobItem = document.createElement("div");
             jobItem.classList.add("job-item");
             jobItem.innerHTML = `
-                <div class="title"><a href="/jobDetails/${job.id}">${job.title}</a></div>
+                <div class="title"><a href="/job/${job.id}">${job.title}</a></div>
                 <div class="company"><a href="/companyProfile/${job.companyName}">${job.companyName}</a></div>
                 <div class="location">${job.isRemote ? "Remote" : job.address}</div>
                 <div class="pay">$${job.estimatedPay}</div>
