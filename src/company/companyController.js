@@ -275,7 +275,8 @@ exports.makeDecision = async (req, res) => {
 exports.downloadResume = async (req, res) => {
     const jobId = req.params.jobId;
     const applicationId = req.params.applicationId;
-    const companyId = req.session?.companyId;
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -296,7 +297,7 @@ exports.downloadResume = async (req, res) => {
         const [rows] = await pool.query(sql, [applicationId, jobId, companyId]);
 
         if (rows.length === 0) {
-            return res.status(200).json({ message: 'Application or resume not found.' });//resume can be empty
+            return res.status(404).json({ message: 'Application or resume not found.' });//resume can be empty
         }
 
         const resume = rows[0].resume;
@@ -309,7 +310,8 @@ exports.downloadResume = async (req, res) => {
         res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
         res.setHeader('Content-Length', resume.length);
 
-        res.end(resume);
+        res.write(resume);
+        res.end();
     } catch (err) {
         console.error('Error downloading resume:', err);
         res.status(500).json({ error: 'Internal server error.' });

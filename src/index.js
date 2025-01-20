@@ -124,3 +124,12 @@ app.get('/allApps/:jobId', (req, res) => {
 app.get('/searchJobs', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'searchJobs', 'jobsearching.html'));
 });
+
+app.get('/testPdfUpload', (req, res) => {
+    const areTesting = true;
+    if (areTesting) {
+        res.sendFile(path.join(initialpath, 'public', 'test', 'testResumeUpload.html'));
+    } else {
+        res.status(401).json({ error: 'Not in testing mode.' });
+    }
+})

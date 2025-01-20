@@ -4,9 +4,13 @@ const path = require('path');
 
 exports.upload = multer({
     storage: multer.memoryStorage(),
-    limits: {
-        fileSize: 5 * 1024 * 1024
-    }
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === 'application/pdf') {
+            cb(null, true);
+        } else {
+            cb(new Error('Only PDF files are allowed.'));
+        }
+    },
 });
 
 exports.uploadResume = async (req, res) => {
@@ -208,9 +212,10 @@ exports.getApplications = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 }
-/*
-app.post('/upload-resume', upload.single('resume'), async (req, res) => {
-    const { jobId, applicationId } = req.body;
+
+exports.uploadResume = async (req, res) => {
+    const jobId = 1;
+    const applicationId = 2;
 
     if (!jobId || !applicationId) {
         return res.status(400).json({ error: 'Job ID and Application ID are required.' });
@@ -221,7 +226,7 @@ app.post('/upload-resume', upload.single('resume'), async (req, res) => {
     }
 
     try {
-        // Insert or update the resume into the openApplications table
+        // Update resume in the openApplications table
         const sql = `
             UPDATE openApplications 
             SET resume = ? 
@@ -234,5 +239,5 @@ app.post('/upload-resume', upload.single('resume'), async (req, res) => {
         console.error('Error uploading resume:', err);
         return res.status(500).json({ error: 'Internal server error.' });
     }
-});
-*/
+};
+
