@@ -196,7 +196,7 @@ ul li {
     box-shadow: 3px 2px 22px 1px rgba(0,0,0, 0.24);
 }
 
-.corner {
+.trcorner {
     position: absolute;
     top: 5px;
     right: 0;
@@ -205,12 +205,33 @@ ul li {
     width: 6em;
 }
 
+.tlcorner {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 90vw;
+    z-index: 999;
+    width: 14em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    vertical-align: middle;
+}
+
 a {
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+.tlcorner:hover {
+    text-decoration: none;
+}
+
+.trcorner:hover {
+    text-decoration: none;
 }
 
 .minilogo:hover {
@@ -312,7 +333,7 @@ a:hover {
     position: absolute;
     z-index: 2;
     opacity: 0;
-    transition: ease 0.15s;
+    transition: ease 0.1s;
 }
 
 .dropdownItem {
@@ -390,4 +411,9 @@ hr {
     height: fit-content;
     transition: 0.3s ease;
     margin: 10px;
+}
+
+.applicantBox:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
 }

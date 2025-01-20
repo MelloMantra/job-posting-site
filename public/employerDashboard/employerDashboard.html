@@ -4,7 +4,7 @@
         <title>Jobify</title>
         <meta name="description" content="Login to Jobify">
         <link rel="icon" href="../assets/icon.png">
-        <link rel="stylesheet" href="../companyDashboard/style.css">
+        <link rel="stylesheet" href="../employerDashboard/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
         <script src="https://unpkg.com/split-type"></script>
         <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
-        <script src="app.js"></script>
+        <script src="../employerDashboard/app.js"></script>
     </head>
     <body>
 
@@ -26,7 +26,8 @@
                 </ul>
             </nav>
         </div>
-        <a href="../loginScreen/login.html" class="dullButton corner">Log Out</a>
+        <a href="../loginScreen/login.html" class="dullButton trcorner">Log Out</a>
+        <a href="../createJob/createJob.html" class="popButton tlcorner"><img src="../assets/plus.png" class="dropdownIcon">Create New Listing</a>
 
         <div class="sidebar">
             <button class="tabBtn" data-tab="search" id="searchEmployeesBtn">Search Applicants</button>
@@ -44,14 +45,14 @@
             <div class="tab active" id="dashboard">
 
                 <div class="popUp unselectable">
-                    <div class="dropdownItem" style="cursor: default;"><p>Actions</p></div>
-                    <div class="dropdownItem"><img src="../assets/details.png" class="dropdownIcon"><p>Review</p></div>
+                    <div class="dropdownItem" id="popUpTitle" style="cursor: default;"><p>Actions</p></div>
+                    <button class="dropdownItem" id="reviewPop"><img src="../assets/details.png" class="dropdownIcon"><p>Review</p></button>
 
-                    <div class="dropdownItem"><img src="../assets/edit.png" class="dropdownIcon"><p>Edit</p></div>
-                    <div class="dropdownItem"><img src="../assets/close.png" class="dropdownIcon"><p>End Listing</p></div>
+                    <div class="dropdownItem" id="editPop"><img src="../assets/edit.png" class="dropdownIcon"><p>Edit</p></div>
+                    <div class="dropdownItem" id="endListingPop"><img src="../assets/close.png" class="dropdownIcon"><p>End Listing</p></div>
 
-                    <div class="dropdownItem"><img src="../assets/hire.png" class="dropdownIcon"><p>Hire</p></div>
-                    <div class="dropdownItem"><img src="../assets/close.png" class="dropdownIcon"><p>Reject</p></div>
+                    <div class="dropdownItem" id="hirePop"><img src="../assets/hire.png" class="dropdownIcon"><p>Hire</p></div>
+                    <div class="dropdownItem" id="rejectPop"><img src="../assets/close.png" class="dropdownIcon"><p>Reject</p></div>
                 </div>
 
                 <div class="jobsWrapper">
