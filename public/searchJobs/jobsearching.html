@@ -74,9 +74,15 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
+        /* 2D Button Style */
+        .search-bar button {
+            box-shadow: none; /* Remove 3D effect */
+            transition: background-color 0.3s ease;
+        }
+
         .search-bar button:hover {
             background-color: #5fadd3;
-            transform: scale(1.05);
+            transform: scale(1); /* Remove scaling effect for 2D look */
         }
 
         .filters {
@@ -158,6 +164,7 @@
             text-decoration: none;
         }
 
+        /* 2D Apply Button Style */
         .apply-button {
             margin-top: 15px;
             padding: 10px 20px;
@@ -167,12 +174,12 @@
             font-size: 16px;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .apply-button:hover {
             background-color: #5fadd3;
-            transform: scale(1.05);
+            transform: scale(1); /* Remove scaling effect for 2D look */
         }
 
         .footer {
@@ -185,6 +192,40 @@
         .small-text {
             font-size: 12px;
             color: #bbb;
+        }
+
+        /* Job Detail Formatting */
+        .job-detail {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+        }
+
+        .job-detail .title {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .job-detail .company {
+            font-size: 20px;
+            color: #bbb;
+            margin-top: 10px;
+        }
+
+        .job-detail .location,
+        .job-detail .pay,
+        .job-detail .industry,
+        .job-detail .occupation {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #bbb;
+        }
+
+        .job-detail a {
+            color: #89CFF0;
+            text-decoration: none;
         }
     </style>
 </head>
