@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif;}
+    body {background: #000; min-height: 100vh; padding: 2rem; position: relative;}
+    #cursor-gradient {position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;}
+    .grid-container {position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; perspective: 1000px;}
+    .grid {position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(77,154,206,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(77,154,206,0.1) 1px, transparent 1px); background-size: 30px 30px; transform-style: preserve-3d;}
+    .container {max-width: 900px; margin: 0 auto; position: relative; z-index: 2;}
+    .job-header {background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-bottom: 2rem;}
+    .job-title {font-size: 2rem; color: #fff; margin-bottom: 1rem;}
+    .job-date {color: #ccc; font-size: 0.9rem;}
+    .view-details {color: #fff; text-decoration: none; display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: rgba(77,154,206,0.3); border-radius: 6px; transition: 0.2s;}
+    .view-details:hover {transform: translateY(-2px); background: rgba(77,154,206,0.5);}
+    .candidates-list {display: grid; gap: 1rem;}
+    .candidate-card {background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;}
+    .candidate-card:hover {transform: translateY(-2px); background: rgba(255,255,255,0.15);}
+    .candidate-name {font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem;}
+    .candidate-date {color: #ccc; font-size: 0.9rem;}
+    .status {padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;}
+    .status-pending {background: rgba(255,243,205,0.2); color: #ffd700;}
+    .status-accepted {background: rgba(212,237,218,0.2); color: #98ff98;}
+    .status-rejected {background: rgba(248,215,218,0.2); color: #ff6b6b;}
+    .modal {display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; backdrop-filter: blur(5px);}
+    .modal-content {background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); margin: 5% auto; padding: 2rem; width: 90%; max-width: 600px; border-radius: 12px; color: #fff;}
+    .close-modal {position: absolute; right: 1rem; top: 1rem; color: #fff; font-size: 1.5rem; cursor: pointer;}
+    .candidate-details h2 {font-size: 1.5rem; margin-bottom: 1.5rem;}
+    .candidate-details p {margin-bottom: 1rem; font-size: 1.1rem;}
+    .download-resume {display: inline-block; padding: 0.8rem 1.5rem; background: rgba(77,154,206,0.3); color: #fff; text-decoration: none; border-radius: 6px; margin: 1rem 0;}
+    .status-buttons {display: flex; gap: 1rem; margin-top: 1.5rem;}
+    .status-button {padding: 0.8rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;}
+    .hire-button {background: #98ff98; color: #000;}
+    .reject-button {background: #ff6b6b; color: #fff;}
+  </style>
+</head>
+<body>
+  <div class="grid-container"><div class="grid"></div></div>
+  <canvas id="cursor-gradient"></canvas>
+  
+  <div class="container">
+    <div class="job-header">
+      <h1 class="job-title">Senior Frontend Developer</h1>
+      <div class="job-date">Posted on January 5, 2025</div>
+      <a href="#" class="view-details">View Job Details</a>
+    </div>
+    <div class="candidates-list"></div>
+  </div>
+
+  <div id="candidateModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="candidate-details"></div>
+    </div>
+  </div>
+
+  <script>
+    const candidates = [
+      {name:'John Smith',email:'john.smith@email.com',date:'Jan 6, 2025',status:'pending',resumeUrl:'#'},
+      {name:'Sarah Johnson',email:'sarah.j@email.com',date:'Jan 7, 2025',status:'accepted',resumeUrl:'#'},
+      {name:'Mike Williams',email:'mike.w@email.com',date:'Jan 7, 2025',status:'rejected',resumeUrl:'#'},
+      {name:'Emily Brown',email:'emily.b@email.com',date:'Jan 8, 2025',status:'pending',resumeUrl:'#'},
+      {name:'David Wilson',email:'david.w@email.com',date:'Jan 8, 2025',status:'accepted',resumeUrl:'#'}
+    ];
+
+    const canvas = document.getElementById('cursor-gradient');
+    const ctx = canvas.getContext('2d');
+    const grid = document.querySelector('.grid');
+    const modal = document.getElementById('candidateModal');
+    let cursor = {x:0, y:0}, targetX = 0, targetY = 0;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function updateCursor() {
+      cursor.x += (targetX - cursor.x) * 0.1;
+      cursor.y += (targetY - cursor.y) * 0.1;
+    }
+
+    function drawGradient() {
+      updateCursor();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const gradient = ctx.createRadialGradient(cursor.x,cursor.y,0,cursor.x,cursor.y,300);
+      gradient.addColorStop(0, 'rgba(77,154,206,0.3)');
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      const dx = cursor.x - window.innerWidth/2;
+      const dy = cursor.y - window.innerHeight/2;
+      grid.style.transform = `rotateX(${(dy/window.innerHeight)*10}deg) rotateY(${-(dx/window.innerWidth)*10}deg)`;
+      requestAnimationFrame(drawGradient);
+    }
+
+    function createCandidateCard(candidate, index) {
+      const card = document.createElement('div');
+      card.className = 'candidate-card';
+      card.innerHTML = `
+        <div class="candidate-info">
+          <div class="candidate-name">${candidate.name}</div>
+          <div class="candidate-date">Applied on ${candidate.date}</div>
+        </div>
+        <div class="status status-${candidate.status}">${candidate.status.charAt(0).toUpperCase() + candidate.status.slice(1)}</div>
+      `;
+      card.onclick = () => showCandidateDetails(index);
+      return card;
+    }
+
+    function showCandidateDetails(index) {
+      const candidate = candidates[index];
+      document.querySelector('.candidate-details').innerHTML = `
+        <h2>${candidate.name}</h2>
+        <p><strong>Email:</strong> ${candidate.email}</p>
+        <p><strong>Application Date:</strong> ${candidate.date}</p>
+        <p><strong>Current Status:</strong> ${candidate.status.charAt(0).toUpperCase() + candidate.status.slice(1)}</p>
+        <a href="${candidate.resumeUrl}" class="download-resume" download>Download Resume</a>
+        <div class="status-buttons">
+          <button class="status-button hire-button" onclick="updateStatus(${index}, 'accepted')">Hire Candidate</button>
+          <button class="status-button reject-button" onclick="updateStatus(${index}, 'rejected')">Reject Candidate</button>
+        </div>
+      `;
+      modal.style.display = 'block';
+    }
+
+    function updateStatus(index, newStatus) {
+      candidates[index].status = newStatus;
+      const cards = document.querySelectorAll('.candidate-card');
+      const statusElement = cards[index].querySelector('.status');
+      statusElement.className = `status status-${newStatus}`;
+      statusElement.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+      modal.style.display = 'none';
+    }
+
+    // Initialize
+    resizeCanvas();
+    window.onresize = resizeCanvas;
+    window.onmousemove = e => {targetX = e.clientX; targetY = e.clientY;};
+    document.querySelector('.close-modal').onclick = () => modal.style.display = 'none';
+    window.onclick = e => {if(e.target === modal) modal.style.display = 'none';};
+    candidates.forEach((candidate, index) => {
+      document.querySelector('.candidates-list').appendChild(createCandidateCard(candidate, index));
+    });
+    drawGradient();
+  </script>
+</body>
+</html>
