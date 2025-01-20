@@ -122,6 +122,5 @@ app.get('/allApps/:jobId', (req, res) => {
 });
 
 app.get('/searchJobs', (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'searchJobs', 'searchJobs.html'));
+    res.sendFile(path.join(initialpath, 'public', 'searchJobs', 'jobsearching.html'));
 });
-
