@@ -55,94 +55,82 @@
   </div>
 
   <script>
-    const candidates = [
-      {name:'John Smith',email:'john.smith@email.com',date:'Jan 6, 2025',status:'pending',resumeUrl:'#'},
-      {name:'Sarah Johnson',email:'sarah.j@email.com',date:'Jan 7, 2025',status:'accepted',resumeUrl:'#'},
-      {name:'Mike Williams',email:'mike.w@email.com',date:'Jan 7, 2025',status:'rejected',resumeUrl:'#'},
-      {name:'Emily Brown',email:'emily.b@email.com',date:'Jan 8, 2025',status:'pending',resumeUrl:'#'},
-      {name:'David Wilson',email:'david.w@email.com',date:'Jan 8, 2025',status:'accepted',resumeUrl:'#'}
-    ];
+    document.addEventListener("DOMContentLoaded", async function () {
+      const candidatesList = document.querySelector('.candidates-list');
+      const modal = document.getElementById('candidateModal');
+      const modalContent = document.querySelector('.candidate-details');
+      const jobId = window.location.pathname.split('/').pop();
 
-    const canvas = document.getElementById('cursor-gradient');
-    const ctx = canvas.getContext('2d');
-    const grid = document.querySelector('.grid');
-    const modal = document.getElementById('candidateModal');
-    let cursor = {x:0, y:0}, targetX = 0, targetY = 0;
+      try {
+        const response = await fetch(`../api/company/getApplications/${jobId}`);
+        if (response.ok) {
+          const { applications } = await response.json();
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+          applications.forEach((candidate, index) => {
+            const card = document.createElement('div');
+            card.className = 'candidate-card';
+            card.innerHTML = `
+              <div class="candidate-info">
+                <div class="candidate-name">${candidate.firstName} ${candidate.lastName}</div>
+                <div class="candidate-date">Applied on ${candidate.created_at.split('T')[0]}</div>
+              </div>
+              <div class="status status-${candidate.state}">${candidate.state.charAt(0).toUpperCase() + candidate.state.slice(1)}</div>
+            `;
+            card.addEventListener('click', () => {
+              modalContent.innerHTML = `
+                <h2>${candidate.firstName} ${candidate.lastName}</h2>
+                <p><strong>Email:</strong> ${candidate.email}</p>
+                <p><strong>Application Date:</strong> ${candidate.created_at.split('T')[0]}</p>
+                <p><strong>Major:</strong> ${candidate.major}</p>
+                <p><strong>Education Level:</strong> ${candidate.educationLevel}</p>
+                <p><strong>University:</strong> ${candidate.university}</p>
+                <p><strong>Experience:</strong> ${candidate.pastExperienceTitle} at ${candidate.pastExperienceCompany}</p>
+                <a href="#" class="download-resume" download>Download Resume</a>
+                <div class="status-buttons">
+                  <button class="status-button hire-button" onclick="makeDecision(${candidate.id}, 'accepted')">Hire Candidate</button>
+                  <button class="status-button reject-button" onclick="makeDecision(${candidate.id}, 'rejected')">Reject Candidate</button>
+                </div>
+              `;
+              modal.style.display = 'block';
+            });
+            candidatesList.appendChild(card);
+          });
+        } else {
+          alert('Failed to fetch candidates');
+        }
+      } catch (error) {
+        console.error('Error fetching candidates:', error);
+      }
 
-    function updateCursor() {
-      cursor.x += (targetX - cursor.x) * 0.1;
-      cursor.y += (targetY - cursor.y) * 0.1;
-    }
-
-    function drawGradient() {
-      updateCursor();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const gradient = ctx.createRadialGradient(cursor.x,cursor.y,0,cursor.x,cursor.y,300);
-      gradient.addColorStop(0, 'rgba(77,154,206,0.3)');
-      gradient.addColorStop(1, 'transparent');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      const dx = cursor.x - window.innerWidth/2;
-      const dy = cursor.y - window.innerHeight/2;
-      grid.style.transform = `rotateX(${(dy/window.innerHeight)*10}deg) rotateY(${-(dx/window.innerWidth)*10}deg)`;
-      requestAnimationFrame(drawGradient);
-    }
-
-    function createCandidateCard(candidate, index) {
-      const card = document.createElement('div');
-      card.className = 'candidate-card';
-      card.innerHTML = `
-        <div class="candidate-info">
-          <div class="candidate-name">${candidate.name}</div>
-          <div class="candidate-date">Applied on ${candidate.date}</div>
-        </div>
-        <div class="status status-${candidate.status}">${candidate.status.charAt(0).toUpperCase() + candidate.status.slice(1)}</div>
-      `;
-      card.onclick = () => showCandidateDetails(index);
-      return card;
-    }
-
-    function showCandidateDetails(index) {
-      const candidate = candidates[index];
-      document.querySelector('.candidate-details').innerHTML = `
-        <h2>${candidate.name}</h2>
-        <p><strong>Email:</strong> ${candidate.email}</p>
-        <p><strong>Application Date:</strong> ${candidate.date}</p>
-        <p><strong>Current Status:</strong> ${candidate.status.charAt(0).toUpperCase() + candidate.status.slice(1)}</p>
-        <a href="${candidate.resumeUrl}" class="download-resume" download>Download Resume</a>
-        <div class="status-buttons">
-          <button class="status-button hire-button" onclick="updateStatus(${index}, 'accepted')">Hire Candidate</button>
-          <button class="status-button reject-button" onclick="updateStatus(${index}, 'rejected')">Reject Candidate</button>
-        </div>
-      `;
-      modal.style.display = 'block';
-    }
-
-    function updateStatus(index, newStatus) {
-      candidates[index].status = newStatus;
-      const cards = document.querySelectorAll('.candidate-card');
-      const statusElement = cards[index].querySelector('.status');
-      statusElement.className = `status status-${newStatus}`;
-      statusElement.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
-      modal.style.display = 'none';
-    }
-
-    // Initialize
-    resizeCanvas();
-    window.onresize = resizeCanvas;
-    window.onmousemove = e => {targetX = e.clientX; targetY = e.clientY;};
-    document.querySelector('.close-modal').onclick = () => modal.style.display = 'none';
-    window.onclick = e => {if(e.target === modal) modal.style.display = 'none';};
-    candidates.forEach((candidate, index) => {
-      document.querySelector('.candidates-list').appendChild(createCandidateCard(candidate, index));
+      document.querySelector('.close-modal').addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+      window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+      };
     });
-    drawGradient();
+
+    async function makeDecision(applicationId, decision) {
+      if (!['accepted', 'rejected'].includes(decision)) {
+        alert('Invalid decision');
+        return;
+      }
+      try {
+        const response = await fetch(`../api/company/makeDecision/${applicationId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ decision }),
+        });
+        if (response.ok) {
+          alert('Decision updated successfully');
+          location.reload();
+        } else {
+          alert('Failed to update decision');
+        }
+      } catch (error) {
+        console.error('Error making decision:', error);
+      }
+    }
   </script>
 </body>
 </html>
@@ -237,8 +225,8 @@
                 <p><strong>Experience:</strong> ${candidate.pastExperienceTitle} at ${candidate.pastExperienceCompany}</p>
                 <a href="#" class="download-resume" download>Download Resume</a>
                 <div class="status-buttons">
-                  <button class="status-button hire-button" onclick="makeDecision(${candidate.id}, 'accepted')">Hire Candidate</button>
-                  <button class="status-button reject-button" onclick="makeDecision(${candidate.id}, 'rejected')">Reject Candidate</button>
+                  <button class="status-button hire-button" onclick="confirmDecision(${candidate.id}, 'accepted')">Hire Candidate</button>
+                  <button class="status-button reject-button" onclick="confirmDecision(${candidate.id}, 'rejected')">Reject Candidate</button>
                 </div>
               `;
               modal.style.display = 'block';
@@ -259,6 +247,13 @@
         if (e.target === modal) modal.style.display = 'none';
       };
     });
+
+    async function confirmDecision(applicationId, decision) {
+      const confirmMessage = `Are you sure you want to mark this application as ${decision}? This action cannot be undone.`;
+      if (confirm(confirmMessage)) {
+        makeDecision(applicationId, decision);
+      }
+    }
 
     async function makeDecision(applicationId, decision) {
       if (!['accepted', 'rejected'].includes(decision)) {
@@ -284,4 +279,3 @@
   </script>
 </body>
 </html>
-
