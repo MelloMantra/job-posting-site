@@ -196,19 +196,35 @@ exports.deleteApplication = async (req, res) => {
 }
 
 exports.getApplications = async (req, res) => {
-    const userId = req.session.userId;
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
 
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
 
     try {
-        const sql = "SELECT * FROM openApplications WHERE user = ?";
+        const sql = `
+            SELECT 
+                a.*, 
+                p.title, 
+                p.address, 
+                p.estimatedPay, 
+                c.name AS companyName
+            FROM 
+                openApplications a
+            JOIN 
+                postedJob p ON a.job = p.id
+            JOIN 
+                companies c ON p.company = c.id
+            WHERE 
+                a.user = ?
+        `;
         const [rows] = await pool.query(sql, [userId]);
 
         //user can have no applications
 
-        return res.status(200).json(rows);
+        return res.status(200).json({ applications: rows });
     } catch (err) {
         console.error('Error querying database:', err);
         return res.status(500).json({ error: 'Internal server error.' });
