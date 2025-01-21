@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     //get 4 jobs
     try {
-        const jobs = await fetch('../api/employer/get4Jobs', {
+        const jobs = await fetch('../api/company/get4Jobs', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     //get 4 applications
     try {
-        const applications = await fetch('../api/employer/get4Applications', {
+        const applications = await fetch('../api/company/get4Applications', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -246,6 +246,45 @@ function startEditing(fieldId) {
     fieldContent.appendChild(input);
     fieldContent.appendChild(saveCancel);
     input.focus();
+}
+
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.tagName === 'A' && event.target.getAttribute('href')) {
+        event.preventDefault();
+        const targetUrl = event.target.getAttribute('href');
+        insertHTML(fetchHTML(targetUrl));
+    }
+});
+
+async function fetchHTML(url) {
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch HTML: ${response.statusText}`);
+        }
+
+        const htmlText = await response.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+
+        const fragment = document.createDocumentFragment();
+
+        Array.from(doc.body.childNodes).forEach(node => fragment.appendChild(node));
+
+        return fragment;
+    } catch (error) {
+        console.error('Error fetching HTML:', error);
+        throw error;
+    }
+}
+
+function insertHTML(html) {
+/*
+const container = document.getElementById('container'); // Replace with your target container
+container.appendChild(html);
+*/
 }
 
 function saveChanges(fieldId) {

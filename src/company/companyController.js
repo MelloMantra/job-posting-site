@@ -355,7 +355,7 @@ exports.get4Jobs = async (req, res) => {
         GROUP BY 
             p.id
         ORDER BY 
-            p.created_at DESC
+            p.date_created DESC
         LIMIT 4;
         `;
         const [rows] = await pool.query(sql, [companyId]);
