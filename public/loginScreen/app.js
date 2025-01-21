@@ -124,7 +124,7 @@ async function submit() {
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data);
-                    window.location.href = 'employerDashboard/';
+                    window.location.href = '../employerDashboard/';
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {
