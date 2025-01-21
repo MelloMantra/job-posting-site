@@ -265,6 +265,7 @@
         try {
             const response = await fetch(URL);
             const data = await response.json();
+            console.log(data);
             displayJobs(data.result);
         } catch (error) {
             console.error("Error fetching jobs:", error);
@@ -283,7 +284,7 @@
                     <a href="/job/${job.id}" target="_blank">${job.title}</a>
                     <div>${job.companyName}</div>
                     <div>${job.isRemote ? "Remote" : job.location}</div>
-                    <div class="pay">$${job.pay}/hour</div>
+                    <div class="pay">$${job.estimatedPay}/hour</div>
                     <button class="apply-button" onclick="applyToJob(${job.id})">Apply Now</button>
                 </div>
             `;
