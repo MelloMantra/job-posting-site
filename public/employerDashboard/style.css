@@ -427,6 +427,7 @@ hr {
     max-width: 60%;
     position: relative;
     left: 20%;
+    margin-top: 75px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -630,7 +631,7 @@ hr {
     }
 }
 
-/* spencer all jobs css */
+/* spencer all jobs css
 
 .container {
     max-width: 1200px;
@@ -833,3 +834,5 @@ hr {
         font-size: 2rem;
     }
 }
+    
+*/
