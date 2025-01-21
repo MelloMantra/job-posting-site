@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             document.getElementById('preferredExperience').textContent = data.jobs.preferredExperience;
 
             // Update page title
-            document.title = `${data.jobs.title} at ${data.jobs.company}`;
+            document.title = `${data.jobs.title}`;
         } else {
             console.log(`Error: ${response.status} ${response.statusText}`);
             alert("Internal server error.");
