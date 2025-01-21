@@ -143,7 +143,7 @@ exports.searchJobs = async (req, res) => {
             sql += " ORDER BY " + sort + " DESC"; 
         }
 
-        sql += " LIMIT 50";
+        sql += " LIMIT 30";
 
         const [rows] = await pool.query(sql, params); 
         
