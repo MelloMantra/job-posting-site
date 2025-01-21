@@ -4,6 +4,23 @@ document.addEventListener("DOMContentLoaded", function () {
     rememberbox = document.getElementById("rememberbox");
     bademail = document.getElementById("bademail");
     badpw = document.getElementById("badpw");
+    const loginType = window.location.pathname.split('/').pop();
+
+    if (loginType == "company") {
+        const goToOtherLogin = document.getElementById("goToOtherLogin");
+        goToOtherLogin.innerText = "Looking for employee log in?";
+        const goToOtherLoginLink = document.getElementById("goToOtherLoginLink");
+        goToOtherLoginLink.href = "../login/user";
+        const loginText = document.getElementById("logintext");
+        loginText.innerText = "to Jobify for Companies";
+    } else if (loginType == "user") {
+        const goToOtherLogin = document.getElementById("goToOtherLogin");
+        goToOtherLogin.innerText = "Looking for company log in?";
+        const goToOtherLoginLink = document.getElementById("goToOtherLoginLink");
+        goToOtherLoginLink.href = "../login/company";
+        const loginText = document.getElementById("logintext");
+        loginText.innerText = "to Jobify for Employees";
+    }
 
     // cookie
     checkCookie();
@@ -69,6 +86,8 @@ async function submit() {
     }
     goodemail = checkemail();
     goodpw = checkpw()
+    var email = document.getElementById("email");
+    var password = document.getElementById("password");
     if (goodemail && goodpw) {
         const loginType = window.location.pathname.split('/').pop();
         console.log(loginType);
@@ -86,7 +105,7 @@ async function submit() {
                     const data = await response.json();
                     alert("Login successful.");
                     console.log(data);
-                    //window.location.href = '/user/' + data.id;
+                    window.location.href = '/userDashboard';
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {
@@ -104,9 +123,8 @@ async function submit() {
                 
                 if (response.ok) {
                     const data = await response.json();
-                    alert("Login successful.");
                     console.log(data);
-                    //window.location.href = '/company/' + data.id;
+                    window.location.href = 'employerDashboard/';
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {

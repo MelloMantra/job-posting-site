@@ -148,3 +148,14 @@ app.get('/userAllApps', (req, res) => {
     */
     res.sendFile(path.join(initialpath, 'public', 'userAllApps', 'userAllApps.html'));
 });
+
+app.get('/employerDashboard', (req, res) => {
+    //comment below portion if testing
+    /*
+    const companyId = req.session?.companyId;
+    if (!companyId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+    */
+    res.sendFile(path.join(initialpath, 'public', 'employerDashboard', 'employerDashboard.html'));
+});

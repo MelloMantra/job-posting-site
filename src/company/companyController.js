@@ -9,6 +9,8 @@ exports.login = async (req, res) => {
         return res.status(400).json({ error: 'email and password are required.' });
     }
 
+    console.log(email, password);
+
     try {
         const [rows] = await pool.query("SELECT * FROM companies WHERE email = ? AND password = ?", [email, password]);
         if (rows.length === 0) {
