@@ -39,7 +39,7 @@
         <div class="contentwrapper">
 
             <div class="tab" id="search">
-                lol
+                
             </div>
 
             <div class="tab active" id="dashboard">
@@ -70,16 +70,15 @@
 
                     <div class="jobListing">
                         <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 3</h3><img src="../assets/3dots.png" class="moreinfo" id="job3"></div>
-                        <div class="line"><p class="openLabel unselectable">OPEN</p><p>0 Applicants</p></div>
-                        <div class="line location"><div><img src="../assets/location.png"> Location, LOL</div></div>
-                    </div>
-
-                    <div class="jobListing">
-                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 4</h3><img src="../assets/3dots.png" class="moreinfo" id="job4"></div>
                         <div class="line"><p class="archivedLabel unselectable">ARCHIVED</p><p>(N/A)</p></div>
                         <div class="line location"><div><img src="../assets/location.png"> Place, EX</div></div>
                     </div>
 
+                    <div class="jobListing">
+                        <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 4</h3><img src="../assets/3dots.png" class="moreinfo" id="job4"></div>
+                        <div class="line"><p class="openLabel unselectable">OPEN</p><p>0 Applicants</p></div>
+                        <div class="line location"><div><img src="../assets/location.png"> Location, LOL</div></div>
+                    </div>
                 </div>
 
                 <div class="seemore"><button class="seemoreBtn">ALL POSITIONS<img src="../assets/arrow.png" class="arrow"></button></div>
@@ -105,20 +104,39 @@
             </div>
 
             <div class="tab" id="profile">
-                <h3>Company Profile</h3>
-                <div class="textinput">
-                    <input type="text" placeholder="First name" required id="firstname">
-                </div>
-
-                <div class="textinput">
-                    <input type="text" placeholder="Last name" required id="lastname">
-                </div>
-
-                <div class="textinput">
-                    <p id="badphone" class="unselectable">Please enter a valid phone number</p>
-                    <div class="textinput" id="phonewrapper">
-                        <input type="text" id="phoneprefix" placeholder="+1">
-                        <input type="text" placeholder="Phone (xxx) xxx-xxxx" id="phone">
+                <div class="profile-container">
+                    <div class="edit-header">
+                        <h1>Edit Company Profile</h1>
+                    </div>
+            
+                    <div class="field-container" style="animation-delay: 0.1s">
+                        <div class="field-label">
+                            <h2>Company Name</h2>
+                            <button class="edit-btn" onclick="startEditing('company-name')">Edit</button>
+                        </div>
+                        <div class="field-content" id="company-name-field">
+                            <div class="field-value" id="company-name-value"></div>
+                        </div>
+                    </div>
+            
+                    <div class="field-container" style="animation-delay: 0.2s">
+                        <div class="field-label">
+                            <h2>Email</h2>
+                            <button class="edit-btn" onclick="startEditing('email')">Edit</button>
+                        </div>
+                        <div class="field-content" id="email-field">
+                            <div class="field-value" id="email-value"></div>
+                        </div>
+                    </div>
+            
+                    <div class="field-container" style="animation-delay: 0.3s">
+                        <div class="field-label">
+                            <h2>Company Description</h2>
+                            <button class="edit-btn" onclick="startEditing('description')">Edit</button>
+                        </div>
+                        <div class="field-content" id="description-field">
+                            <div class="field-value" id="description-value"></div>
+                        </div>
                     </div>
                 </div>
             </div>

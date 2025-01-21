@@ -106,6 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
             event.stopPropagation();
         });
     });
+
+    // romir's profile code
+    employerData = {
+        companyName: "TechCorp Solutions",
+        email: "contact@techcorp.com",
+        description: "Leading provider of innovative software solutions..."
+    };
+    initializeProfile();
 });
 
 // wait function
@@ -115,4 +123,112 @@ function wait(ms) {
 
 function openTab(tabNum) {
     return
+}
+
+
+
+function initializeProfile() {
+    document.getElementById('company-name-value').textContent = employerData.companyName;
+    document.getElementById('email-value').textContent = employerData.email;
+    document.getElementById('description-value').textContent = employerData.description;
+}
+
+function startEditing(fieldId) {
+    const fieldContent = document.getElementById(`${fieldId}-field`);
+    const fieldValue = document.getElementById(`${fieldId}-value`);
+    const currentValue = fieldValue.textContent;
+
+    fieldContent.classList.add('editing');
+    
+    const input = document.createElement(fieldId === 'description' ? 'textarea' : 'input');
+    input.value = currentValue;
+    input.className = `field-input ${fieldId === 'description' ? 'field-textarea' : ''}`;
+    
+    if (fieldId === 'email') {
+        input.type = 'email';
+    }
+
+    const saveCancel = document.createElement('div');
+    saveCancel.className = 'save-cancel';
+    saveCancel.innerHTML = `
+        <button class="save-btn" onclick="saveChanges('${fieldId}')">Save Changes</button>
+        <button class="cancel-btn" onclick="cancelEditing('${fieldId}')">Cancel</button>
+    `;
+
+    fieldContent.innerHTML = '';
+    fieldContent.appendChild(input);
+    fieldContent.appendChild(saveCancel);
+    input.focus();
+}
+
+function saveChanges(fieldId) {
+    const fieldContent = document.getElementById(`${fieldId}-field`);
+    const input = fieldContent.querySelector('.field-input');
+    const newValue = input.value.trim();
+
+    if (!newValue) {
+        showError(`${fieldId.charAt(0).toUpperCase() + fieldId.slice(1)} cannot be empty`);
+        return;
+    }
+
+    if (fieldId === 'email' && !isValidEmail(newValue)) {
+        showError('Please enter a valid email address');
+        return;
+    }
+
+    const loading = document.createElement('div');
+    loading.className = 'loading';
+    fieldContent.appendChild(loading);
+
+    setTimeout(() => {
+        switch(fieldId) {
+            case 'company-name':
+                employerData.companyName = newValue;
+                break;
+            case 'email':
+                employerData.email = newValue;
+                break;
+            case 'description':
+                employerData.description = newValue;
+                break;
+        }
+
+        fieldContent.classList.remove('editing');
+        fieldContent.innerHTML = `<div class="field-value" id="${fieldId}-value">${newValue}</div>`;
+
+        const success = document.createElement('div');
+        success.className = 'success-message';
+        success.textContent = 'Changes saved successfully';
+        document.body.appendChild(success);
+
+        setTimeout(() => success.remove(), 2500);
+    }, 800);
+}
+
+function cancelEditing(fieldId) {
+    const fieldContent = document.getElementById(`${fieldId}-field`);
+    fieldContent.classList.remove('editing');
+    fieldContent.innerHTML = `<div class="field-value" id="${fieldId}-value">${employerData[mapFieldToProperty(fieldId)]}</div>`;
+}
+
+function mapFieldToProperty(fieldId) {
+    switch(fieldId) {
+        case 'company-name':
+            return 'companyName';
+        default:
+            return fieldId;
+    }
+}
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showError(message) {
+    const error = document.createElement('div');
+    error.className = 'success-message';
+    error.style.background = '#ef4444';
+    error.textContent = message;
+    document.body.appendChild(error);
+    setTimeout(() => error.remove(), 2500);
 }
