@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search for Jobs</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Job Search</title>
     <style>
         /* General Reset */
         * {
@@ -22,15 +21,16 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: all 0.3s ease-in-out;
+            padding: 20px;
         }
 
         .container {
-            width: 80%;
+            width: 90%;
             max-width: 1200px;
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 30px;
-            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
 
         h1 {
@@ -42,15 +42,15 @@
 
         .search-bar {
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .search-bar input {
             padding: 12px 20px;
             font-size: 16px;
-            width: 50%;
+            width: 60%;
             border: 2px solid #f5f5f5;
             border-radius: 10px;
             background: transparent;
@@ -65,7 +65,6 @@
 
         .search-bar button {
             padding: 12px 20px;
-            margin-left: 15px;
             background-color: #89CFF0;
             border: none;
             color: white;
@@ -99,6 +98,10 @@
             transition: border-color 0.3s ease;
         }
 
+        .filter-box:hover {
+            border: 2px solid #89CFF0;
+        }
+
         .filter-box select,
         .filter-box input {
             background-color: black;
@@ -112,49 +115,53 @@
         }
 
         .job-list {
-            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
         .job-item {
-            background-color: #222;
-            border: 1px solid #444;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            background-color: #333;
             padding: 20px;
             border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
+            gap: 20px;
             align-items: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
         }
 
         .job-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
         }
 
-        .job-details {
-            flex: 3;
+        .job-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #555;
         }
 
-        .job-details h2 {
-            font-size: 22px;
-            color: #f5f5f5;
-            margin-bottom: 10px;
+        .job-item .details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .job-details p {
-            font-size: 14px;
-            color: #bbb;
+        .job-item .details a {
+            color: #89CFF0;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        .job-actions {
-            flex: 1;
-            text-align: center;
+        .job-item .details .pay {
+            color: #4CAF50;
         }
 
         .apply-button {
+            margin-top: 15px;
             padding: 10px 20px;
             background-color: #89CFF0;
             border: none;
@@ -219,12 +226,15 @@
         <div class="filter-box">
             Sort by
             <select id="sort">
-                <option value="newest">Newest First</option>
+                <option value="">Select Sort</option>
+                <option value="newest">Newest</option>
                 <option value="highestPay">Highest Pay</option>
             </select>
         </div>
     </div>
-    <div class="job-list" id="job-list"></div>
+    <div class="job-list" id="job-list">
+        <!-- Job items will appear here -->
+    </div>
 </div>
 
 <div class="footer">
@@ -237,25 +247,27 @@
         const filters = {
             industry: document.getElementById("industry").value,
             occupation: document.getElementById("occupation").value,
-            isRemote: document.getElementById("remote").value,
-            minPay: document.getElementById("salary").value,
+            remote: document.getElementById("remote").value,
+            salary: document.getElementById("salary").value,
             sort: document.getElementById("sort").value
         };
         searchJobs(query, filters);
     });
 
     async function searchJobs(query, filters) {
-        try {
-            let url = `../api/all/searchJobs?query=${query}`;
-            Object.keys(filters).forEach(key => {
-                if (filters[key]) url += `&${key}=${filters[key]}`;
-            });
+        if (!query) return;
 
-            const res = await fetch(url);
-            const data = await res.json();
+        let URL = `../api/all/searchJobs?query=${query}`;
+        Object.keys(filters).forEach(key => {
+            if (filters[key]) URL += `&${key}=${filters[key]}`;
+        });
+
+        try {
+            const response = await fetch(URL);
+            const data = await response.json();
             displayJobs(data.result);
         } catch (error) {
-            console.error(error);
+            console.error("Error fetching jobs:", error);
         }
     }
 
@@ -263,20 +275,25 @@
         const jobList = document.getElementById("job-list");
         jobList.innerHTML = "";
         jobs.forEach(job => {
-            jobList.innerHTML += `
-                <div class="job-item">
-                    <div class="job-details">
-                        <h2>${job.title}</h2>
-                        <p><i class="fas fa-building"></i> ${job.companyName}</p>
-                        <p><i class="fas fa-map-marker-alt"></i> ${job.isRemote ? "Remote" : job.address}</p>
-                        <p><i class="fas fa-dollar-sign"></i> $${job.estimatedPay}</p>
-                    </div>
-                    <div class="job-actions">
-                        <button class="apply-button">Apply Now</button>
-                    </div>
+            const jobItem = document.createElement("div");
+            jobItem.className = "job-item";
+            jobItem.innerHTML = `
+                <img src="${job.companyLogo || ''}" alt="${job.companyName || 'Company Logo'}">
+                <div class="details">
+                    <a href="/job/${job.id}" target="_blank">${job.title}</a>
+                    <div>${job.companyName}</div>
+                    <div>${job.isRemote ? "Remote" : job.location}</div>
+                    <div class="pay">$${job.pay}/hour</div>
+                    <button class="apply-button" onclick="applyToJob(${job.id})">Apply Now</button>
                 </div>
             `;
+            jobList.appendChild(jobItem);
         });
+    }
+
+    async function applyToJob(jobId) {
+        // Placeholder for applying to a job
+        alert(`Applied to Job ID: ${jobId}`);
     }
 </script>
 
