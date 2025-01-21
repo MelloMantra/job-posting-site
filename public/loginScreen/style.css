@@ -50,7 +50,7 @@ h2 {
     align-self: center;
 }
 
-.form {
+.tab {
     display:flex;
     flex-direction: column;
     gap: 20px;
