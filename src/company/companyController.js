@@ -97,10 +97,10 @@ exports.getJobs = async (req, res) => {
         LEFT JOIN 
             openApplications a ON p.id = a.job
         WHERE 
-            p.company = ?
+            p.company = ? p.status != 'decided
         GROUP BY 
             p.id;
-        `;
+        `; //note that decided jobs will be shown elsewhere
         const [rows] = await pool.query(sql, [companyId]);
 
         //rows can be empty if no jobs have been posted
