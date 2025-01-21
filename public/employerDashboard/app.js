@@ -249,149 +249,6 @@ document.addEventListener('click', function(event) {
         insertHTML(fetchHTML(targetUrl));
     }
 });
-/*
-async function fetchHTML(url, insertTo) {
-    const simulatedLocation = new URL(url, window.location.origin);
-
-    try {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch HTML: ${response.statusText}`); // Fixed template string syntax
-        }
-
-        const htmlText = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
-
-        // Handle scripts - both inline and external
-        const scripts = doc.querySelectorAll('script');
-        const scriptPromises = Array.from(scripts).map(oldScript => {
-            return new Promise((resolve, reject) => {
-                const newScript = document.createElement('script');
-                
-                // Copy all original attributes
-                Array.from(oldScript.attributes).forEach(attr => {
-                    newScript.setAttribute(attr.name, attr.value);
-                });
-
-                // For external scripts
-                if (oldScript.src) {
-                    newScript.onload = resolve;
-                    newScript.onerror = reject;
-                } else {
-                    // For inline scripts
-                    // Wrap the script content with a closure to provide simulated location
-                    newScript.textContent = `
-                        (function() {
-                            const location = ${JSON.stringify(simulatedLocation)};
-                            ${oldScript.textContent}
-                        })();
-                    `;
-                }
-
-                // Replace the old script with the new one
-                oldScript.replaceWith(newScript);
-                
-                // Resolve immediately for inline scripts
-                if (!oldScript.src) {
-                    resolve();
-                }
-            });
-        });
-
-        // Create and append fragment with non-script content
-        const fragment = document.createDocumentFragment();
-        Array.from(doc.body.childNodes).forEach(node => {
-            if (node.nodeName !== 'SCRIPT') {
-                fragment.appendChild(node);
-            }
-        });
-
-        insertTo.appendChild(fragment);
-
-        // Wait for all scripts to load
-        await Promise.all(scriptPromises);
-
-        return true;
-    } catch (error) {
-        console.error('Error fetching HTML:', error);
-        throw error;
-    }
-} */
-
-    async function fetchHTML(url, insertTo) {
-        const simulatedLocation = new URL(url, window.location.origin);
-        
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch HTML: ${response.statusText}`);
-            }
-            
-            const htmlText = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(htmlText, 'text/html');
-            
-            // Handle scripts separately before adding other content
-            const scripts = Array.from(doc.querySelectorAll('script'));
-            const scriptPromises = scripts.map(originalScript => {
-                return new Promise((resolve, reject) => {
-                    const newScript = document.createElement('script');
-                    
-                    // Copy all attributes
-                    Array.from(originalScript.attributes).forEach(attr => {
-                        newScript.setAttribute(attr.name, attr.value);
-                    });
-                    
-                    // Handle both inline and external scripts
-                    if (originalScript.src) {
-                        newScript.src = originalScript.src;
-                        newScript.onload = () => resolve();
-                        newScript.onerror = (error) => reject(error);
-                    } else {
-                        // For inline scripts, wrap in IIFE with simulated location
-                        newScript.textContent = `(function() { 
-                            const location = ${JSON.stringify(simulatedLocation)}; 
-                            ${originalScript.textContent}
-                        })();`;
-                    }
-                    
-                    // Remove the original script to prevent duplicate execution
-                    originalScript.remove();
-                    
-                    // Add the new script to document head
-                    document.head.appendChild(newScript);
-                    
-                    // Resolve immediately for inline scripts
-                    if (!originalScript.src) {
-                        resolve();
-                    }
-                });
-            });
-            
-            // Wait for all scripts to load
-            await Promise.all(scriptPromises);
-            
-            // Clear the target element
-            while (insertTo.firstChild) {
-                insertTo.removeChild(insertTo.firstChild);
-            }
-            
-            // Add the rest of the content
-            const fragment = document.createDocumentFragment();
-            Array.from(doc.body.childNodes).forEach(node => {
-                fragment.appendChild(node.cloneNode(true));
-            });
-            
-            insertTo.appendChild(fragment);
-            
-            return true;
-        } catch (error) {
-            console.error('Error fetching HTML:', error);
-            throw error;
-        }
-    }
 
 
 function executeScriptsFromDoc(doc) {
@@ -406,14 +263,6 @@ function executeScriptsFromDoc(doc) {
         document.body.appendChild(newScript);
         document.body.removeChild(newScript); // Clean up after execution
     });
-}
-
-
-function insertHTML(html) {
-/*
-const container = document.getElementById('container'); // Replace with your target container
-container.appendChild(html);
-*/
 }
 
 function saveChanges(fieldId) {
@@ -487,3 +336,4 @@ function showError(message) {
     document.body.appendChild(error);
     setTimeout(() => error.remove(), 2500);
 }
+
