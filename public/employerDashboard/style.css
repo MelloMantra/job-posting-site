@@ -72,15 +72,14 @@ body {
 h2 {
     font-family: "Josefin Sans";
     font-size: xxx-large;
-    padding: 30px;
-    padding-bottom: 0px;
+    padding: 10px;
     text-align: left;
 }
 
 h3 {
     font-family: "Josefin Sans";
     font-size: x-large;
-    padding-top: 0px;
+    padding: 10px;
     text-align: left;
 }
 
@@ -415,6 +414,12 @@ hr {
 .applicantBox:hover {
     transform: translateY(-8px) scale(1.05);
     box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+.dashboardHeading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 /* romir's profile css */
@@ -834,5 +839,5 @@ hr {
         font-size: 2rem;
     }
 }
-    
+
 */
