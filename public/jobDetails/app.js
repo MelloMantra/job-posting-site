@@ -43,7 +43,7 @@
 /*});*/
 
 document.addEventListener("DOMContentLoaded", async function () {
-    const jobId = window.location.pathname.split('/').pop();
+    const jobId = location.pathname.split('/').pop();
     try {
         const response = await fetch(`../api/all/getJob/${jobId}`, {
             method: 'GET',

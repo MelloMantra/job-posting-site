@@ -121,13 +121,45 @@ frontend won't sync with that unless the page is reloaded (so you could also jus
 decided will be rejected on the backend, so I'd also reflect that in the frontend (and perhaps include a "warning" message that the job will be locked if it's decided).
 This also means that a company can't reopen or switch a job to closed once it's decided (though I may implement a reopen feature in the future).
 */
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof gsap === 'undefined') {
+      console.error('GSAP library is missing!');
+  }
+  if (!document.querySelector('.fa')) {
+      console.error('FontAwesome is not loaded!');
+  }
+});
+
+document.addEventListener('input', (event) => {
+  if (event.target.matches('.search-input')) {
+      // Perform search functionality
+      const searchTerm = event.target.value.toLowerCase();
+      const jobCards = document.querySelectorAll('.job-card');
+
+      jobCards.forEach(card => {
+          const title = card.querySelector('.job-title').textContent.toLowerCase();
+          const description = card.querySelector('.job-description').textContent.toLowerCase();
+
+          if (title.includes(searchTerm) || description.includes(searchTerm)) {
+              card.style.display = 'flex';
+              gsap.to(card, { opacity: 1, duration: 0.3 });
+          } else {
+              gsap.to(card, {
+                  opacity: 0,
+                  duration: 0.3,
+                  onComplete: () => (card.style.display = 'none'),
+              });
+          }
+      });
+  }
+});
 
 
 document.addEventListener("DOMContentLoaded", async function () {
   const candidatesList = document.querySelector('.candidates-list');
   const modal = document.getElementById('candidateModal');
   const modalContent = document.querySelector('.candidate-details');
-  const jobId = window.location.pathname.split('/').pop();
+  const jobId = location.pathname.split('/').pop();
 
   try {
     const response = await fetch(`../api/all/getJob/${jobId}`);
