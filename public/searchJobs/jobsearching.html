@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search for Jobs</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         /* General Reset */
         * {
@@ -98,10 +99,6 @@
             transition: border-color 0.3s ease;
         }
 
-        .filter-box:hover {
-            border: 2px solid #89CFF0;
-        }
-
         .filter-box select,
         .filter-box input {
             background-color: black;
@@ -114,11 +111,6 @@
             border-radius: 5px;
         }
 
-        .filter-box select:focus,
-        .filter-box input:focus {
-            border-color: #89CFF0;
-        }
-
         .job-list {
             width: 100%;
             display: flex;
@@ -127,39 +119,42 @@
         }
 
         .job-item {
-            background-color: #333;
+            background-color: #222;
+            border: 1px solid #444;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .job-item:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
-        .job-item .title {
-            font-size: 20px;
-            font-weight: bold;
+        .job-details {
+            flex: 3;
         }
 
-        .job-item .company,
-        .job-item .location,
-        .job-item .pay,
-        .job-item .industry,
-        .job-item .occupation {
-            margin-top: 10px;
-            font-size: 16px;
+        .job-details h2 {
+            font-size: 22px;
+            color: #f5f5f5;
+            margin-bottom: 10px;
+        }
+
+        .job-details p {
+            font-size: 14px;
             color: #bbb;
         }
 
-        .job-item a {
-            color: #89CFF0;
-            text-decoration: none;
+        .job-actions {
+            flex: 1;
+            text-align: center;
         }
 
         .apply-button {
-            margin-top: 15px;
             padding: 10px 20px;
             background-color: #89CFF0;
             border: none;
@@ -181,24 +176,16 @@
             font-size: 14px;
             color: #bbb;
         }
-
-        .small-text {
-            font-size: 12px;
-            color: #bbb;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Job Search</h1>
-    <!-- Search Bar -->
     <div class="search-bar">
         <input type="text" id="search-query" placeholder="Search for jobs...">
         <button id="search-btn">Search</button>
     </div>
-
-    <!-- Filters -->
     <div class="filters">
         <div class="filter-box">
             Industry
@@ -228,33 +215,16 @@
         <div class="filter-box">
             Salary
             <input type="number" id="salary" placeholder="Min Salary">
-            <div class="small-text">Hourly</div>
         </div>
         <div class="filter-box">
-            Job Type
-            <select id="job-type">
-                <option value="">Select Job Type</option>
-                <option value="Full Time">Full Time</option>
-                <option value="Part Time">Part Time</option>
-                <option value="Internship">Internship</option>
-                <option value="">Seasonal</option>
-            </select>
-        </div>
-        <div class="filter-box">
-            Sort by Date
-            <select id="sort-date">
-                <option value="">Select</option>
-                <option value="asc">Date Ascending</option>
-                <option value="desc">Date Descending</option>
+            Sort by
+            <select id="sort">
+                <option value="newest">Newest First</option>
+                <option value="highestPay">Highest Pay</option>
             </select>
         </div>
     </div>
-
-    <!-- Job Results -->
-    <div class="job-list" id="job-list">
-        <!-- Job items will be appended here -->
-    </div>
-
+    <div class="job-list" id="job-list"></div>
 </div>
 
 <div class="footer">
@@ -262,107 +232,50 @@
 </div>
 
 <script>
-    // Event listener for the "Search" button click
-    document.getElementById("search-btn").addEventListener("click", function() {
+    document.getElementById("search-btn").addEventListener("click", () => {
         const query = document.getElementById("search-query").value;
         const filters = {
             industry: document.getElementById("industry").value,
             occupation: document.getElementById("occupation").value,
             isRemote: document.getElementById("remote").value,
             minPay: document.getElementById("salary").value,
-            jobType: document.getElementById("job-type").value,
-            sort: document.getElementById("sort-date").value || 'estimatedPay' // Default sort order
+            sort: document.getElementById("sort").value
         };
-
         searchJobs(query, filters);
     });
 
-    // Event listener for pressing Enter key in the search input
-    document.getElementById("search-query").addEventListener("keypress", function(event) {
-        if (event.key === 'Enter') {
-            const query = document.getElementById("search-query").value;
-            const filters = {
-                industry: document.getElementById("industry").value,
-                occupation: document.getElementById("occupation").value,
-                isRemote: document.getElementById("remote").value,
-                minPay: document.getElementById("salary").value,
-                jobType: document.getElementById("job-type").value,
-                sort: document.getElementById("sort-date").value || 'estimatedPay' // Default sort order
-            };
-
-            searchJobs(query, filters);
-        }
-    });
-
-    // Function to search jobs based on query and filters
-    async function searchJobs(query, filterOptions) {
-        if (!query) {
-            return [];
-        }
-
+    async function searchJobs(query, filters) {
         try {
-            let URL = `../api/all/searchJobs?query=${query}`;
-
-            if (filterOptions?.industry) {
-                URL += `&industry=${filterOptions.industry}`;
-            }
-
-            if (filterOptions?.occupation) {
-                URL += `&occupation=${filterOptions.occupation}`;
-            }
-
-            if (filterOptions?.isRemote !== undefined) {
-                URL += `&isRemote=${filterOptions.isRemote}`;
-            }
-
-            if (filterOptions?.minPay) {
-                URL += `&minPay=${filterOptions.minPay}`;
-            }
-
-            if (filterOptions?.jobType) {
-                URL += `&jobType=${filterOptions.jobType}`;
-            }
-
-            if (filterOptions?.sort) {
-                URL += `&sort=${filterOptions.sort}`;
-            }
-
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
+            let url = `../api/all/searchJobs?query=${query}`;
+            Object.keys(filters).forEach(key => {
+                if (filters[key]) url += `&${key}=${filters[key]}`;
             });
 
-            if (!response.ok) {
-                alert("Internal server error.");
-                return [];
-            }
-
-            const data = await response.json();
+            const res = await fetch(url);
+            const data = await res.json();
             displayJobs(data.result);
-        } catch (err) {
-            console.error('Error querying database:', err);
-            return [];
+        } catch (error) {
+            console.error(error);
         }
     }
 
-    // Function to display jobs in the UI
     function displayJobs(jobs) {
-        const jobListElement = document.getElementById("job-list");
-        jobListElement.innerHTML = ""; // Clear previous jobs
-
+        const jobList = document.getElementById("job-list");
+        jobList.innerHTML = "";
         jobs.forEach(job => {
-            const jobItem = document.createElement("div");
-            jobItem.classList.add("job-item");
-            jobItem.innerHTML = `
-                <div class="title"><a href="/jobDetails/${job.id}">${job.title}</a></div>
-                <div class="company"><a href="/companyProfile/${job.companyName}">${job.companyName}</a></div>
-                <div class="location">${job.isRemote ? "Remote" : job.address}</div>
-                <div class="pay">$${job.estimatedPay}</div>
-                <div class="industry">${job.industryName}</div>
-                <div class="occupation">${job.occupationName}</div>
-                <button class="apply-button">Apply Now</button>
+            jobList.innerHTML += `
+                <div class="job-item">
+                    <div class="job-details">
+                        <h2>${job.title}</h2>
+                        <p><i class="fas fa-building"></i> ${job.companyName}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> ${job.isRemote ? "Remote" : job.address}</p>
+                        <p><i class="fas fa-dollar-sign"></i> $${job.estimatedPay}</p>
+                    </div>
+                    <div class="job-actions">
+                        <button class="apply-button">Apply Now</button>
+                    </div>
+                </div>
             `;
-            jobListElement.appendChild(jobItem);
         });
     }
 </script>
