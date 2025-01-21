@@ -22,33 +22,43 @@
                 <h2>Log in</h2>
                 <a href="../homeScreen/index.html"><img src="../assets/icon.png" class="minilogo"></a>
             </div>
-            <p>to Jobify for Employees</p>
+            <p id="typeIdentifier">to Jobify</p>
             <div class="form">
 
-                <div class="textinput">
-                    <p id="bademail" class="unselectable">bademail</p>
-                    <input type="text" placeholder="Email" required id="email">
+                <div class="tab">
+                    <div class="typeSelect">
+                        <button class="iconButton">Employee</button>
+                        <button class="iconButton">Employer</button>
+                    </div>
                 </div>
 
-                <div class="textinput" id="passwordarea">
-                    <p id="badpw" class="unselectable">badpw</p>
-                    <input type="password" placeholder="Password" required id="password">
+                <div class="tab">
+                    <div class="textinput">
+                        <p id="bademail" class="unselectable">bademail</p>
+                        <input type="text" placeholder="Email" required id="email">
+                    </div>
+
+                    <div class="textinput" id="passwordarea">
+                        <p id="badpw" class="unselectable">badpw</p>
+                        <input type="password" placeholder="Password" required id="password">
+                    </div>
+
+                    <div class="remember-forgot">
+                        <label><input type="checkbox" id="rememberbox"> Remember my email</label>
+                        <a href="../forgot">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="popButton" onclick="submit()">Login</button>
+
+                    <div class="gotosignup">
+                        <p>Don't have a Jobify account? <a href="../userSignUp">Sign up</a></p>
+                    </div>
+
+                    <div class="gotosignup">
+                        <p>Looking for employer log in? <a href="../login/company">Log in</a></p>
+                    </div>
                 </div>
 
-                <div class="remember-forgot">
-                    <label><input type="checkbox" id="rememberbox"> Remember my email</label>
-                    <a href="../forgot">Forgot password?</a>
-                </div>
-
-                <button type="submit" class="popButton" onclick="submit()">Login</button>
-
-                <div class="gotosignup">
-                    <p>Don't have a Jobify account? <a href="../userSignUp">Sign up</a></p>
-                </div>
-
-                <div class="gotosignup">
-                    <p>Looking for employer log in? <a href="../signupScreen/signup.html">Sign up</a></p>
-                </div>
             </form>
         </div>
 
