@@ -1,5 +1,7 @@
 // Wait for the DOM to load
-document.addEventListener('DOMContentLoaded', () => async function() {
+document.addEventListener('DOMContentLoaded', async () => {
+    gsap.registerPlugin(ScrollTrigger);
+
     // tab stuff
     const tabButtons = document.querySelectorAll('.tabBtn');
     const tabs = document.querySelectorAll('.tab');
@@ -103,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => async function() {
     });
 
     // pop up menu stuff
-    const jobs = document.querySelectorAll('.jobListing');
+    const jobBoxes = document.querySelectorAll('.jobListing');
     const jobActionBtns = document.querySelectorAll('.jobListing img.moreinfo');
     const appActionBtns = document.querySelectorAll('.applicantBox img.moreinfo');
     const popUpActions = document.querySelectorAll('.dropdownItem');
