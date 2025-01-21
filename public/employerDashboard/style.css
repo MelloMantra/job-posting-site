@@ -1,0 +1,630 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Cousine";
+    background-color: rgb(255, 255, 255);
+}
+
+body {
+    width:100vw;
+    display: flex;
+}
+
+.sidebar {
+    width: 12em;
+    height: 92.1vh;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 75px;
+}
+
+.sidebar .tabBtn {
+    padding: 15px;
+    cursor: pointer;
+    text-align: left;
+    border: none;
+    background: none;
+    color: inherit;
+    font-size: 16px;
+    outline: none;
+    font-family: "Josefin Sans";
+}
+
+.sidebar .tabBtn:hover {
+    background-color: #34495e;
+}
+
+.sidebar .tabBtn.active {
+    background-color: rgb(75, 161, 243);
+}
+
+.tab {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity ease, transform 0.3s ease;
+    flex-direction: column;
+    margin-left: 15px;
+    display: none
+}
+
+.tab.active {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.contentwrapper {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    margin-top: 75px;
+    box-shadow: 10px 0 1px 0px rgb(75, 161, 243) inset;
+    position: relative;
+}
+
+h2 {
+    font-family: "Josefin Sans";
+    font-size: xxx-large;
+    padding: 30px;
+    padding-bottom: 0px;
+    text-align: left;
+}
+
+h3 {
+    font-family: "Josefin Sans";
+    font-size: x-large;
+    padding-top: 0px;
+    text-align: left;
+}
+
+.logospace {
+    color: white;
+    display: inline-block;
+    cursor: auto;
+}
+
+.spanbar {
+    display:inline-block;
+    height: 3px;
+    width: clamp(0px, 30vw, 40vw);
+    background-color: rgb(185, 185, 185);
+    vertical-align: middle;
+}
+
+.navbar {
+    position: fixed; /* Fix the navbar at the top of the viewport */
+    top: 0;
+    left: 0;
+    width: 100%; /* Span the full width of the screen */
+    z-index: 0; /* Place it above other elements */
+    display: flex; /* Align navbar contents */
+    justify-content: center; /* Center-align navbar items */
+    align-items: center;
+}
+
+nav {
+    text-align: center;
+    width: 100%;
+}
+
+nav ul {
+    background-color: rgb(255, 255, 255);
+    font-size: 20px;
+    padding: 20px;
+    border-bottom: 1px black solid;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0px;
+    overflow: hidden;
+    text-align: center;
+}
+
+nav img:hover {
+    cursor: pointer;
+}
+
+ul li {
+    display: inline;
+    vertical-align: middle;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.popButton {
+    background-color: rgb(77, 149, 217);
+    color: white;
+    border-radius: 25px;
+    padding: 15px;
+    margin: 5px;
+    font-weight: bold;
+    font-family: "Josefin Sans";
+    font-size: larger;
+    vertical-align: middle;
+    border: none;
+    width: 40%;
+    text-align: center;
+}
+
+.dullButton {
+    border-radius: 15em;
+    padding: 15px;
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.62);
+    font-family: "Josefin Sans";
+    font-size: larger;
+    vertical-align: middle;
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    width: 40%;
+    text-align: center;
+}
+
+.popButton:hover {
+    background-color: rgb(75, 161, 243);
+    cursor: pointer;
+}
+
+.dullButton:hover {
+    background-color: rgba(48, 48, 48, 0.3);
+    cursor: pointer;
+}
+
+.popButton:active {
+    transform: scale(0.95);
+    box-shadow: 3px 2px 22px 1px rgba(75, 161, 243, 0.24);
+}
+
+.dullButton:active {
+    transform: scale(0.95);
+    box-shadow: 3px 2px 22px 1px rgba(0,0,0, 0.24);
+}
+
+.trcorner {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    left: 90vw;
+    z-index: 999;
+    width: 6em;
+}
+
+.tlcorner {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 90vw;
+    z-index: 999;
+    width: 14em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.tlcorner:hover {
+    text-decoration: none;
+}
+
+.trcorner:hover {
+    text-decoration: none;
+}
+
+.minilogo:hover {
+    cursor: pointer;
+}
+
+.jobsWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.jobListing {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 24.422850608em;
+    height: fit-content;
+    transition: 0.3s ease;
+    margin: 10px;
+}
+
+.jobListing:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+.line {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+
+.line img {
+    width: 1em;
+    height: 1em;
+    filter: invert(1);
+}
+
+.moreinfo {
+    border-radius: 5px;
+    padding: 3px;
+    transform: scale(1.5);
+}
+
+.moreinfo:hover {
+    background-color: rgba(141, 141, 141, 0.568);
+    cursor: pointer;
+}
+
+.location {
+    justify-self: right;
+    color: rgb(156, 156, 156)
+}
+
+.location img {
+    filter: invert(0.6);
+    transform: translateY(2px);
+}
+
+.openLabel {
+    padding: 3px 5px 0px 4px;
+    outline: 0.2em solid rgb(123, 255, 47, 0.6);
+    border-radius: 15px;
+    color: rgb(123, 255, 47, 1);
+    font-size: 0.975rem;
+}
+
+.closedLabel {
+    padding: 3px 5px 0px 4px;
+    outline: 0.2em solid rgb(255, 47, 47, 0.6);
+    border-radius: 15px;
+    color: rgb(255, 47, 47, 1);
+    font-size: 0.975rem;
+}
+
+.archivedLabel {
+    padding: 3px 5px 0px 4px;
+    outline: 0.2em solid rgba(255, 150, 47, 0.6);
+    border-radius: 15px;
+    color: rgb(255, 150, 47);
+    font-size: 0.975rem;
+}
+
+.popUp {
+    background-color: rgba(82, 82, 82, 0.95);
+    color: white;
+    padding: 0;
+    border-radius: 10px;
+    width: 10em;
+    height: fit-content;
+    margin: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.685);
+    position: absolute;
+    z-index: 2;
+    opacity: 0;
+    transition: ease 0.1s;
+}
+
+.dropdownItem {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 10px 10px;
+    border-top: 0.1em solid rgb(184, 184, 184);
+    &:first-of-type {
+        border-radius: 10px 10px 0px 0px;
+        border: none;
+        border-bottom: 2px solid rgb(184, 184, 184);
+        font-weight: bold;
+        cursor:default;
+    }
+    &:last-of-type {
+        border-radius: 0px 0px 10px 10px;
+    }
+    transition: 0.1s;
+}
+
+.dropdownItem:hover {
+    background-color: rgba(160, 160, 160, 0.95);
+    cursor: pointer;
+    &:first-of-type {
+        background-color: transparent;
+    }
+}
+
+.dropdownIcon {
+    width: 1em;
+    height: 1em;
+    filter: invert(1);
+}
+
+.seemore {
+    text-align: center;
+}
+
+.seemoreBtn {
+    border: none;
+    width: 20em;
+    padding: 10px 0px 15px 10px;
+    font-family: "Josefin Sans";
+    font-size: 1rem;
+    vertical-align: text-top;
+    font-weight: bold;
+    border-radius: 10em;
+    background-color: rgb(212, 212, 212);
+    transition: 0.1s;
+    margin: 15px 15px 15px 15px;
+}
+
+.seemoreBtn:hover {
+    background-color: rgb(230, 230, 230);
+    cursor: pointer;
+}
+
+.arrow {
+    width: 1.2em;
+    height: auto;
+    transform: translate(10px,3px);
+}
+
+hr {
+    margin: 10px;
+}
+
+.applicantBox {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 24.4em;
+    height: fit-content;
+    transition: 0.3s ease;
+    margin: 10px;
+}
+
+.applicantBox:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* romir's profile css */
+
+.profile-container {
+    background: black;
+    padding: 3rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edit-header h1 {
+    font-family: 'Josefin Sans';
+    font-size: 2rem;
+    color: white;
+}
+
+.field-container {
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s forwards;
+}
+
+.field-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.field-label h2 {
+    font-size: 1rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.edit-btn {
+    background: transparent;
+    border: none;
+    color: #4a9eff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+}
+
+.edit-btn:hover {
+    opacity: 1;
+    background: rgba(74, 158, 255, 0.1);
+}
+
+.field-content {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.field-content:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.field-content.editing {
+    background: rgba(74, 158, 255, 0.05);
+    box-shadow: 0 0 0 1px rgba(74, 158, 255, 0.3);
+}
+
+.field-value {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #fff;
+    word-break: break-word;
+}
+
+.field-input {
+    width: 100%;
+    background: #111;
+    border: 1px solid rgba(74, 158, 255, 0.3);
+    color: #fff;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    font-family: "Cousine";
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: rgba(74, 158, 255, 0.6);
+    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+}
+
+.field-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.save-cancel {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.save-btn, .cancel-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.save-btn {
+    background: #4a9eff;
+    color: #fff;
+    border: none;
+}
+
+.save-btn:hover {
+    background: #3a8ee6;
+}
+
+.cancel-btn {
+    background: transparent;
+    color: #888;
+    border: 1px solid #333;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.success-message {
+    position: fixed;
+    top: 5rem;
+    right: 5rem;
+    background: #22c55e;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    transform: translateX(200%);
+    animation: slideIn 0.3s forwards, slideOut 0.3s forwards 2s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes slideIn {
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    to {
+        transform: translateX(200%);
+    }
+}
+
+.loading {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.loading::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 2px solid #4a9eff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

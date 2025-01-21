@@ -4,15 +4,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let blobs = document.querySelectorAll(".blob");
     let mouse = document.querySelector(".mouse");
     let topText = document.getElementById("topText");
+    let bearnotes = document.getElementById("bearnotes");
 
-    // back to top buttons
-    window.onscroll = function( ) {scrollFunction()};
+    // back to top button
     topText.onclick = function( ) {topFunction()};
 
     function topFunction() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
     }
+
+    // scrolling anim
+    window.addEventListener('scroll', () => { {
+        var scrollAmt = window.scrollY * 2;
+        var scrollStart = 1850;
+        bearnotes.style.transform = `translate(${scrollAmt-scrollStart}px, -50%)`;
+    }});
 
     // lenis smooth scroll
     const lenis = new Lenis();
@@ -36,14 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.from(text.chars, {
             scrollTrigger: {
                 trigger: char,
-                start: 'top 100%',
-                end: 'top 40%',
+                start: 'top 95%',
+                end: 'top 37.5%',
                 scrub: true,
                 markers: false
             },
             y: -20,
             opacity: 0,
-            stagger: 0.1
+            stagger: 0.05
         });
 
     });
