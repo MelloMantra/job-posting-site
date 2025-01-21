@@ -86,7 +86,7 @@ async function submit() {
                     const data = await response.json();
                     alert("Login successful.");
                     console.log(data);
-                    //window.location.href = '/user/' + data.id;
+                    window.location.href = '/userDashboard';
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {
@@ -104,9 +104,8 @@ async function submit() {
                 
                 if (response.ok) {
                     const data = await response.json();
-                    alert("Login successful.");
                     console.log(data);
-                    //window.location.href = '/company/' + data.id;
+                    window.location.href = 'employerDashboard/';
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {
