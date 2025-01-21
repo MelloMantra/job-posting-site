@@ -81,26 +81,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('An unexpected error occurred. Please try again.');
     }
 
+    // tab switching
     tabButtons.forEach(button => {
         button.addEventListener('click', async () => {
-
-            document.querySelector('.tabBtn.active').classList.remove('active');
-            button.classList.add('active');
-            
-            const tab = document.querySelector('.tab.active');
-            var steps = 30
-            for (var i=1; i<steps; i++) {
-                tab.style.opacity = 1-(i/steps);
-                await wait(1);
-            }
-            tab.classList.remove('active');
-
-            const targetTab = document.getElementById(button.dataset.tab);
-            targetTab.classList.add('active');
-            for (var i=1; i<steps; i++) {
-                targetTab.style.opacity = i/steps;
-                await wait(1);
-            }
+            await openTab(button.id.charAt(3));
         });
     });
 
@@ -207,8 +191,25 @@ function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function openTab(tabNum) {
-    return
+async function openTab(tabNum) {
+    const button = document.getElementById(`tab${tabNum}`)
+    document.querySelector('.tabBtn.active').classList.remove('active');
+    button.classList.add('active');
+            
+    const tab = document.querySelector('.tab.active');
+    var steps = 30
+    for (var i=1; i<steps; i++) {
+        tab.style.opacity = 1-(i/steps);
+        await wait(1);
+    }
+    tab.classList.remove('active');
+
+    const targetTab = document.querySelectorAll(".tab")[tabNum-1];
+    targetTab.classList.add('active');
+    for (var i=1; i<steps; i++) {
+        targetTab.style.opacity = i/steps;
+        await wait(1);
+    }
 }
 
 
