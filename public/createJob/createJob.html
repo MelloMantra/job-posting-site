@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job Posting</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="../createJob/app.js"></script>
+    <style>
+        body {
+            background: url('../assets/gradient.gif') no-repeat center center fixed; 
+            background-size: cover;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background: url('../assets/icon.png') no-repeat center center; 
+            background-size: contain;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .typeahead {
+            position: relative;
+        }
+        .typeahead-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .typeahead-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .typeahead-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="logo"></div>
+    <div class="form-container">
+        <h1 class="text-2xl font-bold mb-6">Create Job Posting</h1>
+        <form id="jobForm">
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700">Job Title</label>
+                <input type="text" id="title" name="title" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-gray-700">Address</label>
+                <input type="text" id="address" name="address" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700">Job Description</label>
+                <textarea id="description" name="description" class="mt-1 block w-full p-2 border border-gray-300 rounded" rows="5"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="scheduleType" class="block text-gray-700">Schedule</label>
+                <select id="scheduleType" name="scheduleType" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
+                    <option value="Seasonal">Seasonal</option>
+                    <option value="Internship">Internship</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="estimatedPay" class="block text-gray-700">Estimated Pay</label>
+                <input type="text" id="estimatedPay" name="estimatedPay" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="preferredExp" class="block text-gray-700">Preferred Experience</label>
+                <input type="text" id="preferredExperience" name="preferredExp" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+            </div>
+            <div class="mb-4 typeahead">
+                <!-- Occupation Search -->
+                <label for="occupation" class="block text-gray-700">Occupation</label>
+                <input type="text" id="occupation" name="occupation" class="mt-1 block w-full p-2 border border-gray-300 rounded" oninput="showTypeahead('occupation')">
+                <div id="occupationTypeahead" class="typeahead-list hidden"></div>
+            </div>
+            <div class="mb-4 typeahead">
+                <!-- Industry Dropdown -->
+                <label for="industry" class="block text-gray-700">Industry</label>
+                <select id="industry" name="industry" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                    <option value=1>Accommodation and Food Services</option>
+                    <option value=2">Administrative and Support Services</option>
+                    <option value=3>Agriculture, Forestry, Fishing, and Hunting</option>
+                    <option value=4>Arts, Entertainment, and Recreation</option>
+                    <option value=5>Construction</option>
+                    <option value=6>Educational Services</option>
+                    <option value=7>Finance and Insurance</option>
+                    <option value=8>Government</option>
+                    <option value=9>Health Care and Social Assistance</option>
+                    <option value=10>Information</option>
+                    <option value=11>Management of Companies and Enterprises</option>
+                    <option value=12>Manufacturing</option>
+                    <option value=13>Mining, Quarrying, and Oil and Gas Extraction</option>
+                    <option value=14>Other Services (except Public Administration)</option>
+                    <option value=15>Professional, Scientific, and Technical Services</option>
+                    <option value=16>Real Estate and Rental and Leasing</option>
+                    <option value=17>Retail Trade</option>
+                    <option value=18>Transportation and Warehousing</option>
+                    <option value=19>Utilities</option>
+                    <option value=20>Wholesale Trade</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="isRemote" class="block text-gray-700">Remote</label>
+                <select id="isRemote" name="isRemote" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create Job Posting</button>
+        </form>
+    </div>
+</body>
+</html>

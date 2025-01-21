@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resume</title>
+</head>
+<body>
+    <h1>Upload Resume</h1>
+    <form id="uploadForm" method="POST" action="../api/user/uploadResume" enctype="multipart/form-data">
+
+        <label for="resume">Select a PDF:</label>
+        <input type="file" id="resume" name="resume" accept="application/pdf" required><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

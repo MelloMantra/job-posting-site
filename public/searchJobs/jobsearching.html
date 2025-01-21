@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search for Jobs</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #1a1a1a, #2e2e2e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+        }
+
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f5f5f5;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-bar input {
+            padding: 12px 20px;
+            font-size: 16px;
+            width: 50%;
+            border: 2px solid #f5f5f5;
+            border-radius: 10px;
+            background: transparent;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: #89CFF0;
+        }
+
+        .search-bar button {
+            padding: 12px 20px;
+            margin-left: 15px;
+            background-color: #89CFF0;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #5fadd3;
+            transform: scale(1.05);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-box {
+            background-color: #333;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-box:hover {
+            border: 2px solid #89CFF0;
+        }
+
+        .filter-box select,
+        .filter-box input {
+            background-color: black;
+            color: white;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .filter-box select:focus,
+        .filter-box input:focus {
+            border-color: #89CFF0;
+        }
+
+        .job-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .job-item {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .job-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-item .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .job-item .company,
+        .job-item .location,
+        .job-item .pay,
+        .job-item .industry,
+        .job-item .occupation {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #bbb;
+        }
+
+        .job-item a {
+            color: #89CFF0;
+            text-decoration: none;
+        }
+
+        .apply-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #89CFF0;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .apply-button:hover {
+            background-color: #5fadd3;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .small-text {
+            font-size: 12px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Job Search</h1>
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-query" placeholder="Search for jobs...">
+        <button id="search-btn">Search</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+        <div class="filter-box">
+            Industry
+            <select id="industry">
+                <option value="">Select Industry</option>
+                <option value="1">Tech</option>
+                <option value="2">Finance</option>
+                <option value="3">Healthcare</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Occupation
+            <select id="occupation">
+                <option value="">Select Occupation</option>
+                <option value="101">Developer</option>
+                <option value="102">Manager</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Remote
+            <select id="remote">
+                <option value="">Select</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Salary
+            <input type="number" id="salary" placeholder="Min Salary">
+            <div class="small-text">Hourly</div>
+        </div>
+        <div class="filter-box">
+            Job Type
+            <select id="job-type">
+                <option value="">Select Job Type</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Internship">Internship</option>
+                <option value="">Seasonal</option>
+            </select>
+        </div>
+        <div class="filter-box">
+            Sort by Date
+            <select id="sort-date">
+                <option value="">Select</option>
+                <option value="asc">Date Ascending</option>
+                <option value="desc">Date Descending</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Job Results -->
+    <div class="job-list" id="job-list">
+        <!-- Job items will be appended here -->
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>&copy; 2025 Jobify. All rights reserved.</p>
+</div>
+
+<script>
+    // Event listener for the "Search" button click
+    document.getElementById("search-btn").addEventListener("click", function() {
+        const query = document.getElementById("search-query").value;
+        const filters = {
+            industry: document.getElementById("industry").value,
+            occupation: document.getElementById("occupation").value,
+            isRemote: document.getElementById("remote").value,
+            minPay: document.getElementById("salary").value,
+            jobType: document.getElementById("job-type").value,
+            sort: document.getElementById("sort-date").value || 'estimatedPay' // Default sort order
+        };
+
+        searchJobs(query, filters);
+    });
+
+    // Event listener for pressing Enter key in the search input
+    document.getElementById("search-query").addEventListener("keypress", function(event) {
+        if (event.key === 'Enter') {
+            const query = document.getElementById("search-query").value;
+            const filters = {
+                industry: document.getElementById("industry").value,
+                occupation: document.getElementById("occupation").value,
+                isRemote: document.getElementById("remote").value,
+                minPay: document.getElementById("salary").value,
+                jobType: document.getElementById("job-type").value,
+                sort: document.getElementById("sort-date").value || 'estimatedPay' // Default sort order
+            };
+
+            searchJobs(query, filters);
+        }
+    });
+
+    // Function to search jobs based on query and filters
+    async function searchJobs(query, filterOptions) {
+        if (!query) {
+            return [];
+        }
+
+        try {
+            let URL = `../api/all/searchJobs?query=${query}`;
+
+            if (filterOptions?.industry) {
+                URL += `&industry=${filterOptions.industry}`;
+            }
+
+            if (filterOptions?.occupation) {
+                URL += `&occupation=${filterOptions.occupation}`;
+            }
+
+            if (filterOptions?.isRemote !== undefined) {
+                URL += `&isRemote=${filterOptions.isRemote}`;
+            }
+
+            if (filterOptions?.minPay) {
+                URL += `&minPay=${filterOptions.minPay}`;
+            }
+
+            if (filterOptions?.jobType) {
+                URL += `&jobType=${filterOptions.jobType}`;
+            }
+
+            if (filterOptions?.sort) {
+                URL += `&sort=${filterOptions.sort}`;
+            }
+
+            const response = await fetch(URL, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) {
+                alert("Internal server error.");
+                console.log(await response.json());
+                return [];
+            }
+
+            const data = await response.json();
+            displayJobs(data.result);
+        } catch (err) {
+            console.error('Error querying database:', err);
+            return [];
+        }
+    }
+
+    // Function to display jobs in the UI
+    function displayJobs(jobs) {
+        const jobListElement = document.getElementById("job-list");
+        jobListElement.innerHTML = ""; // Clear previous jobs
+
+        jobs.forEach(job => {
+            const jobItem = document.createElement("div");
+            jobItem.classList.add("job-item");
+            jobItem.id = `job-item-${job.id}`;
+            jobItem.innerHTML = `
+                <div class="title"><a href="/job/${job.id}" target="_blank">${job.title}</a></div>
+                <div class="company"><a href="/companyProfile/${job.companyName}" target="_blank">${job.companyName}</a></div>
+                <div class="location">${job.isRemote ? "Remote" : job.address}</div>
+                <div class="pay">$${job.estimatedPay}</div>
+                <div class="industry">${job.industryName}</div>
+                <div class="occupation">${job.occupationName}</div>
+                <button class="apply-button" onclick="applyToJob(${job.id})">Apply Now</button>
+            `;
+            jobListElement.appendChild(jobItem);
+        });
+    }
+
+    async function applyToJob(jobId) {
+        const jobItem = document.getElementById(`job-item-${jobId}`);
+        jobItem.style.display = "none";
+        
+        var data;
+
+        try {
+            const response = await fetch(`../api/user/applyToJob/${jobId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) {
+                alert("Internal server error.");
+                console.log(await response.json());
+                return;
+            }
+
+            data = await response.json();
+            console.log(data.message);
+        } catch (err) {
+            console.error('Error querying database:', err);
+            alert('Application Submission Error.');
+            return;
+        }
+
+        uploadResume(jobId, data.applicationId);
+    }
+
+    function uploadResume(jobId, applicationId) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf';
+
+        input.click();
+
+        input.onchange = async (event) => {
+            const file = event.target.files[0]; 
+
+            if (file) {
+                if (file.type !== 'application/pdf') {
+                    alert('Please select a valid PDF file.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('resume', file); 
+
+                try {
+                    const response = await fetch(`../api/user/uploadResume/${jobId}/${applicationId}`, {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                    } else {
+                        const result = await response.json();
+                        alert(result.error || 'Failed to upload resume.');
+                    }
+                } catch (error) {
+                    console.error('Error uploading resume:', error);
+                    alert('An error occurred while uploading the resume.');
+                }
+            }
+        }
+    }
+
+
+
+</script>
+
+</body>
+</html>
