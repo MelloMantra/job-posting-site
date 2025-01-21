@@ -100,7 +100,32 @@
             </div>
 
             <div class="tab" id="postings">
-                
+                <div class="loading-overlay">
+                    <div class="loader"></div>
+                </div>
+            
+                <header>
+                    <div class="container">
+                        <div class="header-content">
+                            <nav></nav>
+                        </div>
+                    </div>
+                </header>
+            
+                <main class="container">
+                    <h1 class="dashboard-title">Job Postings</h1>
+            
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search job postings...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+            
+                    <div class="jobs-grid">
+                        <!-- Jobs will be dynamically inserted here -->
+                    </div>
+                </main>
+            
+                <a href="../createJob" target="_blank" class="create-job-button">Create a Job +</a>
             </div>
 
             <div class="tab" id="profile">
