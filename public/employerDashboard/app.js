@@ -55,7 +55,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (applications.ok) {
-            const applicationsJson = await applications.json();
+            const applicationsJson = await applications.json().applications;
+
+            const wrapper = document.querySelector(".jobsWrapper");
+            for (i=0; i<applicationsJson.length; i++) {
+                
+            }
+                wrapper.appendChild()
 
             /* 
             Applications are returned in the following format:
@@ -104,27 +110,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     jobActionBtns.forEach(button => {
         button.addEventListener('click', async (event) => {
+            for (i=0; i<popUpActions.length; i++) {
+                if (i==0) {continue};
+                var action = popUpActions[i];
+                action.style.cursor = "pointer";
+                if (action.id == 'reviewPop' || action.id == 'editPop' || action.id == 'endListingPop') {action.style.display = 'flex'}
+                else {
+                    action.style.display = "none";
+                    if (popUpActions[i-1].style.display=='flex') {popUpActions[i-1].style.borderRadius = "0px 0px 10px 10px"};
+                };
+            }
             if (popUp.style.opacity == 0) {
                 popUp.style.top = `${button.getBoundingClientRect().top - container.getBoundingClientRect().top - 20}px`;
                 popUp.style.left = `${button.getBoundingClientRect().left - container.getBoundingClientRect().left - 20}px`;
                 await wait(100);
-                popUp.style.opacity = 1;
-                for (i=0; i<popUpActions.length; i++) {
-                    if (i==0) {continue};
-                    var action = popUpActions[i];
-                    if (action.id == 'reviewPop' || action.id == 'editPop' || action.id == 'endListingPop') {action.style.display = 'flex'}
-                    else if (popUpActions[i-1].style.display=='flex') {popUpActions[i-1].style.borderRadius = "0px 0px 10px 10px"};
-                }
-
-                popUpActions.forEach(action => {
-                    if (action.id == 'popUpTitle' || action.id == 'reviewPop' || action.id == 'editPop' || action.id == 'endListingPop') {
-                        action.style.display = 'flex';
-                    } else {
-                        action.style.display = 'none';
-                    }
-                });
+                popUp.style.opacity = 1;                
             } else {
-                if ((popUp.style.top == `${(Math.round((button.getBoundingClientRect().top + Number.EPSILON)*100) - Math.round((container.getBoundingClientRect().top + Number.EPSILON)*100) - 2000)/100}px`) && (popUp.style.left == `${(Math.round((button.getBoundingClientRect().left + Number.EPSILON)*100) - Math.round((container.getBoundingClientRect().left + Number.EPSILON)*100) - 2000)/100}px`)) {
+                if ((popUp.style.top == `${(Math.round((button.getBoundingClientRect().top + Number.EPSILON)*1000) - Math.round((container.getBoundingClientRect().top + Number.EPSILON)*1000) - 20000)/1000}px`) && (popUp.style.left == `${(Math.round((button.getBoundingClientRect().left + Number.EPSILON)*1000) - Math.round((container.getBoundingClientRect().left + Number.EPSILON)*1000) - 20000)/1000}px`)) {
                     popUp.style.opacity = 0;
                 } else {
                     popUp.style.top = `${button.getBoundingClientRect().top - container.getBoundingClientRect().top - 20}px`;
@@ -137,27 +139,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     appActionBtns.forEach(button => {
         button.addEventListener('click', async (event) => {
+            for (i=0; i<popUpActions.length; i++) {
+                if (i==0) {continue};
+                var action = popUpActions[i];
+                if (action.id == 'reviewPop' || action.id == 'hirePop' || action.id == 'rejectPop') {action.style.display = 'flex'}
+                else {action.style.display = "none"};
+            }
             if (popUp.style.opacity == 0) {
                 popUp.style.top = `${button.getBoundingClientRect().top - container.getBoundingClientRect().top - 20}px`;
                 popUp.style.left = `${button.getBoundingClientRect().left - container.getBoundingClientRect().left - 20}px`;
                 await wait(100);
-                popUp.style.opacity = 1;
-                for (i=0; i<popUpActions.length; i++) {
-                    if (i==0) {continue};
-                    var action = popUpActions[i];
-                    if (action.id == 'reviewPop' || action.id == 'editPop' || action.id == 'endListingPop') {action.style.display = 'flex'}
-                    else if (popUpActions[i-1].style.display=='flex') {popUpActions[i-1].style.borderRadius = "0px 0px 10px 10px"};
-                }
-
-                popUpActions.forEach(action => {
-                    if (action.id == 'popUpTitle' || action.id == 'reviewPop' || action.id == 'editPop' || action.id == 'endListingPop') {
-                        action.style.display = 'flex';
-                    } else {
-                        action.style.display = 'none';
-                    }
-                });
+                popUp.style.opacity = 1;                
             } else {
-                if ((popUp.style.top == `${(Math.round((button.getBoundingClientRect().top + Number.EPSILON)*100) - Math.round((container.getBoundingClientRect().top + Number.EPSILON)*100) - 2000)/100}px`) && (popUp.style.left == `${(Math.round((button.getBoundingClientRect().left + Number.EPSILON)*100) - Math.round((container.getBoundingClientRect().left + Number.EPSILON)*100) - 2000)/100}px`)) {
+                if ((popUp.style.top == `${(Math.round((button.getBoundingClientRect().top + Number.EPSILON)*1000) - Math.round((container.getBoundingClientRect().top + Number.EPSILON)*1000) - 20000)/1000}px`) && (popUp.style.left == `${(Math.round((button.getBoundingClientRect().left + Number.EPSILON)*1000) - Math.round((container.getBoundingClientRect().left + Number.EPSILON)*1000) - 20000)/1000}px`)) {
                     popUp.style.opacity = 0;
                 } else {
                     popUp.style.top = `${button.getBoundingClientRect().top - container.getBoundingClientRect().top - 20}px`;
