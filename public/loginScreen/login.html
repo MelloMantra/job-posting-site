@@ -13,7 +13,6 @@
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
         <script src="https://unpkg.com/split-type"></script>
         <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
-        <script src="../loginScreen/app.js"></script>
     </head>
     <body>
 
@@ -22,7 +21,7 @@
                 <h2>Log in</h2>
                 <a href="../homeScreen/index.html"><img src="../assets/icon.png" class="minilogo"></a>
             </div>
-            <p>to Jobify for Employees</p>
+            <p id="logintext"> to Jobify for Employees</p>
             <div class="form">
 
                 <div class="textinput">
@@ -47,10 +46,11 @@
                 </div>
 
                 <div class="gotosignup">
-                    <p>Looking for employer log in? <a href="../login/employer">Log In</a></p>
+                    <p id="goToOtherLogin">Looking for employer log in? <a id="goToOtherLoginLink" class = "goToOtherLoginLink" href="../login/company">Log In</a></p>
                 </div>
             </form>
         </div>
 
     </body>
+    <script src="../loginScreen/app.js"></script>
 </html>
