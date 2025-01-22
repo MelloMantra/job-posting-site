@@ -17,10 +17,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (jobs.ok) {
-            const jobsJson = await jobs.json().jobs;
+            var jobsJson = await jobs.json();
+
+            jobsJson = jobsJson.jobs;
 
             const wrapper = document.querySelector(".jobsWrapper");
-            for (i=0; i<jobsJson.length; i++) {
+            for (let i=0; i<jobsJson.length; i++) {
                 var jobListing = document.createElement("div");
                 jobListing.className = "jobListing";
                 var line1 = document.createElement("div");
@@ -97,13 +99,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (applications.ok) {
-            const applicationsJson = await applications.json().applications;
+            var applicationsJson = await applications.json();
+
+            applicationsJson = applicationsJson.applications;
 
                 
 
             /* 
             Applications are returned in the following format:
-            applications:
+            applicants:
             [
                 {
                     "job": 1, (to set an href = `/job/${job.id}`)

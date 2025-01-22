@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (jobs.ok) {
-            const jobsJson = await jobs.json();
+            var jobsJson = await jobs.json();
+
+            jobsJson = jobsJson.jobs;
 
             /* 
             Jobs are returned in the following format:
@@ -48,7 +50,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (applications.ok) {
-            const applicationsJson = await applications.json().applications;
+            var applicationsJson = await applications.json();
+
+            applicationsJson = applicationsJson.applications;
 
             /* 
             Applications are returned in the following format:
