@@ -238,6 +238,39 @@ async function confirmDecision(applicationId, decision) {
   }
 }
 
+/*
+Can be passed either "decided" or "closed"
+*/
+async function confirmStateChange(state) {
+  if (state !== "decided" && state !== "closed") {
+    alert('Invalid state');
+    return;
+  }
+
+  const confirmMessage = `Are you sure you want to mark this job as ${state}? This action cannot be undone.`;
+  if (confirm(confirmMessage)) {
+    closeJob(state);
+  }
+}
+
+async function closeJob(state) {
+  try {
+    const response = await fetch(`../api/company/updateJobStatus/${location.pathname.split('/').pop()}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: state }),
+    });
+    if (response.ok) {
+      alert('Job updated successfully');
+      location.reload();
+    } else {
+      alert('Failed to update job');
+    }
+  } catch (error) {
+    console.error('Error making decision:', error);
+  }
+}
+
 async function makeDecision(applicationId, decision) {
   if (!['accepted', 'rejected'].includes(decision)) {
     alert('Invalid decision');

@@ -11,8 +11,12 @@
     .job-header {background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-bottom: 2rem;}
     .job-title {font-size: 2rem; color: #fff; margin-bottom: 1rem;}
     .job-date {color: #ccc; font-size: 0.9rem;}
-    .view-details {color: #fff; text-decoration: none; display: inline-block; margin-top: 1rem; padding: 0.8rem 1.5rem; background: rgba(77,154,206,0.3); border-radius: 6px; transition: 0.2s;}
-    .view-details:hover {transform: translateY(-2px); background: rgba(77,154,206,0.5);}
+    .view-details {color: #fff; text-decoration: none; display: inline-block; margin-top: 1rem; margin-right: 1rem; padding: 0.8rem 1.5rem; background: rgba(206, 77, 167, 0.3); border-radius: 6px; transition: 0.2s;}
+    .view-details:hover {transform: translateY(-2px); background: rgba(206, 77, 206, 0.5);}
+    .close-apps {color: #fff; text-decoration: none; display: inline-block; margin-top: 1rem; margin-right: 1rem; padding: 0.8rem 1.5rem; background: rgba(77,154,206,0.3); border-radius: 6px; transition: 0.2s;}
+    .close-apps:hover {transform: translateY(-2px); background: rgba(77,154,206,0.5);}
+    .finalize-decisions {color: #fff; text-decoration: none; display: inline-block; margin-top: 1rem; margin-right: 1rem; padding: 0.8rem 1.5rem; background: rgba(206, 204, 77, 0.3); border-radius: 6px; transition: 0.2s;}
+    .finalize-decisions:hover {transform: translateY(-2px); background: rgba(187, 206, 77, 0.5);}
     .candidates-list {display: grid; gap: 1rem;}
     .candidate-card {background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;}
     .candidate-card:hover {transform: translateY(-2px); background: rgba(255,255,255,0.15);}
@@ -43,6 +47,8 @@
       <h1 class="job-title"></h1>
       <div class="job-date">Posted on</div>
       <a href="#" class="view-details" target="_blank">View Job Details</a>
+      <a class="close-apps" onclick="confirmStateChange('closed')">Close Applications</a>
+      <a class="finalize-decisions" onclick="confirmStateChange('decided')">Finalize Decisions</a>
     </div>
     <div class="candidates-list"></div>
   </div>
