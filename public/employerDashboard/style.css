@@ -214,7 +214,6 @@ ul li {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    vertical-align: middle;
 }
 
 a {

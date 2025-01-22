@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title.classList.add("unselectable");
                 title.innerHTML = jobsJson[i].title;
                 var moreDots = document.createElement("img");
-                moreDots.className = "moreInfo";
+                moreDots.className = "moreinfo";
                 moreDots.id = `job${i+1}`;
                 moreDots.src = "../assets/3dots.png";
                 line1.appendChild(title);
@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 var status = document.createElement("p");
                 status.className = `${jobsJson[i].status}Label`;
                 status.classList.add("unselectable");
-                status.innerHTML = jobsJson[i].status;
+                status.innerHTML = jobsJson[i].status.toUpperCase();
                 var applicants = document.createElement("p");
-                applicants.innerHTML = jobsJson[i].applicantCount;
+                applicants.innerHTML = jobsJson[i].applicantCount+" Applicants";
                 line2.appendChild(status);
                 line2.appendChild(applicants);
                 var line3 = document.createElement("div");
@@ -103,7 +103,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             applicationsJson = applicationsJson.applications;
 
-                
+            const wrapper = document.querySelector(".applicantsWrapper");
+            for (let i=0; i<applicationsJson.length; i++) {
+                var applicantBox = document.createElement("div");
+                applicantBox.className = "jobListing";
+                var line1 = document.createElement("div");
+                line1.className = "line";
+                var title = document.createElement("h3");
+                title.className = "jobTitle";
+                title.classList.add("unselectable");
+                title.innerHTML = jobsJson[i].title;
+                var moreDots = document.createElement("img");
+                moreDots.className = "moreinfo";
+                moreDots.id = `job${i+1}`;
+                moreDots.src = "../assets/3dots.png";
+                line1.appendChild(title);
+                line1.appendChild(moreDots);
+                var line2 = document.createElement("div");
+                line2.className = "line";
+                var status = document.createElement("p");
+                status.className = `${jobsJson[i].status}Label`;
+                status.classList.add("unselectable");
+                status.innerHTML = jobsJson[i].status.toUpperCase();
+                var applicants = document.createElement("p");
+                applicants.innerHTML = jobsJson[i].applicantCount+" Applicants";
+                line2.appendChild(status);
+                line2.appendChild(applicants);
+                var line3 = document.createElement("div");
+                line3.className = "line";
+                line3.classList.add("location");
+                var locationDiv = document.createElement("div");
+                var locationIcon = document.createElement("img");
+                locationIcon.src = "../assets/location.png";
+                locationDiv.appendChild(locationIcon);
+                locationDiv.innerHTML = " "+jobsJson[i].address;
+                line3.appendChild(locationDiv);
+                applicantBox.appendChild(line1);
+                applicantBox.appendChild(line2);
+                applicantBox.appendChild(line3);
+
+                wrapper.appendChild(applicantBox);
+            }
 
             /* 
             Applications are returned in the following format:
