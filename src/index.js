@@ -100,7 +100,8 @@ app.get('/job/:jobId', (req, res) => {
 
 app.get('/createJob', (req, res) => {
     //Uncomment below portion once done testing
-    const companyId = req.session?.companyId;
+    const companyId = 1; //for testing purposes
+    //const companyId = req.session?.companyId;
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }

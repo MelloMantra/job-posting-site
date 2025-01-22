@@ -186,6 +186,37 @@
             font-size: 12px;
             color: #bbb;
         }
+
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .typeahead {
+            position: relative;
+        }
+        .typeahead-list {
+            position: fixed;
+            top: 51%;
+            left: 49%;
+            background: rgb(0, 0, 0);
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 150px;
+            max-width: 300px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .typeahead-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .typeahead-item:hover {
+            background: #00001a;
+        }
     </style>
 </head>
 <body>
@@ -228,11 +259,8 @@
         </div>
         <div class="filter-box">
             Occupation
-            <select id="occupation">
-                <option value="">Select Occupation</option>
-                <option value="101">Developer</option>
-                <option value="102">Manager</option>
-            </select>
+            <input type="text" id="occupation" name="occupation" class="mt-1 block w-full p-2 border border-gray-300 rounded" oninput="showTypeahead('occupation')">
+            <div id="occupationTypeahead" class="typeahead-list hidden"></div>
         </div>
         <div class="filter-box">
             Remote
@@ -284,7 +312,7 @@
         const query = document.getElementById("search-query").value;
         const filters = {
             industry: document.getElementById("industry").value,
-            occupation: document.getElementById("occupation").value,
+            occupation: occupation,
             isRemote: document.getElementById("remote").value,
             minPay: document.getElementById("salary").value,
             jobType: document.getElementById("job-type").value,
@@ -300,7 +328,7 @@
             const query = document.getElementById("search-query").value;
             const filters = {
                 industry: document.getElementById("industry").value,
-                occupation: document.getElementById("occupation").value,
+                occupation: occupation,
                 isRemote: document.getElementById("remote").value,
                 minPay: document.getElementById("salary").value,
                 jobType: document.getElementById("job-type").value,
@@ -453,6 +481,84 @@
         }
     }
 
+var occupation;
+    function debounce(func, delay) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => func(...args), delay);
+    };
+}
+
+const showTypeahead = debounce(async (field) => {
+    const input = document.getElementById(field);
+    const typeahead = document.getElementById(`occupationTypeahead`);
+    typeahead.innerHTML = '';
+
+    const query = input.value;
+    if (query) {
+        var matches;
+        try {
+            matches = await fetch(`../api/all/searchCategory/${field}?query=${query}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (matches.ok) {
+                matches = await matches.json();
+                console.log(matches);
+                /* Matches will look something like this:
+                {
+                    "result": [
+                        {
+                            "id": 1,
+                            "name": "Occupation Name"
+                        },
+                        {
+                            "id": 2,
+                            "name": "Occupation Name"
+                        },
+                        {
+                            "id": 3,
+                            "name": "Occupation Name"
+                        }
+                    ]
+                }
+
+                note that you need to use matches.result to get the actual content, not just matches
+                */
+            } else {
+                console.log(`Error: ${matches.status} ${matches.statusText}`);
+                alert("Internal server error.");
+            }
+            if (matches.result.length === 0) {
+                typeahead.classList.add('hidden');
+                return;
+            }
+        } catch (err) {
+            console.error('Error querying database:', err);
+        }
+
+        matches.result.forEach(match => {
+            const div = document.createElement('div');
+            div.className = 'typeahead-item';
+            div.textContent = match.name;
+            div.onclick = () => {
+                input.value = match.name;
+                occupation = match.id;
+                const typeahead = document.getElementById(`occupationTypeahead`);
+                typeahead.display = 'none';
+            };
+            typeahead.appendChild(div);
+        });
+        
+        typeahead.classList.remove('hidden');
+    } else {
+        typeahead.classList.add('hidden');
+    }  
+}, 300);
 
 
 </script>
