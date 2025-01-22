@@ -69,6 +69,14 @@ const applications = [
         status: "pending",
         date: "2025-01-18",
         location: "San Francisco, CA"
+    },
+    {
+        id: 3,
+        company: "Innovation Labs",
+        position: "Software Engineer",
+        status: "pending",
+        date: "2025-01-18",
+        location: "San Francisco, CA"
     }
 ];
 

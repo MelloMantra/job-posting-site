@@ -152,7 +152,7 @@ exports.deleteJob = async (req, res) => {
 
 exports.updateJobStatus = async (req, res) => {
     const jobId = req.params.jobId;
-    const companyId = 2; //for testing purposes
+    const companyId = 1; //for testing purposes
     //const companyId = req.session?.companyId;
     const status = req.body.status;
 
