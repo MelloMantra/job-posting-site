@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (applications.ok) {
-            const applicationsJson = await applications.json().applications;
+            const applicationsJson = await applications.json().applicants;
 
             const wrapper = document.querySelector(".jobsWrapper");
             for (i=0; i<applicationsJson.length; i++) {
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             /* 
             Applications are returned in the following format:
-            applications:
+            applicants:
             [
                 {
                     "job": 1, (to set an href = `/job/${job.id}`)

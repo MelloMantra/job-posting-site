@@ -356,7 +356,7 @@ exports.get4Applications = async (req, res) => {
         `;
         const [rows] = await pool.query(sql, [userId]);
 
-        return res.status(200).json({ jobs: rows });
+        return res.status(200).json({ applications: rows });
     } catch (err) {
         console.error('Error querying database:', err);
         return res.status(500).json({ error: 'Internal server error.' });
