@@ -85,6 +85,7 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: 'Invalid email or password.' });
         }
 
+        console.log(rows);
         req.session.userId = rows[0].id;
         return res.status(200).json({ message: 'Login successful.', user: rows[0] });
     } catch (err) {
