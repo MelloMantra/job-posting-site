@@ -99,7 +99,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (applications.ok) {
-            const applicationsJson = await applications.json().applicants;
+            var applicationsJson = await applications.json();
+
+            applicationsJson = applicationsJson.applications;
 
                 
 
