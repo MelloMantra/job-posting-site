@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const jobsJson = await jobs.json().jobs;
 
             const wrapper = document.querySelector(".jobsWrapper");
-            for (i=0; i<applicationsJson.length; i++) {
+            for (i=0; i<jobsJson.length; i++) {
                 var jobListing = document.createElement("div");
                 jobListing.className = "jobListing";
                 var line1 = document.createElement("div");

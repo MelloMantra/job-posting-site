@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // scrolling anim
     window.addEventListener('scroll', () => { {
-        var scrollAmt = window.scrollY * 2;
-        var scrollStart = 1850;
-        bearnotes.style.transform = `translate(${scrollAmt-scrollStart}px, -50%)`;
+        var scrollAmt = window.scrollY / 4.5;
+        var scrollStart = 190;
+        bearnotes.style.transform = `translate(${scrollAmt-scrollStart}em, -50%)`;
     }});
 
     // lenis smooth scroll

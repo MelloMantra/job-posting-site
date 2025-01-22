@@ -209,7 +209,7 @@ ul li {
     left: 0;
     right: 90vw;
     z-index: 999;
-    width: 14em;
+    width: 18%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -250,7 +250,7 @@ a:hover {
     color: white;
     padding: 10px 20px;
     border-radius: 10px;
-    width: 24.422850608em;
+    width: 22.5%;
     height: fit-content;
     transition: 0.3s ease;
     margin: 10px;
