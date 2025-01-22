@@ -294,3 +294,71 @@ exports.get4Jobs = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 }
+
+exports.get4Jobs = async (req, res) => {
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+
+    try {
+        const sql = `
+            SELECT 
+                p.*, 
+                c.name AS companyName
+            FROM 
+                postedJob p
+            LEFT JOIN 
+                openApplications a ON p.id = a.job AND a.user = ?
+            LEFT JOIN 
+                companies c ON p.company = c.id
+            WHERE 
+                a.job IS NULL
+            LIMIT 4;
+        `;
+        const [rows] = await pool.query(sql, [userId]);
+
+        return res.status(200).json({ jobs: rows });
+    } catch (err) {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
+
+exports.get4Applications = async (req, res) => {
+    const userId = 1; //for testing purposes
+    //const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).json({ error: 'User not authenticated.' });
+    }
+
+    try {
+        const sql = `
+            SELECT 
+            a.*, 
+            p.title AS jobTitle, 
+            p.address AS jobAddress, 
+            c.name AS companyName
+        FROM 
+            openApplications a
+        JOIN 
+            postedJob p ON a.job = p.id
+        JOIN 
+            companies c ON p.company = c.id
+        WHERE 
+            a.user = ?
+        ORDER BY 
+            a.created_at DESC
+        LIMIT 4;
+        `;
+        const [rows] = await pool.query(sql, [userId]);
+
+        return res.status(200).json({ jobs: rows });
+    } catch (err) {
+        console.error('Error querying database:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
