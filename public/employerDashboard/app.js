@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (applications.ok) {
             var applicationsJson = await applications.json();
 
-            applicationsJson = applicationsJson.applications;
+            applicationsJson = applicationsJson.applicants;
 
             const wrapper = document.querySelector(".applicantsWrapper");
             for (let i=0; i<applicationsJson.length; i++) {
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 var status = document.createElement("p");
                 status.className = `openLabel`; //    NEED TO CHANGE TO UPDATE DYNAMICALLY
                 status.classList.add("unselectable");
-                status.innerHTML = applicationsJson[i].status.toUpperCase();
+                status.innerHTML = applicationsJson[i].state.toUpperCase();
                 var jobTitle = document.createElement("p");
                 jobTitle.innerHTML = applicationsJson[i].jobTitle;
                 line2.appendChild(status);
