@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jobify</title>
+        <meta name="description" content="Login to Jobify">
+        <link rel="icon" href="../../assets/icon.png">
+        <link rel="stylesheet" href="../../loginScreen/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src="https://unpkg.com/split-type"></script>
+        <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+    </head>
+    <body>
+
+        <div class="loginbox">
+            <div class="header unselectable">
+                <h2>Log in</h2>
+                <a href="../homeScreen/index.html"><img src="../assets/icon.png" class="minilogo"></a>
+            </div>
+            <p id="logintext"> to Jobify</p>
+            <div class="form">
+
+                <div class="tab">
+
+                    <h3>Log in as</h3>
+                    <a href="login/user"><button class="selectType"><img>Employee</button></a>
+                    <a href="login/company"><button class="selectType"><img>Employer</button></a>
+
+                <div class="gotosignup">
+                    <p>Don't have a Jobify account? <a href="../../userSignUp">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+
+    </body>
+    <script src="../../loginScreen/app.js"></script>
+</html>
