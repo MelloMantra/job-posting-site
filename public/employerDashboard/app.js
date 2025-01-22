@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             jobsJson = jobsJson.jobs;
 
+            console.log("Jobs: ", jobsJson);
+
             const wrapper = document.querySelector(".jobsWrapper");
             for (let i=0; i<jobsJson.length; i++) {
                 var jobListing = document.createElement("div");
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 var locationIcon = document.createElement("img");
                 locationIcon.src = "../assets/location.png";
                 locationDiv.appendChild(locationIcon);
-                var locationText = document.createTextNode(" "+jobsJson[i].address);
+                var locationText = document.createTextNode(" "+(jobsJson[i].address == null ? "Remote" : jobsJson[i].address));
                 locationDiv.appendChild(locationText);
                 line3.appendChild(locationDiv);
                 jobListing.appendChild(line1);
@@ -103,6 +105,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             var applicationsJson = await applications.json();
 
             applicationsJson = applicationsJson.applicants;
+
+            console.log("Applications: ", applicationsJson);
 
             const wrapper = document.querySelector(".applicantsWrapper");
             for (let i=0; i<applicationsJson.length; i++) {
