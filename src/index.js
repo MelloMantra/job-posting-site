@@ -154,6 +154,7 @@ app.get('/employerDashboard', (req, res) => {
 
 app.get('/employeeDashboard', (req, res) => {
     //comment below portion if testing
+    req.session.userId = 1;
     const userId = req.session?.userId;
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
