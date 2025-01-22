@@ -264,7 +264,11 @@ async function closeJob(state) {
     });
     if (response.ok) {
       alert('Job updated successfully');
-      location.reload();
+      if (state === "closed")
+        location.reload();
+      else if (state === "decided") {
+        location.href = `../allApps`
+      }
     } else {
       alert('Failed to update job');
     }

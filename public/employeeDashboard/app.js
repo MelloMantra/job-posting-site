@@ -179,7 +179,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     const appsTab = document.getElementById('tab3');
     const appsIframe = document.getElementById('allApps');
     appsTab.addEventListener('click', () => {
-        appsIframe.src = "../allUserApps";
+        if (appsIframe.src != "../userAllApps") {
+            appsIframe.src = "../userAllApps";
+        } else {
+            appsIframe.contentWindow.location.reload();
+        }
+    });
+
+    const jobsTab = document.getElementById('tab1');
+    const jobsIframe = document.getElementById('searchJobs');
+    jobsTab.addEventListener('click', () => {
+        if (jobsIframe.src != "../searchJobs") {
+            jobsIframe.src = "../searchJobs";
+        } else {
+            jobsIframe.contentWindow.location.reload();
+        }
+
     });
 
     // pop up menu stuff
