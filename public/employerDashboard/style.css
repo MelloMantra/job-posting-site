@@ -304,6 +304,22 @@ a:hover {
     font-size: 0.975rem;
 }
 
+.reviewingLabel {
+    padding: 3px 5px 0px 4px;
+    outline: 0.2em solid rgb(123, 255, 47, 0.6);
+    border-radius: 15px;
+    color: rgb(123, 255, 47, 1);
+    font-size: 0.975rem;
+}
+
+.acceptedLabel {
+    padding: 3px 5px 0px 4px;
+    outline: 0.2em solid rgb(123, 255, 47, 0.6);
+    border-radius: 15px;
+    color: rgb(123, 255, 47, 1);
+    font-size: 0.975rem;
+}
+
 .closedLabel {
     padding: 3px 5px 0px 4px;
     outline: 0.2em solid rgb(255, 47, 47, 0.6);
@@ -312,7 +328,23 @@ a:hover {
     font-size: 0.975rem;
 }
 
+.rejectedLabel {
+    padding: 3px 5px 0px 4px;
+    outline: 0.2em solid rgb(255, 47, 47, 0.6);
+    border-radius: 15px;
+    color: rgb(255, 47, 47, 1);
+    font-size: 0.975rem;
+}
+
 .archivedLabel {
+    padding: 3px 5px 0px 4px;
+    outline: 0.2em solid rgba(255, 150, 47, 0.6);
+    border-radius: 15px;
+    color: rgb(255, 150, 47);
+    font-size: 0.975rem;
+}
+
+.pendingLabel {
     padding: 3px 5px 0px 4px;
     outline: 0.2em solid rgba(255, 150, 47, 0.6);
     border-radius: 15px;
@@ -399,6 +431,15 @@ a:hover {
 
 hr {
     margin: 10px;
+}
+
+.applicantsWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .applicantBox {
