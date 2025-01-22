@@ -183,6 +183,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // tab refreshing
+    const postingsTab = document.getElementById('tab3');
+    const postingsIframe = document.getElementById('allJobs');
+    postingsTab.addEventListener('click', () => {
+        postingsIframe.src = "../allJobs";
+        postingsIframe.contentWindow.location.reload();
+    });
+
     // pop up menu stuff
     const jobBoxes = document.querySelectorAll('.jobListing');
     const jobActionBtns = document.querySelectorAll('.jobListing img.moreinfo');

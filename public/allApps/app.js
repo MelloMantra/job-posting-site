@@ -121,6 +121,7 @@ frontend won't sync with that unless the page is reloaded (so you could also jus
 decided will be rejected on the backend, so I'd also reflect that in the frontend (and perhaps include a "warning" message that the job will be locked if it's decided).
 This also means that a company can't reopen or switch a job to closed once it's decided (though I may implement a reopen feature in the future).
 */
+/*
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof gsap === 'undefined') {
       console.error('GSAP library is missing!');
@@ -129,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('FontAwesome is not loaded!');
   }
 });
+*/
 
 document.addEventListener('input', (event) => {
   if (event.target.matches('.search-input')) {
