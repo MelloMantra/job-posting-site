@@ -251,20 +251,6 @@ document.addEventListener('click', function(event) {
 });
 
 
-function executeScriptsFromDoc(doc) {
-    const scripts = doc.querySelectorAll('script');
-    scripts.forEach((script) => {
-        const newScript = document.createElement('script');
-        if (script.src) {
-            newScript.src = script.src; // Reattach external script
-        } else {
-            newScript.textContent = script.textContent; // Inline script
-        }
-        document.body.appendChild(newScript);
-        document.body.removeChild(newScript); // Clean up after execution
-    });
-}
-
 function saveChanges(fieldId) {
     const fieldContent = document.getElementById(`${fieldId}-field`);
     const input = fieldContent.querySelector('.field-input');
@@ -336,4 +322,3 @@ function showError(message) {
     document.body.appendChild(error);
     setTimeout(() => error.remove(), 2500);
 }
-
