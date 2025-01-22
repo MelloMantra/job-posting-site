@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     "hours": "Full Time", (Full Time, Part Time, Seasonal, Internship)
                     "estimatedPay": 10000,
                     "jobDescription": "We are looking for a talented software engineer to join our team.",
+                    "companyName": "Company Name"
                 }
             ]
             */

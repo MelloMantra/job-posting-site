@@ -85,6 +85,7 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: 'Invalid email or password.' });
         }
 
+        console.log(rows);
         req.session.userId = rows[0].id;
         return res.status(200).json({ message: 'Login successful.', user: rows[0] });
     } catch (err) {
@@ -123,8 +124,8 @@ exports.signUp = async (req, res) => {
 //when resumes are switched to user, change this
 exports.applyToJob = async (req, res) => {
     const { jobId } = req.params;
-    const userId = 1; //for testing purposes
-    //const userId = req.session.userId;
+    //const userId = 1; //for testing purposes
+    const userId = req.session.userId;
 
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -198,8 +199,8 @@ exports.deleteApplication = async (req, res) => {
 }
 
 exports.getApplications = async (req, res) => {
-    const userId = 1; //for testing purposes
-    //const userId = req.session.userId;
+    //const userId = 1; //for testing purposes
+    const userId = req.session.userId;
 
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -236,8 +237,8 @@ exports.getApplications = async (req, res) => {
 exports.uploadResume = async (req, res) => {
     const jobId = req.params.jobId;
     const applicationId = req.params.applicationId;
-    const userId = 1; //for testing purposes
-    //const userId = req.session.userId;
+    //const userId = 1; //for testing purposes
+    const userId = req.session.userId;
 
     if (!jobId || !applicationId) {
         return res.status(400).json({ error: 'Job ID and Application ID are required.' });
@@ -264,8 +265,8 @@ exports.uploadResume = async (req, res) => {
 };
 
 exports.get4Jobs = async (req, res) => {
-    const userId = 1; //for testing purposes
-    //const userId = req.session.userId;
+    //const userId = 1; //for testing purposes
+    const userId = req.session.userId;
 
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -295,6 +296,7 @@ exports.get4Jobs = async (req, res) => {
     }
 }
 
+/*
 exports.get4Jobs = async (req, res) => {
     const userId = 1; //for testing purposes
     //const userId = req.session.userId;
@@ -326,10 +328,11 @@ exports.get4Jobs = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 }
+*/
 
 exports.get4Applications = async (req, res) => {
-    const userId = 1; //for testing purposes
-    //const userId = req.session.userId;
+    //const userId = 1; //for testing purposes
+    const userId = req.session.userId;
 
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
