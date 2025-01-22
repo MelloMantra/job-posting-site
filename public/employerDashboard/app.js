@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 var line2 = document.createElement("div");
                 line2.className = "line";
                 var status = document.createElement("p");
-                status.className = `openLabel`; //    NEED TO CHANGE TO UPDATE DYNAMICALLY
+                status.className = `${applicationsJson[i].state}Label`;
                 status.classList.add("unselectable");
                 status.innerHTML = applicationsJson[i].state.toUpperCase();
                 var jobTitle = document.createElement("p");
@@ -135,12 +135,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 line3.classList.add("location");
                 var creationDiv = document.createElement("div");
                 var creationIcon = document.createElement("img");
-                creationIcon.src = "../assets/review.png";
-                creationDiv.appendChild(locationIcon);
-                var creationText = document.createElement("caption");
-                creationText.innerHTML = " "+DateTimeFormat(applicationsJson[i].created_at);
-                creationDiv.appendChild(locationText);
-                line3.appendChild(locationDiv);
+                creationIcon.src = "../assets/details.png";
+                creationDiv.appendChild(creationIcon);
+                var creationText = document.createTextNode(" Applied on "+formatDate(applicationsJson[i].created_at));
+                creationDiv.appendChild(creationText);
+                line3.appendChild(creationDiv);
                 applicantBox.appendChild(line1);
                 applicantBox.appendChild(line2);
                 applicantBox.appendChild(line3);
@@ -258,11 +257,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function formatDate(dateStr) {
     const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-    }).format(date);
+    const readableDate = date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    });
+    return readableDate;
 }
 
 // wait function
