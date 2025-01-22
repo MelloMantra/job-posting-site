@@ -51,7 +51,8 @@ body {
     transition: opacity ease, transform 0.3s ease;
     flex-direction: column;
     margin-left: 15px;
-    display: none
+    display: none;
+    overflow-x: hidden;
 }
 
 .tab.active {
@@ -209,7 +210,7 @@ ul li {
     left: 0;
     right: 90vw;
     z-index: 999;
-    width: 14em;
+    width: 15em;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -250,7 +251,7 @@ a:hover {
     color: white;
     padding: 10px 20px;
     border-radius: 10px;
-    width: 24.422850608em;
+    width: 24.42206em;
     height: fit-content;
     transition: 0.3s ease;
     margin: 10px;
@@ -420,6 +421,13 @@ hr {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+iframe {
+    width: 86vw;
+    height: 87.6vh;
+    border-radius: 25px;
+    scrollbar-width: 0px;
 }
 
 /* romir's profile css */

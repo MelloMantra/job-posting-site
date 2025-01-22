@@ -17,7 +17,49 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (jobs.ok) {
-            const jobsJson = await jobs.json();
+            const jobsJson = await jobs.json().jobs;
+
+            const wrapper = document.querySelector(".jobsWrapper");
+            for (i=0; i<jobsJson.length; i++) {
+                var jobListing = document.createElement("div");
+                jobListing.className = "jobListing";
+                var line1 = document.createElement("div");
+                line1.className = "line";
+                var title = document.createElement("h3");
+                title.className = "jobTitle";
+                title.classList.add("unselectable");
+                title.innerHTML = jobsJson[i].title;
+                var moreDots = document.createElement("img");
+                moreDots.className = "moreInfo";
+                moreDots.id = `job${i+1}`;
+                moreDots.src = "../assets/3dots.png";
+                line1.appendChild(title);
+                line1.appendChild(moreDots);
+                var line2 = document.createElement("div");
+                line2.className = "line";
+                var status = document.createElement("p");
+                status.className = `${jobsJson[i].status}Label`;
+                status.classList.add("unselectable");
+                status.innerHTML = jobsJson[i].status;
+                var applicants = document.createElement("p");
+                applicants.innerHTML = jobsJson[i].applicantCount;
+                line2.appendChild(status);
+                line2.appendChild(applicants);
+                var line3 = document.createElement("div");
+                line3.className = "line";
+                line3.classList.add("location");
+                var locationDiv = document.createElement("div");
+                var locationIcon = document.createElement("img");
+                locationIcon.src = "../assets/location.png";
+                locationDiv.appendChild(locationIcon);
+                locationDiv.innerHTML = " "+jobsJson[i].address;
+                line3.appendChild(locationDiv);
+                jobListing.appendChild(line1);
+                jobListing.appendChild(line2);
+                jobListing.appendChild(line3);
+
+                wrapper.appendChild(jobListing);
+            }
 
             /* 
             Jobs are returned in the following format:
@@ -57,11 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (applications.ok) {
             const applicationsJson = await applications.json().applications;
 
-            const wrapper = document.querySelector(".jobsWrapper");
-            for (i=0; i<applicationsJson.length; i++) {
                 
-            }
-                wrapper.appendChild()
 
             /* 
             Applications are returned in the following format:
@@ -207,7 +245,7 @@ async function openTab(tabNum) {
 }
 
 
-
+// romir's functions
 function initializeProfile() {
     document.getElementById('company-name-value').textContent = employerData.companyName;
     document.getElementById('email-value').textContent = employerData.email;
