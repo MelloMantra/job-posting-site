@@ -72,7 +72,7 @@ section h2 {
 }
 
 section h2.small {
-    font-size: clamp(3rem, 2.8vw, 8rem);
+    font-size: clamp(3rem, 2.7vw, 8rem);
 }
 
 .bottomtab {
