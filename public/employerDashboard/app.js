@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title.classList.add("unselectable");
                 title.innerHTML = jobsJson[i].title;
                 var moreDots = document.createElement("img");
-                moreDots.className = "moreInfo";
+                moreDots.className = "moreinfo";
                 moreDots.id = `job${i+1}`;
                 moreDots.src = "../assets/3dots.png";
                 line1.appendChild(title);
