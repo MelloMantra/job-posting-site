@@ -56,13 +56,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.log(data);
 
             // Populate the page with job data
-            document.getElementById('companyName').textContent = data.jobs.company;
+            document.getElementById('companyName').textContent = data.jobs.company_name;
             document.getElementById('jobTitle').textContent = data.jobs.title;
             document.getElementById('jobStatus').textContent = data.jobs.status.charAt(0).toUpperCase() + data.jobs.status.slice(1);
             document.getElementById('jobStatus').className = `job-status status-${data.jobs.status}`;
             document.getElementById('jobDescription').textContent = data.jobs.description;
             document.getElementById('jobLocation').textContent = data.jobs.address;
-            document.getElementById('jobHours').textContent = data.jobs.hours;
+            document.getElementById('jobHours').textContent = data.jobs.scheduleType;
             document.getElementById('jobPay').textContent = `$${data.jobs.estimatedPay.toLocaleString()} per year`;
             document.getElementById('jobIndustry').textContent = data.jobs.industry_name;
             document.getElementById('jobOccupation').textContent = data.jobs.occupation_name;

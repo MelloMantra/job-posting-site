@@ -137,13 +137,13 @@
                     data = await response.json();
                     console.log(data);
                     // Populate the page with job data
-                    document.getElementById('companyName').textContent = data.company;
+                    document.getElementById('companyName').textContent = data.company_name;
                     document.getElementById('jobTitle').textContent = data.title;
                     document.getElementById('jobStatus').textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);
                     document.getElementById('jobStatus').className = `job-status status-${data.status}`;
                     document.getElementById('jobDescription').textContent = data.description;
                     document.getElementById('jobLocation').textContent = data.address;
-                    document.getElementById('jobHours').textContent = data.hours;
+                    document.getElementById('jobHours').textContent = data.scheduleType;
                     document.getElementById('jobPay').textContent = `$${data.estimatedPay.toLocaleString()} per year`;
                     document.getElementById('jobIndustry').textContent = data.industry_name;
                     document.getElementById('jobOccupation').textContent = data.occupation_name;
