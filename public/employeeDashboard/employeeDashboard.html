@@ -4,7 +4,7 @@
         <title>Jobify</title>
         <meta name="description" content="Login to Jobify">
         <link rel="icon" href="../assets/icon.png">
-        <link rel="stylesheet" href="../employeeDashboard/style.css">
+        <link rel="stylesheet" href="../employerDashboard/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
@@ -13,58 +13,56 @@
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
         <script src="https://unpkg.com/split-type"></script>
         <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
-        <script src="../employeeDashboard/app.js"></script>
+        <script src="../employerDashboard/app.js"></script>
     </head>
     <body>
 
         <div class="navbar">
             <nav>
                 <ul>
-                    <li><p></p></li>
                     <li><span class="spanbar"></span></li>
                     <li><a href=".."><span class="logospace"><img src="../assets/icon.png" style="width: 30px;"></span></a></li>
                     <li><span class="spanbar"></span></li>
                 </ul>
             </nav>
         </div>
-        <a href=".." class="dullButton">Log Out</a>
-        <a href="../createJob/createJob.html" class="popButton"><img src="../assets/plus.png" class="dropdownIcon">Create New Listing</a>
+
+        <a href=".." class="dullButton trcorner"><div>Log Out</div></a>
 
         <div class="sidebar">
-            <button class="tabBtn" data-tab="search" id="tab1">Search Applicants</button>
+            <button class="tabBtn" data-tab="search" id="tab1">Search Opportunities</button>
             <button class="tabBtn active" data-tab="dashboard" id="tab2">Dashboard</button>
-            <button class="tabBtn" data-tab="postings" id="tab3">All Listings</button>
-            <button class="tabBtn" data-tab="profile" id="tab4">Company Profile</button>
+            <button class="tabBtn" data-tab="postings" id="tab3">All Applications</button>
+            <button class="tabBtn" data-tab="profile" id="tab4">Profile</button>
         </div>
 
         <div class="contentwrapper">
 
             <div class="tab" id="search">
-                
+                <iframe src="../searchJobs/jobsearching.html" frameborder="0" id="allApps"></iframe>
             </div>
 
             <div class="tab active" id="dashboard">
 
                 <div class="popUp unselectable">
                     <div class="dropdownItem" id="popUpTitle" style="cursor: default;"><p>Actions</p></div>
-                    <div class="dropdownItem" id="reviewPop"><img src="../assets/details.png" class="dropdownIcon"><p>Review</p></div>
+                    <div class="dropdownItem" id="detailsPop"><img src="../assets/details.png" class="dropdownIcon"><p>Details</p></div>
 
                     <div class="dropdownItem" id="editPop"><img src="../assets/edit.png" class="dropdownIcon"><p>Edit</p></div>
-                    <div class="dropdownItem" id="endListingPop"><img src="../assets/close.png" class="dropdownIcon"><p>End Listing</p></div>
+                    <div class="dropdownItem" id="withdrawPop"><img src="../assets/close.png" class="dropdownIcon"><p>Withdraw</p></div>
 
-                    <div class="dropdownItem" id="hirePop"><img src="../assets/hire.png" class="dropdownIcon"><p>Hire</p></div>
-                    <div class="dropdownItem" id="rejectPop"><img src="../assets/close.png" class="dropdownIcon"><p>Reject</p></div>
+                    <div class="dropdownItem" id="applyPop"><img src="../assets/hire.png" class="dropdownIcon"><p>Apply</p></div>
                 </div>
 
                 <div class="dashboardHeading">
-                    <h2>Dashboard</h2>
+                    <h2>My Dashboard</h2>
                     <img>
                 </div>
 
-                <h3>Recent Postings</h3>
+                <h3>Opportunities Feed</h3>
 
                 <div class="jobsWrapper">
-                    <div class="jobListing">
+                    <!--<div class="jobListing">
                         <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 1</h3><img src="../assets/3dots.png" class="moreinfo" id="job1"></div>
                         <div class="line"><p class="openLabel unselectable">OPEN</p><p>0 Applicants</p></div>
                         <div class="line location"><div><img src="../assets/location.png"> Location, LOL</div></div>
@@ -86,10 +84,10 @@
                         <div class="line"><h3 class="jobTitle unselectable">Example Job Listing 4</h3><img src="../assets/3dots.png" class="moreinfo" id="job4"></div>
                         <div class="line"><p class="openLabel unselectable">OPEN</p><p>0 Applicants</p></div>
                         <div class="line location"><div><img src="../assets/location.png"> Location, LOL</div></div>
-                    </div>
+                    </div>-->
                 </div>
 
-                <div class="seemore"><button class="seemoreBtn" onclick="openTab(3)">ALL POSITIONS<img src="../assets/arrow.png" class="arrow"></button></div>
+                <div class="seemore"><button class="seemoreBtn" onclick="openTab(1)">ALL OPPORTUNITIES<img src="../assets/arrow.png" class="arrow"></button></div>
 
                 <hr>
 
@@ -97,31 +95,31 @@
 
                 <div class="applicantsWrapper">
 
-                    <div class="applicantBox">
-                        <div class="line"><h3 class="jobTitle unselectable">Ann Example</h3><img src="../assets/3dots.png" class="moreinfo" id="job1"></div>
+                    <!--<div class="applicantBox">
+                        <div class="line"><h3 class="jobTitle unselectable">Ann Example</h3><img src="../assets/3dots.png" class="moreinfo" id="app1"></div>
                         <div class="line"><p class="openLabel unselectable">REVIEWING</p><p>Example Job 1</p></div>
                         <div class="line location"><div><img src="../assets/details.png"> Applied on 01/01/2025</div></div>
-                    </div>
+                    </div>-->
 
                 </div>
                 
-                <div class="seemore"><button class="seemoreBtn" onclick="openTab(1)">ALL APPLICANTS<img src="../assets/arrow.png" class="arrow"></button></div>
+                <div class="seemore"><button class="seemoreBtn" onclick="openTab(3)">ALL APPLICATIONS<img src="../assets/arrow.png" class="arrow"></button></div>
             
             </div>
 
             <div class="tab" id="postings">
-                <iframe src="../allJobs" frameborder="0"></iframe>
+                <iframe src="../userAllApps" frameborder="0" id="allApps"></iframe>
             </div>
 
             <div class="tab" id="profile">
                 <div class="profile-container">
                     <div class="edit-header">
-                        <h1>Edit Company Profile</h1>
+                        <h1>Edit Profile</h1>
                     </div>
             
                     <div class="field-container" style="animation-delay: 0.1s">
                         <div class="field-label">
-                            <h2>Company Name</h2>
+                            <h2>Full Name</h2>
                             <button class="edit-btn" onclick="startEditing('company-name')">Edit</button>
                         </div>
                         <div class="field-content" id="company-name-field">
@@ -141,7 +139,7 @@
             
                     <div class="field-container" style="animation-delay: 0.3s">
                         <div class="field-label">
-                            <h2>Company Description</h2>
+                            <h2>Personal Statement</h2>
                             <button class="edit-btn" onclick="startEditing('description')">Edit</button>
                         </div>
                         <div class="field-content" id="description-field">
