@@ -42,11 +42,6 @@ section {
     display: block;
     align-content: center;
     z-index: -1;
-    
-    h2 {
-        font-size: clamp(3rem, 5vw, 9rem);
-        padding: 20px;
-    }
 
     p {
         font-size: clamp(1rem, 2vw, 4rem);
@@ -69,6 +64,15 @@ section {
         background-color: black;
         color: white;
     }
+}
+
+section h2 {
+    font-size: clamp(3rem, 5vw, 9rem);
+        padding: 20px;
+}
+
+section h2.small {
+    font-size: clamp(3rem, 2.8vw, 8rem);
 }
 
 .bottomtab {
