@@ -68,6 +68,7 @@ body {
     margin-top: 75px;
     box-shadow: 10px 0 1px 0px rgb(75, 161, 243) inset;
     position: relative;
+    padding-bottom: none;
 }
 
 h2 {
