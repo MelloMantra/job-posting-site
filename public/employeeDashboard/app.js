@@ -203,8 +203,8 @@ appActionBtns.forEach(button => {
 });
 
 // romir's profile code
-employerData = {
-    companyName: "TechCorp Solutions",
+employeeData = {
+    fullName: "john deere",
     email: "contact@techcorp.com",
     description: "Leading provider of innovative software solutions..."
 };
@@ -250,9 +250,9 @@ for (var i=1; i<steps; i++) {
 
 // romir's functions
 function initializeProfile() {
-document.getElementById('company-name-value').textContent = employerData.companyName;
-document.getElementById('email-value').textContent = employerData.email;
-document.getElementById('description-value').textContent = employerData.description;
+document.getElementById('full-name-value').textContent = employeeData.fullName;
+document.getElementById('email-value').textContent = employeeData.email;
+document.getElementById('description-value').textContent = employeeData.description;
 }
 
 function startEditing(fieldId) {
@@ -313,14 +313,14 @@ fieldContent.appendChild(loading);
 
 setTimeout(() => {
     switch(fieldId) {
-        case 'company-name':
-            employerData.companyName = newValue;
+        case 'full-name':
+            employeeData.fullName = newValue;
             break;
         case 'email':
-            employerData.email = newValue;
+            employeeData.email = newValue;
             break;
         case 'description':
-            employerData.description = newValue;
+            employeeData.description = newValue;
             break;
     }
 
@@ -344,8 +344,8 @@ fieldContent.innerHTML = `<div class="field-value" id="${fieldId}-value">${emplo
 
 function mapFieldToProperty(fieldId) {
 switch(fieldId) {
-    case 'company-name':
-        return 'companyName';
+    case 'full-name':
+        return 'fullName';
     default:
         return fieldId;
 }
