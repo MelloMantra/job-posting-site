@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (applications.ok) {
             var applicationsJson = await applications.json();
 
-            applicationsJson = applicationsJson.applications;
+            applicationsJson = applicationsJson.applicants;
 
             const wrapper = document.querySelector(".applicantsWrapper");
             for (let i=0; i<applicationsJson.length; i++) {
@@ -123,9 +123,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 var line2 = document.createElement("div");
                 line2.className = "line";
                 var status = document.createElement("p");
-                status.className = `${applicationsJson[i].status}Label`;
+                status.className = `${applicationsJson[i].state}Label`;
                 status.classList.add("unselectable");
-                status.innerHTML = applicationsJson[i].status.toUpperCase();
+                status.innerHTML = applicationsJson[i].state.toUpperCase();
                 var applicants = document.createElement("p");
                 applicants.innerHTML = applicationsJson[i].createdAt+" Applicants";
                 line2.appendChild(status);
