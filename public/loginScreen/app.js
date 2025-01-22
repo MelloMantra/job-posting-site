@@ -105,7 +105,7 @@ async function submit() {
                     const data = await response.json();
                     alert("Login successful.");
                     console.log(data);
-                    window.location.href = '/userDashboard';
+                    window.location.href = '/employeeDashboard';
                 } else if (response.status == 401) {
                     alert("Invalid email or password");
                 } else {
