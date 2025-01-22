@@ -187,7 +187,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const postingsIframe = document.getElementById('allJobs');
     postingsTab.addEventListener('click', () => {
         postingsIframe.src = "../allJobs";
-        postingsIframe.contentWindow.location.reload();
     });
 
     // pop up menu stuff
