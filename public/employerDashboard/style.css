@@ -214,6 +214,7 @@ ul li {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    gap: 10px
 }
 
 a {
