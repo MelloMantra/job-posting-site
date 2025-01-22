@@ -90,6 +90,7 @@ const showTypeahead = debounce(async (field) => {
 }, 300);
 
 document.getElementById('jobForm').addEventListener('submit', async function(event) {
+    console.log('Form submitted');
     event.preventDefault();
 
     // get form data
@@ -147,7 +148,8 @@ document.getElementById('jobForm').addEventListener('submit', async function(eve
         if (response.ok) {
             const data = await response.json();
             console.log(data);
-            //alert('Job posted successfully.');
+            alert('Job posted successfully.');
+            window.close();
             //window.location.href = '/employerDashboard'; //Not 100% sure if this works or not since we've not implemented the dashboard yet
         } else {
             console.log(`Error: ${response.status} ${response.statusText}`);
