@@ -100,24 +100,19 @@ app.get('/job/:jobId', (req, res) => {
 
 app.get('/createJob', (req, res) => {
     //Uncomment below portion once done testing
-    /*
     const companyId = req.session?.companyId;
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    */
     res.sendFile(path.join(initialpath, 'public', 'createJob', 'createJob.html'));
 });
 
-//delete this if we end up putting all the application pages together into a single page
 app.get('/allApps/:jobId', (req, res) => {
     //comment below portion if testing
-    /*
     const companyId = req.session?.companyId;
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    */
     res.sendFile(path.join(initialpath, 'public', 'allApps', 'allApps.html'));
 });
 
@@ -126,7 +121,7 @@ app.get('/searchJobs', (req, res) => {
 });
 
 app.get('/testPdfUpload', (req, res) => {
-    const areTesting = true;
+    const areTesting = false;
     if (areTesting) {
         res.sendFile(path.join(initialpath, 'public', 'test', 'testResumeUpload.html'));
     } else {
@@ -140,34 +135,28 @@ app.get('/allJobs', (req, res) => {
 
 app.get('/userAllApps', (req, res) => {
         //comment below portion if testing
-    /*
     const userId = req.session?.userId;
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    */
     res.sendFile(path.join(initialpath, 'public', 'userAllApps', 'userAllApps.html'));
 });
 
 app.get('/employerDashboard', (req, res) => {
     //comment below portion if testing
-    /*
     const companyId = req.session?.companyId;
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    */
     res.sendFile(path.join(initialpath, 'public', 'employerDashboard', 'employerDashboard.html'));
 });
 
 app.get('/employeeDashboard', (req, res) => {
     //comment below portion if testing
-    /*
     const userId = req.session?.userId;
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    */
     res.sendFile(path.join(initialpath, 'public', 'employeeDashboard', 'employeeDashboard.html'));
 });
 

@@ -110,9 +110,9 @@ function renderApplications(apps) {
 
 document.getElementById('searchBar').addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase();
-    const filtered = applications.filter(app => 
-        app.company.toLowerCase().includes(searchTerm) ||
-        app.position.toLowerCase().includes(searchTerm)
+    const filtered = applications.applications.filter(app => 
+        app.companyName.toLowerCase().includes(searchTerm) ||
+        app.title.toLowerCase().includes(searchTerm)
     );
     renderApplications(filtered);
 });
