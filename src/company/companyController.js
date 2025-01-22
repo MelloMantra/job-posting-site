@@ -50,8 +50,8 @@ exports.signUp = async (req, res) => {
 
 exports.postJob = async (req, res) => { 
     const { title, address, description, hours, estimatedPay, preferredExperience, occupation, industry, isRemote } = req.body;
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
     
     //address is optional if it's remote or something
     if (!title || !description || !hours || !estimatedPay || !preferredExperience || !occupation || !industry || isRemote === undefined) {
@@ -82,8 +82,8 @@ exports.postJob = async (req, res) => {
 }
 
 exports.getJobs = async (req, res) => {
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -152,8 +152,8 @@ exports.deleteJob = async (req, res) => {
 
 exports.updateJobStatus = async (req, res) => {
     const jobId = req.params.jobId;
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
     const status = req.body.status;
 
     if (!companyId) {
@@ -226,8 +226,8 @@ exports.updateJobStatus = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
     const jobId = req.params.jobId;
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -252,8 +252,8 @@ exports.getApplications = async (req, res) => {
 
 exports.makeDecision = async (req, res) => {
     const applicationId = req.params.applicationId;
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
     const decision = req.body.decision;
 
     if (!companyId) {
@@ -290,8 +290,8 @@ exports.makeDecision = async (req, res) => {
 exports.downloadResume = async (req, res) => {
     const jobId = req.params.jobId;
     const applicationId = req.params.applicationId;
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -334,8 +334,8 @@ exports.downloadResume = async (req, res) => {
 };
 
 exports.get4Jobs = async (req, res) => {
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
@@ -370,8 +370,8 @@ exports.get4Jobs = async (req, res) => {
 }
 
 exports.get4Applicants = async (req, res) => {
-    const companyId = 1; //for testing purposes
-    //const companyId = req.session?.companyId;
+    //const companyId = 1; //for testing purposes
+    const companyId = req.session?.companyId;
 
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
