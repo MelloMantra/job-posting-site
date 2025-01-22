@@ -259,6 +259,7 @@ footer {
     z-index: 1;
     left:-100px;
     transition: transform;
+    height: 90vh;
 }
 
 /*

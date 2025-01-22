@@ -4,7 +4,7 @@
         <title>Jobify</title>
         <meta name="description" content="Login to Jobify">
         <link rel="icon" href="../assets/icon.png">
-        <link rel="stylesheet" href="../employerDashboard/style.css">
+        <link rel="stylesheet" href="../employeeDashboard/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
@@ -13,27 +13,28 @@
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
         <script src="https://unpkg.com/split-type"></script>
         <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
-        <script src="../employerDashboard/app.js"></script>
+        <script src="../employeeDashboard/app.js"></script>
     </head>
     <body>
 
         <div class="navbar">
             <nav>
                 <ul>
+                    <li><p></p></li>
                     <li><span class="spanbar"></span></li>
-                    <li><a href="../homeScreen/index.html"><span class="logospace"><img src="../assets/icon.png" style="width: 30px;"></span></a></li>
+                    <li><a href=""><span class="logospace"><img src="../assets/icon.png" style="width: 30px;"></span></a></li>
                     <li><span class="spanbar"></span></li>
                 </ul>
             </nav>
         </div>
-        <a href="../loginScreen/login.html" class="dullButton trcorner">Log Out</a>
+        <a href="../" class="dullButton trcorner">Log Out</a>
         <a href="../createJob/createJob.html" class="popButton tlcorner"><img src="../assets/plus.png" class="dropdownIcon">Create New Listing</a>
 
         <div class="sidebar">
-            <button class="tabBtn" data-tab="search" id="searchEmployeesBtn">Search Applicants</button>
-            <button class="tabBtn active" data-tab="dashboard" id="dashboardHomeBtn">Dashboard</button>
-            <button class="tabBtn" data-tab="postings" id="allPostingsBtn">All Listings</button>
-            <button class="tabBtn" data-tab="profile" id="companyProfileBtn">Company Profile</button>
+            <button class="tabBtn" data-tab="search" id="tab1">Search Applicants</button>
+            <button class="tabBtn active" data-tab="dashboard" id="tab2">Dashboard</button>
+            <button class="tabBtn" data-tab="postings" id="tab3">All Listings</button>
+            <button class="tabBtn" data-tab="profile" id="tab4">Company Profile</button>
         </div>
 
         <div class="contentwrapper">
@@ -54,6 +55,13 @@
                     <div class="dropdownItem" id="hirePop"><img src="../assets/hire.png" class="dropdownIcon"><p>Hire</p></div>
                     <div class="dropdownItem" id="rejectPop"><img src="../assets/close.png" class="dropdownIcon"><p>Reject</p></div>
                 </div>
+
+                <div class="dashboardHeading">
+                    <h2>Dashboard</h2>
+                    <img>
+                </div>
+
+                <h3>Recent Postings</h3>
 
                 <div class="jobsWrapper">
                     <div class="jobListing">
@@ -81,9 +89,11 @@
                     </div>
                 </div>
 
-                <div class="seemore"><button class="seemoreBtn">ALL POSITIONS<img src="../assets/arrow.png" class="arrow"></button></div>
+                <div class="seemore"><button class="seemoreBtn" onclick="openTab(3)">ALL POSITIONS<img src="../assets/arrow.png" class="arrow"></button></div>
 
                 <hr>
+
+                <h3>Recent Applications</h3>
 
                 <div class="applicantsWrapper">
 
@@ -95,12 +105,12 @@
 
                 </div>
                 
-                <div class="seemore"><button class="seemoreBtn">ALL APPLICANTS<img src="../assets/arrow.png" class="arrow"></button></div>
+                <div class="seemore"><button class="seemoreBtn" onclick="openTab(1)">ALL APPLICANTS<img src="../assets/arrow.png" class="arrow"></button></div>
             
             </div>
 
             <div class="tab" id="postings">
-                
+                <iframe src="../allJobs" frameborder="0"></iframe>
             </div>
 
             <div class="tab" id="profile">
