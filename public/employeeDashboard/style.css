@@ -433,7 +433,7 @@ hr {
     margin: 10px;
 }
 
-.applicantsWrapper {
+.applicationsWrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -442,7 +442,7 @@ hr {
     width: 100%;
 }
 
-.applicantBox {
+.applicationBox {
     background-color: black;
     color: white;
     padding: 10px 20px;
@@ -453,7 +453,7 @@ hr {
     margin: 10px;
 }
 
-.applicantBox:hover {
+.applicationBox:hover {
     transform: translateY(-8px) scale(1.05);
     box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
 }
