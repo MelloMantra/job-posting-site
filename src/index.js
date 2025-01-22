@@ -170,3 +170,7 @@ app.get('/employeeDashboard', (req, res) => {
     */
     res.sendFile(path.join(initialpath, 'public', 'employeeDashboard', 'employeeDashboard.html'));
 });
+
+app.get('/selecttype', (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'loginScreen', 'selecttype.html'));
+});
