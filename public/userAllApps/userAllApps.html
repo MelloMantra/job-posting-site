@@ -3,10 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Applications</title>
-    <script src="../userAllApps/app.js"></script>
+    <title>Your Applications</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --success-green: #4CAF50;
+            --pending-yellow: #FFC107;
+            --rejected-red: #f44336;
+            --dark: #1a1a1a;
+            --light: #ffffff;
+            --gray: #808080;
+            --primary: #2196F3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: slideDown 0.5s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--light);
+        }
+
+        .search-bar:focus {
+            transform: scale(1.01);
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .applications-grid {
+            display: grid;
+            gap: 1.5rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .application-card {
+            border: none;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            background-color: var(--light);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .company-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .position {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-accepted {
+            background-color: #d4edda;
+            color: #155724;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .location-icon, .calendar-icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            opacity: 0.7;
+        }
+
+        .accepted-card {
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 2px 5px rgba(76, 175, 80, 0.1); }
+            50% { box-shadow: 0 2px 20px rgba(76, 175, 80, 0.2); }
+            100% { box-shadow: 0 2px 5px rgba(76, 175, 80, 0.1); }
+        }
+    </style>
 </head>
 <body>
-    
+    <header class="header">
+        <h1>Your Applications</h1>
+    </header>
+
+    <main class="container">
+        <input type="text" class="search-bar" placeholder="Search applications..." id="searchBar">
+        <div class="applications-grid" id="applicationsGrid"></div>
+    </main>
+
+    <script src="../userAllApps/app.js"></script>
 </body>
 </html>
