@@ -1,5 +1,5 @@
+var applications;
 document.addEventListener("DOMContentLoaded", async function () {
-    var data;
     
     try {
         const response = await fetch('../api/user/getApplications', {
@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         if (response.ok) {
-            data = await response.json();
-            console.log(data);
+            applications = await response.json();
+            console.log(applications);
         } else {
             console.log(`Error: ${response.status} ${response.statusText}`);
             alert("Internal server error.");
@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error('Error Querying Database:', err);
         alert('Error Querying Database');
     }
+
+    renderApplications(applications.applications);
 });
 
 function formatDate(dateStr) {
@@ -44,42 +46,6 @@ data.applications will contain an array of JSON objects with the following struc
 }
 note that I'm not including everything in the JSON object, I'm leaving out some internal variables like ID's and such
 */
-
-const applications = [
-    {
-        id: 1,
-        company: "TechCorp Solutions",
-        position: "Frontend Developer",
-        status: "accepted",
-        date: "2025-01-15",
-        location: "Remote"
-    },
-    {
-        id: 2,
-        company: "Digital Dynamics",
-        position: "UX Designer",
-        status: "rejected",
-        date: "2025-01-10",
-        location: "New York, NY"
-    },
-    {
-        id: 3,
-        company: "Innovation Labs",
-        position: "Software Engineer",
-        status: "pending",
-        date: "2025-01-18",
-        location: "San Francisco, CA"
-    },
-    {
-        id: 3,
-        company: "Innovation Labs",
-        position: "Software Engineer",
-        status: "pending",
-        date: "2025-01-18",
-        location: "San Francisco, CA"
-    }
-];
-
 function fireConfetti() {
     // Shorter duration - 800ms
     const duration = 800;
@@ -115,21 +81,21 @@ function fireConfetti() {
 function renderApplications(apps) {
     const grid = document.getElementById('applicationsGrid');
     grid.innerHTML = apps.map(app => `
-        <div class="application-card ${app.status === 'accepted' ? 'accepted-card' : ''}"
-             data-status="${app.status}">
-            <div class="company-name">${app.company}</div>
-            <div class="position">${app.position}</div>
-            <div class="status status-${app.status}">
-                ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+        <div class="application-card ${app.state === 'accepted' ? 'accepted-card' : ''}"
+             data-status="${app.state}">
+            <div class="company-name">${app.companyName}</div>
+            <div class="position">${app.title}</div>
+            <div class="status status-${app.state}">
+                ${app.state.charAt(0).toUpperCase() + app.state.slice(1)}
             </div>
             <div class="details">
                 <span>
                     <span class="location-icon">📍</span>
-                    ${app.location}
+                    ${app.address}
                 </span>
                 <span>
                     <span class="calendar-icon">📅</span>
-                    Applied: ${new Date(app.date).toLocaleDateString()}
+                    Applied: ${new Date(app.created_at).toLocaleDateString()}
                 </span>
             </div>
         </div>
@@ -150,6 +116,3 @@ document.getElementById('searchBar').addEventListener('input', (e) => {
     );
     renderApplications(filtered);
 });
-
-// Initial render
-renderApplications(applications);
