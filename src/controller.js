@@ -108,8 +108,8 @@ Sorting options:
 
 exports.searchJobs = async (req, res) => {
     const { query, industry, occupation, isRemote, minPay, jobType, sort } = req.query;
-    const userId = 1; //for testing purposes
-    //const userId = req.session?.userId
+    //const userId = 1; //for testing purposes
+    const userId = req.session?.userId
 
     if ( !query ) {
         return res.status(200).json({ result: []});
@@ -165,8 +165,7 @@ exports.searchJobs = async (req, res) => {
         const [rows] = await pool.query(sql, params); 
         
         return res.status(200).json({ result: rows});
-
-    } catch {err} {
+    } catch (err) {
         console.error('Error querying database:', err);
         return res.status(500).json({ error: 'Internal server error.' });
     }

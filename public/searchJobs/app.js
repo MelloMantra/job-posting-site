@@ -100,7 +100,7 @@
                 <div class="title"><a href="/job/${job.id}" target="_blank">${job.title}</a></div>
                 <div class="company"><a href="/companyProfile/${job.companyName}" target="_blank">${job.companyName}</a></div>
                 <div class="location">${job.isRemote ? "Remote" : job.address}</div>
-                <div class="pay">$${job.estimatedPay}</div>
+                <div class="pay">$${job.estimatedPay}/hour</div>
                 <div class="industry">${job.industryName}</div>
                 <div class="occupation">${job.occupationName}</div>
                 <button class="apply-button" onclick="applyToJob(${job.id})">Apply Now</button>
