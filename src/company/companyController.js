@@ -9,7 +9,7 @@ exports.login = async (req, res) => {
         return res.status(400).json({ error: 'email and password are required.' });
     }
 
-    console.log(email, password);
+    //console.log(email, password);
 
     try {
         const [rows] = await pool.query("SELECT * FROM companies WHERE email = ? AND password = ?", [email, password]);
@@ -55,7 +55,7 @@ exports.postJob = async (req, res) => {
     
     //address is optional if it's remote or something
     if (!title || !description || !hours || !estimatedPay || !preferredExperience || !occupation || !industry || isRemote === undefined) {
-        console.log("All fields are required.");
+        //console.log("All fields are required.");
         return res.status(400).json({ error: 'All fields are required.' });
     }    
 

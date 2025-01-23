@@ -116,31 +116,31 @@ exports.searchJobs = async (req, res) => {
     }
 
     try {
-        let sql = "SELECT  postedJob.*, companies.name AS companyName, occupation.name AS occupationName, industry.name AS industryName FROM postedJob LEFT JOIN companies ON postedJob.company = companies.id LEFT JOIN occupation ON postedJob.occupation = occupation.id LEFT JOIN industry ON postedJob.industry = industry.id WHERE title LIKE CONCAT('%', ?, '%') AND status = 'open'";
+        let sql = `SELECT  postedJob.*, companies.name AS companyName, occupation.name AS occupationName, industry.name AS industryName FROM postedJob LEFT JOIN companies ON postedJob.company = companies.id LEFT JOIN occupation ON postedJob.occupation = occupation.id LEFT JOIN industry ON postedJob.industry = industry.id WHERE title LIKE CONCAT('%', ?, '%') AND status = 'open'`;
         const params = [query];
 
         if (industry) {
-            sql += " AND industry = ?";
+            sql += ` AND industry = ?`;
             params.push(industry);
         }
 
         if (occupation) {
-            sql += " AND occupation = ?";
+            sql += ` AND occupation = ?`;
             params.push(occupation);
         }
 
         if (isRemote !== undefined) { //isRemote is a boolean
-            sql += " AND isRemote = ?";
+            sql += ` AND isRemote = ?`;
             params.push(isRemote);
         }
 
         if (minPay) {
-            sql += " AND estimatedPay >= ?";
+            sql += ` AND estimatedPay >= ?`;
             params.push(minPay);
         }
 
         if (jobType) {
-            sql += " AND scheduleType = ?";
+            sql += ` AND scheduleType = ?`;
             params.push(jobType);
         }
 
@@ -157,10 +157,10 @@ exports.searchJobs = async (req, res) => {
         }
 
         if (sort) {
-            sql += " ORDER BY " + sort + " DESC"; 
+            sql += ` ORDER BY ` + sort + ` DESC`; 
         }
 
-        sql += " LIMIT 30";
+        sql += ` LIMIT 30`;
 
         const [rows] = await pool.query(sql, params); 
         

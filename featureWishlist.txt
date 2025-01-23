@@ -1,0 +1,19 @@
+Needs:
+- Settings
+- Signup
+- More comprehensive job applications
+- LinkedIn Like Profile System
+
+Wants:
+- Algorithm for Job Reccs
+    - Verified Job History for users
+- Chatgpt model for help
+- Similar jobs model, job categorization and tags, standardization of requirements and benefits
+- Profile Pics and more data stored
+- Sub-companies and more enterprise features
+- Resume creator
+- Business model focused on employers being able to search for optimal employees, rather than the other way around
+
+Dreams:
+- Secure an actual userbase
+- Jobify environment, meet all hiring needs
