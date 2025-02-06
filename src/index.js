@@ -70,7 +70,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/userSignUp', (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'signupScreen', 'signup.html'));
+    res.sendFile(path.join(initialpath, 'public', 'account', 'signupScreen', 'signup.html'));
 });
 
 //Either login/user or login/company
@@ -78,24 +78,24 @@ app.get('/login/:loginType', (req, res) => {
     if (req.params.loginType != "user" && req.params.loginType != "company") {
         res.status(400).json({ error: 'Invalid login type. Must be "user" or "company"' });
     } else {
-        res.sendFile(path.join(initialpath, 'public', 'loginScreen', 'login.html'));
+        res.sendFile(path.join(initialpath, 'public', 'account', 'loginScreen', 'login.html'));
     }
 });
 
 app.get('/privacy' , (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'privacy', 'privacy.html'));
+    res.sendFile(path.join(initialpath, 'public', 'general', 'privacy', 'privacy.html'));
 });
 
 app.get('/terms' , (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'privacy', 'terms.html'));
+    res.sendFile(path.join(initialpath, 'public', 'general', 'privacy', 'terms.html'));
 });
 
 app.get('/forgot' , (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'forgotScreen', 'forgot.html'));
+    res.sendFile(path.join(initialpath, 'public', 'account', 'forgotScreen', 'forgot.html'));
 })
 
 app.get('/job/:jobId', (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'jobDetails', 'job.html'));
+    res.sendFile(path.join(initialpath, 'public', 'general', 'jobDetails', 'job.html'));
 })
 
 app.get('/createJob', (req, res) => {
@@ -105,7 +105,7 @@ app.get('/createJob', (req, res) => {
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    res.sendFile(path.join(initialpath, 'public', 'createJob', 'createJob.html'));
+    res.sendFile(path.join(initialpath, 'public', 'employer', 'createJob', 'createJob.html'));
 });
 
 app.get('/allApps/:jobId', (req, res) => {
@@ -114,11 +114,11 @@ app.get('/allApps/:jobId', (req, res) => {
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    res.sendFile(path.join(initialpath, 'public', 'allApps', 'allApps.html'));
+    res.sendFile(path.join(initialpath, 'public', 'employer', 'allApps', 'allApps.html'));
 });
 
 app.get('/searchJobs', (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'searchJobs', 'jobsearching.html'));
+    res.sendFile(path.join(initialpath, 'public', 'employee', 'searchJobs', 'jobsearching.html'));
 });
 
 app.get('/testPdfUpload', (req, res) => {
@@ -131,7 +131,7 @@ app.get('/testPdfUpload', (req, res) => {
 })
 
 app.get('/allJobs', (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'allJobs', 'allJobs.html'));
+    res.sendFile(path.join(initialpath, 'public', 'employer', 'allJobs', 'allJobs.html'));
 });
 
 app.get('/userAllApps', (req, res) => {
@@ -140,7 +140,7 @@ app.get('/userAllApps', (req, res) => {
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    res.sendFile(path.join(initialpath, 'public', 'userAllApps', 'userAllApps.html'));
+    res.sendFile(path.join(initialpath, 'public', 'employee', 'userAllApps', 'userAllApps.html'));
 });
 
 app.get('/employerDashboard', (req, res) => {
@@ -149,7 +149,7 @@ app.get('/employerDashboard', (req, res) => {
     if (!companyId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    res.sendFile(path.join(initialpath, 'public', 'employerDashboard', 'employerDashboard.html'));
+    res.sendFile(path.join(initialpath, 'public', 'employer','employerDashboard', 'employerDashboard.html'));
 });
 
 app.get('/employeeDashboard', (req, res) => {
@@ -159,9 +159,9 @@ app.get('/employeeDashboard', (req, res) => {
     if (!userId) {
         return res.status(401).json({ error: 'User not authenticated.' });
     }
-    res.sendFile(path.join(initialpath, 'public', 'employeeDashboard', 'employeeDashboard.html'));
+    res.sendFile(path.join(initialpath, 'public', 'employee', 'employeeDashboard', 'employeeDashboard.html'));
 });
 
 app.get('/selecttype', (req, res) => {
-    res.sendFile(path.join(initialpath, 'public', 'loginScreen', 'selecttype.html'));
+    res.sendFile(path.join(initialpath, 'public', 'account', 'loginScreen', 'selecttype.html'));
 });
