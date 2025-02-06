@@ -165,3 +165,7 @@ app.get('/employeeDashboard', (req, res) => {
 app.get('/selecttype', (req, res) => {
     res.sendFile(path.join(initialpath, 'public', 'account', 'loginScreen', 'selecttype.html'));
 });
+
+app.get('/3dLogoTest' , (req, res) => {
+    res.sendFile(path.join(initialpath, 'public', 'tech', '3dLogoTest', '3dLogo.html'));
+})

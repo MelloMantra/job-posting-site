@@ -10,4 +10,7 @@ export default defineConfig({
     build: {
         outDir: 'dist', // Prevents interfering with your main project
     },
+    optimizeDeps: {
+        include: ['three'] // Ensures three.js is bundled properly
+      }
 });

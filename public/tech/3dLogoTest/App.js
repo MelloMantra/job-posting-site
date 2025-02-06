@@ -7,6 +7,10 @@ https://www.theatrejs.com/
 https://threejs.org
 */
 
+let testVar = 1;
+
+console.log(testVar);
+
 import * as THREE from 'three';
 
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
@@ -39,7 +43,7 @@ window.addEventListener( 'resize', onWindowResize, false );
 
 const loader = new FontLoader();
 loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
-    const textGeometry = new TextGeometry('My Logo', {
+    const textGeometry = new TextGeometry('Jobify', {
         font: font,
         size: 2,       // Size of the text
         height: 0.5,   // Depth
